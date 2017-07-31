@@ -1,0 +1,48 @@
+.header {
+    background-color: #008573;
+}
+.header .left {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 3px 10px;
+    font-size: 18px;
+    font-weight: 400;
+    border: 1px solid white;
+    border-radius: 4px;
+}
+.item {
+    margin: 10px 0;
+    padding: 15px 0;
+    text-align: left;
+    background-color: #BDB76A;
+    border-radius: 4px;
+}
+.item * {
+    display: inline-block;
+    margin: 0;
+    text-align: center;
+}
+.item .name {
+    width: 40%;
+    text-align: left;
+}
+.item .detail {
+    width: 10%;
+    text-align: center;
+}
+.item .price {
+    width: 20%;
+}
+.item .num {
+    width: 20%;
+}
+.item .button {
+    width: 10%;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+.footer {
+    padding: 10px 0;
+    background-color: #008573;
+}

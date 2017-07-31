@@ -1,0 +1,14 @@
+body {
+    background-color: #BDB76A;
+}
+input[type=number] {
+    display: inline-block;
+    width: 50px;
+    color: black;
+    background-color: #BDB76A;
+    border: 1px solid white;
+    border-radius: 8px;
+}
+.button {
+    background-color: #008573;
+}

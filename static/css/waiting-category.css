@@ -1,0 +1,13 @@
+.header {
+    background-color: #008573;
+}
+.item {
+    margin: 10px 0;
+    padding: 15px 0;
+    background-color: #BDB76A;
+    border-radius: 4px;
+}
+.footer {
+    padding: 10px 0;
+    background-color: #008573;
+}

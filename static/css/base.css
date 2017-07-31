@@ -1,0 +1,95 @@
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 80px 0;
+	box-sizing: border-box;
+	background-color: #ffc;
+	color: white;
+	text-align: center;
+	font-family:  "Hiragino Sans GB", "Microsoft YaHei",
+					 "WenQuanYi Micro Hei", sans-serif;
+    font-size: 18px;
+	line-height: 18px;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 10px 0;
+    
+}
+.header h1, .header h2, .header h3, .header h4, .header h5 , .header h6 {
+	font-size: 26px;
+	line-height: 26px;
+    font-weight: 400;
+}
+.content {
+	
+}
+.footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.div-50 {
+	float: left;
+	width: 50%;
+}
+a {
+	color: white;
+	text-decoration: none;
+	font-weight: 400;
+}
+.button {
+	display: block;
+	padding: 10px 0;
+	text-align: center;
+	border: 0 solid white;
+	border-radius: 6px;
+}
+
+.btn-left {
+	background-color: #99cc99;
+}
+
+.btn-right {
+	background-color: #ff9966;
+}
+
+input {
+    width: 100%;
+    height: 36px;
+    color: white;
+    font-size: 18px;
+    line-height: 18px;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
+    color:    white;		
+}
+input:-moz-placeholder, textarea:-moz-placeholder { 
+    color:    white;
+		
+}
+input::-moz-placeholder, textarea::-moz-placeholder { 
+    color:    white;
+		
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder { 
+    color:    white;
+		
+}
+
+textarea:focus, input:focus {
+	outline: 1px solid  white;
+}
