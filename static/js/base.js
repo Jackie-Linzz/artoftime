@@ -5,8 +5,7 @@ function getCookie(name) {
 
 
 $.postJSON = function(url, args, callback) {
-    args._xsrf = getCookie("_xsrf");
-    console.log(args);
+   // console.log(args);
     $.ajax(
         {
             url: url,
@@ -26,15 +25,6 @@ $.postJSON = function(url, args, callback) {
 
 var json = JSON.stringify;
 
-var makeins = function(op, data){
-
-    if(op == '+') return {'+': {'id': data['id'], 'demand':data['demand']} };
-    if(op == '-') return {'-': data};
-    if(op == 'gd') return {'gd': data};
-    if(op == 'submit') return {'submit': data};
-    return {op: data};
-
-};
 
 var delay = 5000;
 var disablebutton = function(b$){
@@ -49,13 +39,5 @@ var disable = function(b$, delay) {
 
 function trim(str) {
     return str.replace(/(^\s*)|(\s*$)/g,'');
-}
-
-function auth(response) {
-    if(response.status != 'ok') {
-        window.location.replace(response.next);
-        return false;
-    }
-    return true;
 }
 
