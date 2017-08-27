@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	<meta charset="utf-8" />
+
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+
+	<link rel="stylesheet" type="text/css" href="base.css">
+	<link rel="stylesheet" type="text/css" href="customer-feedback.css">
+
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/base.css")}}">
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/customer-feedback.css")}}">
+    </head>
+
+    <body>
+	<div class="header">
+            <h2 class="heading" data-desk="{{table}}">feed back</h2>
+            <div class="left">back</div>
+	</div>
+	<div class="content">
+            <div class="item" data-uid="1">
+		<div class="row">
+                    <div class="name">name</div>
+		</div>
+		<div class="row">
+                    <div class="fb selected" data-fb="1">good</div>
+		    <div class="fb" data-fb="0">normal</div>
+		    <div class="fb" data-fb="-1">bad</div>
+		</div>
+		
+            </div>
+            <div class="item" data-uid="2">
+		<div class="row">
+                    <div class="name">name</div>
+		</div>
+		<div class="row">
+                    <div class="fb selected" data-fb="1">good</div>
+		    <div class="fb" data-fb="0">normal</div>
+		    <div class="fb" data-fb="-1">bad</div>
+		</div>
+		
+            </div>
+	    {% for item in done %}
+	    <div class="item" data-uid="{{item.uid}}">
+		<div class="row">
+                    <div class="name">{{item.name}}</div>
+		</div>
+		<div class="row">
+                    <div class="fb" data-fb="1">good</div>
+		    <div class="fb" data-fb="0">normal</div>
+		    <div class="fb" data-fb="-1">bad</div>
+		</div>
+		
+            </div>
+	    {% end %}
+	    <textarea class="comment" placeholder="comment" rows="3"></textarea>
+            
+	</div>
+	<div class="footer">submit</div>
+	
+	
+
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/customer-feedback.js")}}"></script>
+    </body>
+</html>

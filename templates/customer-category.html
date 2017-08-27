@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	<meta charset="utf-8" />
+
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+
+	<link rel="stylesheet" type="text/css" href="base.css">
+	<link rel="stylesheet" type="text/css" href="customer-category.css">
+
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/base.css")}}">
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/customer-category.css")}}">
+
+    </head>
+
+    <body>
+
+	<div class="header">
+	    <h2 class="heading" data-desk="{{table}}">{{table}}</h2>
+	    <div class="left">back</div>
+	</div>
+	<div class="content">
+	    <div class="item" data-cid="001">
+		<div class="name">group1</div>
+		<div class="num">8</div>
+	    </div>
+	    {% for v in groups %}
+	    <div class="item" data-cid="{{v['cid']}}">
+		<div class="name">{{v['name']}}</div>
+		<div class="num">0</div>
+	    </div>
+	    {% end %}
+	    
+	</div>
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/customer-category.js")}}"></script>
+    </body>
+</html>

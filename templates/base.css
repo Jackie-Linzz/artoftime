@@ -15,7 +15,7 @@ body {
 	text-align: center;
 	font-family:  "Hiragino Sans GB", "Microsoft YaHei",
 					 "WenQuanYi Micro Hei", sans-serif;
-    font-size: 18px;
+        font-size: 18px;
 	line-height: 18px;
 }
 
@@ -30,7 +30,7 @@ body {
 .header h1, .header h2, .header h3, .header h4, .header h5 , .header h6 {
 	font-size: 26px;
 	line-height: 26px;
-    font-weight: 400;
+        font-weight: 400;
 }
 .content {
 	
@@ -75,21 +75,21 @@ input {
 }
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
-    color:    white;		
+    color: #999;		
 }
 input:-moz-placeholder, textarea:-moz-placeholder { 
-    color:    white;
+    color: #999;
 		
 }
 input::-moz-placeholder, textarea::-moz-placeholder { 
-    color:    white;
+    color: #999;
 		
 }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder { 
-    color:    white;
+    color: #999;
 		
 }
 
 textarea:focus, input:focus {
-	outline: 1px solid  white;
+    outline: 1px solid  white;
 }

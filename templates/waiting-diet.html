@@ -18,43 +18,23 @@
 
 <body>
   <div class="header">
-      <h2 class="heading">类别</h2>
-      <div class="left">返回</div>
+      <h2 class="heading">{{table}}</h2>
+      <div class="left" data-cid="{{cid}}">返回</div>
   </div>
   <div class="content">
-      <div class="item">
-          <div class="name">名字</div><!--
-       --><div class="detail">...</div><!--
-       --><div class="price">18.0</div><!--
-       --><div class="num">0</div><!--
-       --><div class="button">+</div>       
+  
+      {% for v in diet %}
+      <div class="item" data-did="{{v['did']}}">
+	  <div class="name">{{v['name']}}</div><div class="detail">...</div><div class="price">{{v['price']}}</div><div class="num">0</div><div class="button">+</div>
       </div>
-      <div class="item">
-          <div class="name">名字</div><!--
-       --><div class="detail">...</div><!--
-       --><div class="price">18.0</div><!--
-       --><div class="num">0</div><!--
-       --><div class="button">+</div>       
-      </div><div class="item">
-          <div class="name">名字</div><!--
-       --><div class="detail">...</div><!--
-       --><div class="price">18.0</div><!--
-       --><div class="num">0</div><!--
-       --><div class="button">+</div>       
-      </div>
-      <div class="item">
-          <div class="name">名字</div><!--
-       --><div class="detail">...</div><!--
-       --><div class="price">18.0</div><!--
-       --><div class="num">0</div><!--
-       --><div class="button">+</div>       
-      </div>
+      {% end %}
   </div>
   <div class="footer">我的订单</div>
 
   <script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
   <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
   <script src="{{static_url("js/base.js")}}"></script>
+  <script src="{{static_url("js/waiting-diet.js")}}"></script>
   
 
 </body>

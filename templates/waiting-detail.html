@@ -18,14 +18,15 @@
 
 <body>
     <div class="header">
-        <h2 class="heading">名字</h2>
-        <div class="left">返回</div>
+        <h2 class="heading">{{item['name']}}</h2>
+        <div class="left" data-cid="{{item['cid']}}" data-did="{{item['did']}}">返回</div>
     </div>
     <div class="content">
-        <div class="desc">这是介绍文字这是介绍文字这是介绍文字这是介绍文字这是介绍文字这是介绍文字这是介绍文字</div>
-        <div class="img"><img src="#" alt="这是图片"></div>
-        <div class="line"><div class="price">18.0</div><div class="num">0</div></div>
-        <textarea class="demand">这里是特殊要求</textarea>
+        
+        <div class="img"><img src="{{static_url("pictures")}}/{{item['did']}}" alt="这是图片" /></div>
+	<div class="desc">{{item['desp']}}</div>
+        <div class="line"><div class="price">{{item['price']}}</div><div class="num">0</div></div>
+        <textarea class="demand" placeholder="input demand"></textarea>
     </div>
     <div class="footer">添加</div>
     
@@ -33,6 +34,7 @@
     <script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
     <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
     <script src="{{static_url("js/base.js")}}"></script>
+    <script src="{{static_url("js/waiting-detail.js")}}"></script>
   
 
 </body>

@@ -19,19 +19,20 @@
 <body>
 
   <div class="header">
-    <h2 class="heading">类别</h2>
+    <h2 class="heading">{{table}}</h2>
   </div>
   <div class="content">
-    <div class="item">类别1</div>
-    <div class="item">类别2</div>
-    <div class="item">类别3</div>
-    <div class="item">类别4</div>
+    
+    {% for k,v in category.items()%}
+    <div class="item" data-cid="{{v['cid']}}">{{v['name']}}</div>
+    {% end %}
   </div>
   <div class="footer">我的订单</div>
 
   <script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
   <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
   <script src="{{static_url("js/base.js")}}"></script>
+  <script src="{{static_url("js/waiting-category.js")}}"></script>
   
 
 </body>

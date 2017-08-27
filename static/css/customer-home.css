@@ -1,0 +1,23 @@
+.header {
+    background-color: #f17c67;
+}
+.order {
+    padding: 40px 0;
+    font-size: 24px;
+    background-color: #f17c67;
+}
+.myorder {
+    padding: 40px 0;
+    font-size: 24px;
+    background-color: #495a80;
+}
+.fb {
+    padding: 40px 0;
+    font-size: 24px;
+    background-color: #2e68aa;
+}
+.call {
+    padding: 40px 0;
+    font-size: 24px;
+    background-color: #376956;
+}
