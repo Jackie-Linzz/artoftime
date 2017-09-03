@@ -1,0 +1,182 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+    color: black;
+    background-color: white;
+}
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    color: white;
+    background-color: #2a8fbd;
+    font-size: 22px;
+}
+.content {
+    margin-left: 200px;
+}
+.menu .back {
+    margin-bottom: 30px;
+    padding: 10px;
+    font-size: 24px;
+    text-align: center;
+}
+.menu .back:hover {
+    border: 1px solid white;
+}
+.menu .head, .menu .op {
+    padding: 10px 0;
+    text-align: center;
+}
+.menu .head {
+    font-size: 24px;
+}
+.menu .op:hover {
+    border: 1px dotted white;
+}
+.diet {
+    margin-top: 20px;
+}
+.group-add, .group-del {
+    width: 50%;
+    margin: 0 auto;
+}
+.group-add .heading {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+.group-add .label {
+    margin: 10px 0;
+    font-size: 22px;
+}
+.group-add input,
+.group-add textarea {
+    width: 100%;
+    font-size: 22px;
+}
+#group-add-button {
+    margin-top: 30px;
+    padding: 10px 0;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    background-color: #2a8fbd;
+}
+.group-del .heading {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+.group-del .label {
+    margin: 10px 0;
+    font-size: 22px;
+}
+.group-del input {
+    width: 100%;
+    font-size: 22px;
+}
+#group-del-button {
+    margin-top: 30px;
+    padding: 10px 0;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    background-color: #2a8fbd;
+}
+.group-show table {
+    width: 100%;
+}
+.group-show caption {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+.diet-add, .diet-del {
+    width: 50%;
+    margin: 0 auto;
+}
+.diet-add .heading {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+.diet-add .label {
+    margin: 10px 0;
+    font-size: 22px;
+}
+.diet-add input,
+.diet-add textarea {
+    width: 100%;
+    font-size: 22px;
+}
+#diet-add-button {
+    display: block;
+    margin-top: 30px;
+    padding: 10px 0;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    background-color: #2a8fbd;
+}
+.diet-del .heading {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+.diet-del .label {
+    margin: 10px 0;
+    font-size: 22px;
+}
+.diet-del input {
+    width: 100%;
+    font-size: 22px;
+}
+#diet-del-button {
+    display: block;
+    margin-top: 30px;
+    padding: 10px 0;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    background-color: #2a8fbd;
+}
+.diet-show table {
+    width: 100%;
+}
+.diet-show caption {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+.diet-show table td {
+    text-align: center;
+}
+.diet-detail {
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 400px;
+    font-size: 22px;
+    color: white;
+    background-color: #2a8fbd;
+}
+.diet-detail .close {
+    margin: 10px;
+    padding: 10px;
+    font-size: 28px;
+    text-align: center;
+}
+.diet-detail .label {
+    margin-top: 10px;
+}
+.diet-detail img {
+    width: 100%;
+}

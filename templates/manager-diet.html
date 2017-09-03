@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	<meta charset="utf-8" />
+
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+
+	
+	<link rel="stylesheet" type="text/css" href="manager-diet.css">
+	
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/manager-diet.css")}}">
+	
+
+    </head>
+
+    <body>
+	
+	<div class="menu">
+	    <div class="back">back</div>
+	    <div class="group">
+		<div class="head">group</div>
+		<div class="group-container">
+		    <div class="op">add</div>
+		    <div class="op">delete</div>
+		    <div class="op">show</div>
+		</div>
+	    </div>
+	    <div class="diet">
+		<div class="head">diet</div>
+		<div class="diet-container">
+		    <div class="op">add</div>
+		    <div class="op">delete</div>
+		    <div class="op">show</div>
+		</div>
+	    </div>
+	</div>
+	<div class="content">
+	    <div class="group-add">
+		<div class="heading">add</div>
+		<div class="label">cid</div>
+		<input type="text" id="cid">
+		<div class="label">name</div>
+		<input type="text" id="c-name">
+		<div class="label">order</div>
+		<input type="text" id="c-order">
+		<div class="label">description</div>
+		<textarea rows="3" id="c-desp"></textarea>
+		<div id="group-add-button">submit</div>
+	    </div>
+	    <div class="group-del">
+		<div class="heading">delete</div>
+		<div class="label">cid</div>
+		<input type="text" id="cid2">
+		<div id="group-del-button">submit</div>
+	    </div>
+	    <div class="group-show">
+		<table border="1" cellspacing="0">
+		    <caption>category</caption>
+		    <thead>
+			<tr>
+			    <th>cid</th>
+			    <th>name</th>
+			    <th>order</th>
+			    <th>description</th>
+			</tr>
+		    </thead>
+		    <tbody>
+			<tr>
+			    <td>001</td>
+			    <td>group1</td>
+			    <td>1</td>
+			    <td>discription</td>
+			</tr>
+		    </tbody>
+		</table>
+	    </div>
+	    <div class="diet-add">
+		<form action="/diet-add" method="post" enctype="multipart/form-data" target="iframe">
+		    <div class="heading">add</div>
+		    <div class="label">did</div>
+		    <input type="text" name="did">
+		    <div class="label">name</div>
+		    <input type="text" name="name">
+		    <div class="label">order</div>
+		    <input type="text" name="order">
+		    <div class="label">price</div>
+		    <input type="text" name="price">
+		    <div class="label">price2</div>
+		    <input type="text" name="price2">
+		    <div class="label">base</div>
+		    <input type="text" name="base">
+		    <div class="label">category</div>
+		    <input type="text" name="cid">
+		    <div class="label">picture</div>
+		    <input type="file" name="picture">
+		    <div class="label">description</div>
+		    <textarea name="desp" rows="3"></textarea>
+		    <input type="submit" id="diet-add-button">
+		</form>
+		
+		<iframe name="iframe"></iframe>
+	    </div>
+	    <div class="diet-del">
+		<div class="heading">delete</div>
+		<div class="label">did</div>
+		<input type="text" id="did2">
+		<div id="diet-del-button">submit</div>
+	    </div>
+	    <div class="diet-show">
+		<table border="1" cellspacing="0">
+		    <caption>diet show</caption>
+		    <thead>
+			<tr>
+			    <th>did</th>
+			    <th>name</th>
+			    <th>order</th>
+			    <th>price</th>
+			    <th>cid</th>
+			    <th>detail</th>
+			</tr>
+		    </thead>
+		    <tbody>
+			<tr>
+			    <td>0001</td>
+			    <td>coffee</td>
+			    <td>1</td>
+			    <td>18.00</td>
+			    <td>1</td>
+			    <td class="detail">...</td>
+			</tr>
+		    </tbody>
+		</table>
+	    </div>
+	    <div class="diet-detail">
+		<div class="close">X</div>
+		<div class="label">did</div>
+		<div>0001</div>
+		<div class="label">name</div>
+		<div>coffee</div>
+		<div class="label">picture</div>
+		<img src="" alt="this is picture">
+		<div class="label">price</div>
+		<div>18.00</div>
+		<div class="label">price2</div>
+		<div>0</div>
+		<div class="label">order</div>
+		<div>1</div>
+		<div class="label">base</div>
+		<div>1</div>
+		<div class="label">category</div>
+		<div>001</div>
+		<div class="label">description</div>
+		<div>this is description</div>
+	    </div>
+	    
+	</div>
+	
+	
+	
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/manager-diet.js")}}"></script>
+    </body>
+</html>

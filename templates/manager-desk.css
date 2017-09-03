@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+    color: black;
+    background-color: white;
+}
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    color: white;
+    background-color: #2a8fbd;
+    font-size: 22px;
+}
+.content {
+    margin-left: 200px;
+}
+.menu .back {
+    margin-bottom: 30px;
+    padding: 10px;
+    font-size: 24px;
+    text-align: center;
+}
+.menu .back:hover {
+    border: 1px solid white;
+}
+.menu .head, .menu .op {
+    padding: 10px 0;
+    text-align: center;
+}
+.menu .head {
+    font-size: 24px;
+}
+.menu .op:hover {
+    border: 1px dotted white;
+}
+.desk-add, .desk-del {
+    width: 50%;
+    margin: 0 auto;
+}
+.desk-add .heading {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+.desk-add .label {
+    margin: 10px 0;
+    font-size: 22px;
+}
+.desk-add input {
+    width: 100%;
+    font-size: 22px;
+}
+#desk-add-button {
+    margin-top: 30px;
+    padding: 10px 0;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    background-color: #2a8fbd;
+}
+.desk-del .heading {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+.desk-del .label {
+    margin: 10px 0;
+    font-size: 22px;
+}
+.desk-del input {
+    width: 100%;
+    font-size: 22px;
+}
+#desk-del-button {
+    margin-top: 30px;
+    padding: 10px 0;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    background-color: #2a8fbd;
+}
+.desk-show table {
+    width: 100%;
+}
+.desk-show caption {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+.desk-show table td {
+    text-align: center;
+}
