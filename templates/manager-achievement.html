@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	<meta charset="utf-8" />
+
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+
+	
+	<link rel="stylesheet" type="text/css" href="manager-achievement.css">
+	
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/manager-achievement.css")}}">
+	
+
+    </head>
+
+    <body>
+	<div class="menu">
+	    <div class="back">back</div>
+	    <div class="head">achievement</div>
+	    
+	</div>
+
+	<div class="content">
+	    <div class="query">
+		<div class="heading">achievement</div>
+		<div class="label">from:</div>
+		<input type="date" id="from">
+		<div class="label">to:</div>
+		<input type="date" id="to">
+		<div class="label">fid:</div>
+		<input type="text" id="fid">
+		<div class="button">query</div>
+	    </div>
+	    <div class="cashier">
+		<table border="1" cellspacing="0">
+		    <caption>cashier</caption>
+		    <thead>
+			<tr>
+			    <th>failure</th>
+			    <th>success</th>
+			</tr>
+		    </thead>
+		    <tbody>
+			<tr>
+			    <td>1</td>
+			    <td>100</td>
+			</tr>
+		    </tbody>
+		</table>
+	    </div>
+	    <div class="cook">
+		<table border="1" cellspacing="0">
+		    <caption>count</caption>
+		    <thead>
+			<tr>
+			    <th>name</th>
+			    <th>number</th>
+			</tr>
+		    </thead>
+		    <tbody>
+			<tr>
+			    <td>coffee</td>
+			    <td>100</td>
+			</tr>
+		    </tbody>
+		</table>
+		<table border="1" cellspacing="0">
+		    <caption>feed back</caption>
+		    <thead>
+			<tr>
+			    <th>name</th>
+			    <th>good</th>
+			    <th>normal</th>
+			    <th>bad</th>
+			    <th>good rate</th>
+			    <th>bad rate</th>
+			</tr>
+		    </thead>
+		    <tbody>
+			<tr>
+			    <td>coffee</td>
+			    <td>1</td>
+			    <td>98</td>
+			    <td>1</td>
+			    <td>1%</td>
+			    <td>1%</td>
+			</tr>
+		    </tbody>
+		</table>
+	    </div>
+	</div>
+	
+	
+	
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/manager-achievement.js")}}"></script>
+    </body>
+</html>

@@ -11,6 +11,7 @@ from tornado.options import define, options
 from handlers_waiting import *
 from handlers_common import *
 from handlers_customer import *
+from handlers_manager import *
 
 define("port", default=8000, help="run on the given port", type=int)
 define("debug", default=False, help="run in debug mode")
@@ -32,7 +33,19 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/customer-order', CustomerOrderHandler),
               (r'/customer-ins', CustomerInsHandler),
               (r'/customer-update', CustomerUpdateHandler),
-              (r'/customer-feedback', CustomerFeedbackHandler)]
+              (r'/customer-feedback', CustomerFeedbackHandler),
+              (r'/faculty-login', FacultyLoginHandler),
+              (r'/faculty-role', FacultyRoleHandler),
+              (r'/manager-home', ManagerHomeHandler),
+              (r'/manager-company', ManagerCompanyHandler),
+              (r'/manager-company-set', ManagerCompanySetHandler),
+              (r'/manager-diet', ManagerDietHandler),
+              (r'/manager-group-add', ManagerGroupAddHandler),
+              (r'/manager-group-del', ManagerGroupDelHandler),
+              (r'/manager-group-show', ManagerGroupShowHandler),
+              (r'/manager-diet-add', ManagerDietAddHandler),
+              (r'/manager-diet-del', ManagerDietDelHandler),
+              (r'/manager-diet-show', ManagerDietShowHandler)]
 settings = dict(
                 cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
                # login_url="/",

@@ -41,30 +41,24 @@ body {
 .menu .op:hover {
     border: 1px dotted white;
 }
-.worker-add, .worker-del {
+.query, .result {
     width: 50%;
     margin: 0 auto;
 }
-.worker-add .heading {
+.query .heading {
     margin-bottom: 20px;
     text-align: center;
     font-size: 24px;
 }
-.worker-add .label {
+.query .label {
     margin: 10px 0;
     font-size: 22px;
 }
-.worker-add input {
+.query input {
     width: 100%;
     font-size: 22px;
 }
-.worker-add .role {
-    font-size: 22px;
-}
-.worker-add .role input {
-    width: 40px;
-}
-#worker-add-button {
+#cookdo-button {
     margin-top: 30px;
     padding: 10px 0;
     font-size: 22px;
@@ -72,35 +66,17 @@ body {
     color: white;
     background-color: #2a8fbd;
 }
-.worker-del .heading {
-    margin-bottom: 20px;
-    text-align: center;
+.result1 {
     font-size: 24px;
-}
-.worker-del .label {
-    margin: 10px 0;
-    font-size: 22px;
-}
-.worker-del input {
-    width: 100%;
-    font-size: 22px;
-}
-#worker-del-button {
-    margin-top: 30px;
-    padding: 10px 0;
-    font-size: 22px;
     text-align: center;
-    color: white;
-    background-color: #2a8fbd;
 }
-.worker-show table {
+.result2 {
     width: 100%;
 }
-.worker-show caption {
+.result2 caption {
     margin-bottom: 20px;
     font-size: 24px;
 }
-.worker-show table td {
+.result2 td {
     text-align: center;
 }
-

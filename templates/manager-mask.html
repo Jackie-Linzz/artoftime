@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	<meta charset="utf-8" />
+
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+
+	
+	<link rel="stylesheet" type="text/css" href="manager-mask.css">
+	
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/manager-mask.css")}}">
+	
+
+    </head>
+
+    <body>
+	<div class="menu">
+	    <div class="back">back</div>
+	    <div class="head">mask</div>
+	    <div class="mask-container">
+		<div class="op">mask</div>
+		<div class="op">unmask</div>
+		<div class="op">show</div>
+	    </div>
+	</div>
+
+	<div class="content">
+	    <div class="mask">
+		<table border="1" cellspacing="0">
+		    <thead>
+			<tr>
+			    <th>did</th>
+			    <th>name</th>
+			    <th>group</th>
+			    <th>mask</th>
+			</tr>
+		    </thead>
+		    <tbody>
+			<tr>
+			    <td>0001</td>
+			    <td>coffee</td>
+			    <td>group1</td>
+			    <td><input type="checkbox" class="did-mask"></td>
+			</tr>
+		    </tbody>
+		</table>
+	    </div>
+	    <div class="unmask">
+		<table border="1" cellspacing="0">
+		    <thead>
+			<tr>
+			    <th>did</th>
+			    <th>name</th>
+			    <th>group</th>
+			    <th>unmask</th>
+			</tr>
+		    </thead>
+		    <tbody>
+			<tr>
+			    <td>0001</td>
+			    <td>coffee</td>
+			    <td>group1</td>
+			    <td><input type="checkbox" class="did-unmask"></td>
+			</tr>
+		    </tbody>
+		</table>
+	    </div>
+	    <div class="show">
+		<table border="1" cellspacing="0">
+		    <thead>
+			<tr>
+			    <th>did</th>
+			    <th>name</th>
+			    <th>group</th>
+			</tr>
+		    </thead>
+		    <tbody>
+			<tr>
+			    <td>0001</td>
+			    <td>coffee</td>
+			    <td>group1</td>
+			</tr>
+		    </tbody>
+		</table>
+	    </div>
+	</div>
+	
+	
+	
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/manager-mask.js")}}"></script>
+    </body>
+</html>

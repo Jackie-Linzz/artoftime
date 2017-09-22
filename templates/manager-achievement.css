@@ -41,30 +41,25 @@ body {
 .menu .op:hover {
     border: 1px dotted white;
 }
-.worker-add, .worker-del {
+.query {
     width: 50%;
     margin: 0 auto;
 }
-.worker-add .heading {
+.query .heading {
     margin-bottom: 20px;
     text-align: center;
     font-size: 24px;
 }
-.worker-add .label {
+.query .label {
     margin: 10px 0;
     font-size: 22px;
 }
-.worker-add input {
+.query input {
     width: 100%;
     font-size: 22px;
+    text-align: center;
 }
-.worker-add .role {
-    font-size: 22px;
-}
-.worker-add .role input {
-    width: 40px;
-}
-#worker-add-button {
+.button {
     margin-top: 30px;
     padding: 10px 0;
     font-size: 22px;
@@ -72,35 +67,20 @@ body {
     color: white;
     background-color: #2a8fbd;
 }
-.worker-del .heading {
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 24px;
+.cashier {
+    width: 50%;
+    margin: 0 auto;
 }
-.worker-del .label {
-    margin: 10px 0;
-    font-size: 22px;
-}
-.worker-del input {
-    width: 100%;
-    font-size: 22px;
-}
-#worker-del-button {
-    margin-top: 30px;
-    padding: 10px 0;
-    font-size: 22px;
-    text-align: center;
-    color: white;
-    background-color: #2a8fbd;
-}
-.worker-show table {
+.cashier table {
     width: 100%;
 }
-.worker-show caption {
-    margin-bottom: 20px;
-    font-size: 24px;
+.cook table {
+    width: 100%;
 }
-.worker-show table td {
+table td {
     text-align: center;
 }
-
+caption {
+    font-size: 24px;
+    margin-bottom: 20px;
+}

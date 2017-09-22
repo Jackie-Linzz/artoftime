@@ -1,0 +1,32 @@
+$(document).ready(function(){
+    $(document).on('tap', '.company', function(){
+	window.location.replace('/manager-company');
+    });
+    $(document).on('tap', '.diet', function(){
+	window.location.replace('/manager-diet');
+    });
+    $(document).on('tap', '.desk', function(){
+	window.location.replace('/manager-desk');
+    });
+    $(document).on('tap', '.faculty', function(){
+	window.location.replace('/manager-faculty');
+    });
+    $(document).on('tap', '.cookdo', function(){
+	window.location.replace('/manager-cookdo');
+    });
+    $(document).on('tap', '.achievement', function(){
+	window.location.replace('/manager-achievement');
+    });
+    $(document).on('tap', '.flow', function(){
+	window.location.replace('/manager-flow');
+    });
+    $(document).on('tap', '.comment', function(){
+	window.location.replace('/manager-comment');
+    });
+    $(document).on('tap', '.mask', function(){
+	window.location.replace('/manager-mask');
+    });
+    $(document).on('tap', '.shutdown', function(){
+	window.location.replace('/manager-shutdown');
+    });
+});

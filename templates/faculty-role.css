@@ -6,25 +6,18 @@
     box-sizing: border-box;
 }
 body {
-    font-size: 18px;
+    font-size: 24px;
     color: white;
     background-color: #2a5caa;
 }
-table {
-    margin: auto;
-    text-align: center;
-}
-caption {
-    margin-bottom: 20px;
-    font-size: 24px;
-}
-input {
-    width: 400px;
-    height: 24px;
-    text-align: center;
-}
 
-div.button {
-    margin-top: 20px;
+div {
+    width: 60%;
+    margin: 20px auto;
+    padding: 30px 0;
+    text-align: center;
+    background-color: #2a8fbd;
+}
+div:hover {
     border: 1px solid white;
 }

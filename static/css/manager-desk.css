@@ -41,30 +41,24 @@ body {
 .menu .op:hover {
     border: 1px dotted white;
 }
-.worker-add, .worker-del {
+.desk-add, .desk-del {
     width: 50%;
     margin: 0 auto;
 }
-.worker-add .heading {
+.desk-add .heading {
     margin-bottom: 20px;
     text-align: center;
     font-size: 24px;
 }
-.worker-add .label {
+.desk-add .label {
     margin: 10px 0;
     font-size: 22px;
 }
-.worker-add input {
+.desk-add input {
     width: 100%;
     font-size: 22px;
 }
-.worker-add .role {
-    font-size: 22px;
-}
-.worker-add .role input {
-    width: 40px;
-}
-#worker-add-button {
+#desk-add-button {
     margin-top: 30px;
     padding: 10px 0;
     font-size: 22px;
@@ -72,20 +66,20 @@ body {
     color: white;
     background-color: #2a8fbd;
 }
-.worker-del .heading {
+.desk-del .heading {
     margin-bottom: 20px;
     text-align: center;
     font-size: 24px;
 }
-.worker-del .label {
+.desk-del .label {
     margin: 10px 0;
     font-size: 22px;
 }
-.worker-del input {
+.desk-del input {
     width: 100%;
     font-size: 22px;
 }
-#worker-del-button {
+#desk-del-button {
     margin-top: 30px;
     padding: 10px 0;
     font-size: 22px;
@@ -93,14 +87,13 @@ body {
     color: white;
     background-color: #2a8fbd;
 }
-.worker-show table {
+.desk-show table {
     width: 100%;
 }
-.worker-show caption {
+.desk-show caption {
     margin-bottom: 20px;
     font-size: 24px;
 }
-.worker-show table td {
+.desk-show table td {
     text-align: center;
 }
-

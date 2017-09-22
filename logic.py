@@ -1,6 +1,7 @@
 import time
 from tornado.concurrent import Future
 
+company_file = 'company-info'
 tables = {}
 waiting = {}
 desks = set()

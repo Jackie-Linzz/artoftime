@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	<meta charset="utf-8" />
+
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+
+	
+	<link rel="stylesheet" type="text/css" href="faculty-role.css">
+	
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/faculty-role.css")}}">
+	
+
+    </head>
+
+    <body>
+	<br>
+	<br>
+	{% for one in roles %}
+	<br>
+	<br>
+	{% if one['role'] == 'manager' %}
+	<div class="manager">manager</div>
+	{% end %}
+	
+	{% if one['role'] == 'waiter' %}
+	<div class="waiter">waiter</div>
+	{% end %}
+
+	{% if one['role'] == 'cashier' %}
+	<div class="cashier">cashier</div>
+	{% end %}
+
+	{% if one['role'] == 'cook' %}
+	<div class="cook">cook</div>
+	{% end %}
+	{% end %}
+	
+	
+	
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/faculty-role.js")}}"></script>
+    </body>
+</html>

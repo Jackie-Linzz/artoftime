@@ -36,35 +36,40 @@ body {
     text-align: center;
 }
 .menu .head {
+    margin-top: 20px;
     font-size: 24px;
+}
+.menu .op {
+    font-size: 20px;
 }
 .menu .op:hover {
     border: 1px dotted white;
 }
-.worker-add, .worker-del {
+
+.flow-content,
+.fb-content,
+.trend-content {
+    width: 100%;
+}
+.content .query {
     width: 50%;
     margin: 0 auto;
 }
-.worker-add .heading {
+.content .heading {
     margin-bottom: 20px;
     text-align: center;
     font-size: 24px;
 }
-.worker-add .label {
+.content .label {
     margin: 10px 0;
     font-size: 22px;
 }
-.worker-add input {
+.content input {
     width: 100%;
-    font-size: 22px;
+    text-align: center;
+    font-size: 20px;
 }
-.worker-add .role {
-    font-size: 22px;
-}
-.worker-add .role input {
-    width: 40px;
-}
-#worker-add-button {
+.content .button {
     margin-top: 30px;
     padding: 10px 0;
     font-size: 22px;
@@ -72,35 +77,13 @@ body {
     color: white;
     background-color: #2a8fbd;
 }
-.worker-del .heading {
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 24px;
+table {
+    margin: 0 auto;
 }
-.worker-del .label {
-    margin: 10px 0;
-    font-size: 22px;
-}
-.worker-del input {
-    width: 100%;
-    font-size: 22px;
-}
-#worker-del-button {
-    margin-top: 30px;
-    padding: 10px 0;
-    font-size: 22px;
-    text-align: center;
-    color: white;
-    background-color: #2a8fbd;
-}
-.worker-show table {
-    width: 100%;
-}
-.worker-show caption {
+table caption {
     margin-bottom: 20px;
     font-size: 24px;
 }
-.worker-show table td {
+table td {
     text-align: center;
 }
-
