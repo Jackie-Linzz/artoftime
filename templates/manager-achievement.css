@@ -71,13 +71,8 @@ body {
     width: 50%;
     margin: 0 auto;
 }
-.cashier table {
-    width: 100%;
-}
-.cook table {
-    width: 100%;
-}
-table td {
+table {
+    margin: 0 auto;
     text-align: center;
 }
 caption {

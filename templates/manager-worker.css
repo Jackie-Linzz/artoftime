@@ -94,13 +94,10 @@ body {
     background-color: #2a8fbd;
 }
 .worker-show table {
-    width: 100%;
+    margin: 0 auto;
+    text-align: center;
 }
 .worker-show caption {
     margin-bottom: 20px;
     font-size: 24px;
 }
-.worker-show table td {
-    text-align: center;
-}
-

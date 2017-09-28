@@ -9,7 +9,7 @@ $(document).ready(function(){
 	window.location.replace('/manager-desk');
     });
     $(document).on('tap', '.faculty', function(){
-	window.location.replace('/manager-faculty');
+	window.location.replace('/manager-worker');
     });
     $(document).on('tap', '.cookdo', function(){
 	window.location.replace('/manager-cookdo');
@@ -18,7 +18,7 @@ $(document).ready(function(){
 	window.location.replace('/manager-achievement');
     });
     $(document).on('tap', '.flow', function(){
-	window.location.replace('/manager-flow');
+	window.location.replace('/manager-history');
     });
     $(document).on('tap', '.comment', function(){
 	window.location.replace('/manager-comment');

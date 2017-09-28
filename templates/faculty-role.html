@@ -22,19 +22,19 @@
 	{% for one in roles %}
 	<br>
 	<br>
-	{% if one['role'] == 'manager' %}
+	{% if one == 'manager' %}
 	<div class="manager">manager</div>
 	{% end %}
 	
-	{% if one['role'] == 'waiter' %}
+	{% if one == 'waiter' %}
 	<div class="waiter">waiter</div>
 	{% end %}
 
-	{% if one['role'] == 'cashier' %}
+	{% if one == 'cashier' %}
 	<div class="cashier">cashier</div>
 	{% end %}
 
-	{% if one['role'] == 'cook' %}
+	{% if one == 'cook' %}
 	<div class="cook">cook</div>
 	{% end %}
 	{% end %}

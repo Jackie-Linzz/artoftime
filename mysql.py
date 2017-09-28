@@ -190,6 +190,24 @@ def execute(sql):
         cursor.close()
         conn.close()
 
+def query(sql):
+    conn = MySQLdb.connect(host=HOST, port=PORT, user=USER, passwd=PASSWD, db=DB, charset='utf8')
+    conn.autocommit(False)
+    cursor = conn.cursor()
+    try:
+        
+        cursor.execute(sql)
+        conn.commit()
+        columns = [d[0] for d in cursor.description]
+        result = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        return result
+    except Exception as e:
+        print e
+        conn.rollback()
+        return None
+    finally:
+        cursor.close()
+        conn.close()
 
 def get(table, con):
 

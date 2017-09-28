@@ -88,12 +88,10 @@ body {
     background-color: #2a8fbd;
 }
 .desk-show table {
-    width: 100%;
+    margin: 0 auto;
+    text-align: center;
 }
 .desk-show caption {
     margin-bottom: 20px;
     font-size: 24px;
-}
-.desk-show table td {
-    text-align: center;
 }

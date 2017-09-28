@@ -1,5 +1,8 @@
 $(document).ready(function(){
     $('.tab').hide();
+    $(document).on('tap', '.back', function(){
+	window.location.replace('/manager-home');
+    });
     $(document).on('tap', '.menu .add', function(){
 	$('.tab').hide();
 	$('.desk-add').show();
@@ -20,8 +23,12 @@ $(document).ready(function(){
 		var p = $('.desk-show tbody').empty();
 		for(var i in desks) {
 		    if(i % 5 == 0) {
-			
+			var tr = $('<tr></tr>');
+			p.append(tr);
 		    }
+		    var td = $('<td></td>');
+		    td.text(desks[i].desk);
+		    tr.append(td);
 		}
 	    }
 	);
@@ -49,7 +56,7 @@ $(document).ready(function(){
 	    {'desk': desk},
 	    function(response) {
 		if(response.status == 'ok') {
-		    $('#desk-add').val('');
+		    $('#desk-del').val('');
 		}
 	    }
 	);

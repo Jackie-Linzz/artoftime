@@ -1,8 +1,11 @@
 import tornado.web
 import pickle
+import datetime
+import time
 import logic
 import mysql
 import os
+import qrcode
 
 from tornado.escape import json_encode, json_decode
 
@@ -143,3 +146,267 @@ class ManagerDeskHandler(tornado.web.RequestHandler):
         if role != 'manager':
             return
         self.render('manager-desk.html')
+
+class ManagerDeskAddHandler(tornado.web.RequestHandler):
+    def post(self):
+        desk = self.get_argument('desk')
+        desk = desk.upper()
+        result = mysql.insert('desks', {'desk': desk})
+        if result:
+            path = os.path.join(os.getcwd(), 'static/desks/' + desk)
+            data = desk
+            img = qrcode.make(data)
+            img.save(path)
+            response = {'status': 'ok'}
+        else:
+            response = {'status': 'error'}
+        self.write(json_encode(response))
+
+class ManagerDeskDelHandler(tornado.web.RequestHandler):
+    def post(self):
+        desk = self.get_argument('desk')
+        desk = desk.upper()
+        result = mysql.delete('desks', {'desk': desk})
+        if result:
+            path = os.path.join(os.getcwd(), 'static/desks/' + desk)
+            os.remove(path)
+            response = {'status': 'ok'}
+        else:
+            response = {'status': 'error'}
+        self.write(json_encode(response))
+
+class ManagerDeskShowHandler(tornado.web.RequestHandler):
+    def post(self):
+        desks = mysql.get_all('desks')
+        desks.sort()
+        response = {'status': 'ok', 'desks': desks}
+        self.write(json_encode(response))
+
+class ManagerWorkerHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-worker.html')
+
+class ManagerWorkerAddHandler(tornado.web.RequestHandler):
+    def post(self):
+        fid = self.get_argument('fid')
+        name = self.get_argument('name')
+        passwd = self.get_argument('passwd')
+        role = json_decode(self.get_argument('role'))
+        role = ','.join(role)
+        result = mysql.insert('faculty', {'fid': fid, 'name': name, 'role': role})
+        result2 = mysql.insert('password', {'fid': fid, 'passwd': passwd})
+        if result and result2:
+            response = {'status': 'ok'}
+        else:
+            mysql.delete('faculty', {'fid': fid})
+            mysql.delete('password', {'fid': fid})
+            response = {'status': 'error'}
+        self.write(json_encode(response))
+
+class ManagerWorkerDelHandler(tornado.web.RequestHandler):
+    def post(self):
+        fid = self.get_argument('fid')
+        result = mysql.delete('faculty', {'fid': fid})
+        result2 = mysql.delete('password', {'fid': fid})
+        if result and result2:
+            response = {'status': 'ok'}
+        else:
+            response = {'status': 'error'}
+        self.write(json_encode(response))
+
+class ManagerWorkerShowHandler(tornado.web.RequestHandler):
+    def post(self):
+        sql = 'select faculty.fid, name, role, passwd from faculty, password where faculty.fid = password.fid'
+        result = mysql.query(sql)
+        response = {'status': 'ok', 'workers': result}
+        self.write(json_encode(response))
+
+class ManagerCookdoHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-cookdo.html')
+
+    def post(self):
+        fid = self.get_argument('fid')
+        sql = 'select did from cook_do where fid = "%s"' % fid
+        #sql = 'select diet.did, name, cid from cookdo, diet where fid = "%s" and cookdo.did = diet.did' % fid
+        result = mysql.query(sql)
+        if len(result) == 0:
+            return
+        all = False
+        for one in result:
+            if one['did'] == all:
+                all = True
+                break
+        if all:
+            response = {'status': 'ok', 'result': 'all'}
+        else:
+            sql = 'select diet.did, name, cid from cook_do, diet where fid = "%s" and cook_do.did = diet.did' % fid
+            cookdo = mysql.query(sql)
+            response = {'status': 'ok', 'result': 'some', 'cookdo': cookdo}
+        self.write(json_encode(response))
+        
+class ManagerAchievementHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-achievement.html')
+
+    def post(self):
+        t1 = self.get_argument('from')
+        t2 = self.get_argument('to')
+        fid = self.get_argument('fid')
+        format = '%Y-%m-%d'
+        t1 = datetime.datetime.strptime(t1, format)
+        t2 = datetime.datetime.strptime(t2, format)
+        if t1 >= t2:
+            return
+        sql = 'select role from faculty where fid = "%s" ' % fid
+        result = mysql.query(sql)
+        if result is None or len(result) == 0:
+            return
+        roles = result[0]['role']
+        roles = roles.split(',')
+        response = {'status': 'ok', 'roles': roles}
+
+        t1 = time.mktime(t1.timetuple())
+        t2 = time.mktime(t2.timetuple())
+        if 'cashier' in roles:
+            sql = 'select count(*) as number from cash_history where status = "success" and stamp > %s and stamp < %s ' % (t1, t2)
+            result = mysql.query(sql)
+            success = result[0]['number']
+            sql = 'select count(*) as number from cash_history where status = "failure" and stamp > %s and stamp < %s ' % (t1, t2)
+            result = mysql.query(sql)
+            failure = result[0]['number']
+            response['cashier'] = {'success': success, 'failure': failure}
+        if 'cook' in roles:
+            sql = 'select name, sum(num) as number from diet,order_history,cook_history where diet.did = order_history.did and order_history.uid = cook_history.uid and fid = "%s" and cook_history.stamp > %s and cook_history.stamp < %s group by name' % (fid, t1, t2)
+            result = mysql.query(sql)
+            response['flow'] = result
+            sql = 'select name, sum(num) as number, fb from diet,order_history,cook_history,feedback where diet.did = order_history.did and order_history.uid = cook_history.uid and cook_history.uid = feedback.uid and fid = "%s" and cook_history.stamp > %s and cook_history.stamp < %s group by name,fb' % (fid, t1, t2)
+            result = mysql.query(sql)
+            fb = []
+            temp = {}
+            for one in result:
+                name = one['name']
+                number = one['number']
+                if one['fb'] == -1:
+                    temp[name]['bad'] = number
+                elif one['fb'] == 0:
+                    temp[name]['normal'] = number
+                else:
+                    temp[name]['good'] = number
+            for k, v in temp.items():
+                total = v['good'] + v['normal'] + v['bad']
+                if total == 0:
+                    fb.append({'name': k, 'good': v['good'], 'normal': v['normal'], 'bad': v['bad'], 'goodrate': '0%', 'badrate': '0%'})
+                else:
+                    total = float(total)
+                    rate1 = v['good'] * 100 / total
+                    rate2 = v['bad'] * 100 / total
+                    fb.append({'name': k, 'good': v['good'], 'normal': v['normal'], 'bad': v['bad'], 'goodrate': str(rate1)+'%', 'badrate': str(rate2)+'%'})
+            response['fb'] = fb
+        self.write(json_encode(response))
+
+class ManagerHistoryHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-history.html')
+
+class ManagerHistoryFlowHandler(tornado.web.RequestHandler):
+    def post(self):
+        start = self.get_argument('from')
+        end = self.get_argument('to')
+        format = '%Y-%m-%d'
+        start = datetime.datetime.strptime(start, format)
+        end = datetime.datetime.strptime(end, format)
+        start = time.mktime(start.timetuple())
+        end = time.mktime(end.timetuple())
+        sql = 'select order_history.did,name,diet.price,sum(num) as number from order_history,diet where order_history.did = diet.did and stamp > %s and stamp < %s group by name' % (start, end)
+        result = mysql.query(sql)
+        response = {'status': 'ok', 'flow': result}
+        self.write(json_encode(response))
+
+class ManagerHistoryFeedbackHandler(tornado.web.RequestHandler):
+    def post(self):
+        start = self.get_argument('from')
+        end = self.get_argument('to')
+        format = '%Y-%m-%d'
+        start = datetime.datetime.strptime(start, format)
+        end = datetime.datetime.strptime(end, format)
+        start = time.mktime(start.timetuple())
+        end = time.mktime(end.timetuple())
+        sql = 'select diet.did,name,fb,sum(num) as number from order_history,feedback,diet where order_history.uid = feedback.uid and order_history.did = diet.did and order_history.stamp > %s and order_history.stamp < %s group by diet.did,fb' % (start, end)
+        result = mysql.query(sql)
+        temp = {}
+        for one in result:
+            did = one['did']
+            fb = one['fb']
+            temp[did]['did'] = did
+            temp[did]['name'] = one['name']
+            if fb == 1:
+                temp[did]['good'] = one['number']
+            elif fb == 0:
+                temp[did]['normal'] = one['number']
+            else:
+                temp[did]['bad'] = one['number']
+        feedback = temp.values()
+        response = {'status': 'ok', 'fb': feedback}
+        self.write(json_encode(response))
+
+class ManagerHistoryTrendHandler(tornado.web.RequestHandler):
+    def post(self):
+        start = self.get_argument('from')
+        end = self.get_argument('to')
+        format = '%Y-%m-%d'
+        start = datetime.datetime.strptime(start, format)
+        end = datetime.datetime.strptime(end, format)
+        if start >= end:
+            return
+        if start.day >28:
+            return
+        m = start
+        t = []
+        while m < end:
+            year = m.year
+            month = m.month
+            day = m.day
+            next_year = year
+            next_month = month + 1
+            if next_month > 12:
+                next_year += 1
+                next_month = 1
+            next_day = day
+            t.append((datetime.datetime(year,month,day), datetime.datetime(next_year,next_month,next_day)))
+            m = datetime.datetime(next_year,next_month,next_day)
+        s = []
+        for one in t:
+            start = one[0]
+            end = one[1]
+            start = time.mktime(start.timetuple())
+            end = time.mktime(end.timetuple())
+            s.append((start, end))
+        
+        trend = []
+        for one in s:
+            sql = 'select sum(order_history.price*num) as flow from order_history,diet where order_history.did = diet.did and stamp > %s and stamp < %s'
+            sql = sql % one
+            result = mysql.query(sql)
+            flow = result[0]['flow']
+            start = datetime.datetime.fromtimestamp(one[0])
+            end = datetime.datetime.fromtimestamp(one[1])
+            start = start.strftime(format)
+            end = end.strftime(format)
+            trend.append({'from': start, 'to': end, 'flow': flow})
+        response = {'status': 'ok', 'trend': trend}
+        self.write(json_encode(response))
+        
+        

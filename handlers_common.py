@@ -41,9 +41,15 @@ class FacultyLoginHandler(tornado.web.RequestHandler):
         
 class FacultyRoleHandler(tornado.web.RequestHandler):
     def get(self):
+        #import pdb
+        #pdb.set_trace()
         fid = self.get_cookie('fid')
         self.clear_cookie('role')
         roles = mysql.get('faculty', {'fid': fid})
+        if len(roles) == 0:
+            return
+        roles = roles[0]['role']
+        roles = roles.split(',')
         self.render('faculty-role.html', roles=roles)
 
     def post(self):

@@ -21,34 +21,35 @@
 	    <div class="back">back</div>
 	    <div class="head">worker</div>
 	    <div class="worker-container">
-		<div class="op">add</div>
-		<div class="op">delete</div>
-		<div class="op">show</div>
+		<div class="op add">add</div>
+		<div class="op del">delete</div>
+		<div class="op show">show</div>
 	    </div>
 	</div>
 
 	<div class="content">
-	    <div class="worker-add">
+	    <div class="worker-add tab">
 		<div class="heading">worker add</div>
 		<div class="label">fid</div>
 		<input type="text" id="fid">
 		<div class="label">name</div>
 		<input type="text" id="name">
 		<div class="label">role</div>
-		<div class="role"><input type="checkbox" class="">waiter</div>
-		<div class="role"><input type="checkbox" class="">cashier</div>
-		<div class="role"><input type="checkbox" class="">cooker</div>
+		<div class="role"><input type="checkbox" value="manager">manager</div>
+		<div class="role"><input type="checkbox" value="waiter">waiter</div>
+		<div class="role"><input type="checkbox" value="cashier">cashier</div>
+		<div class="role"><input type="checkbox" value="cook">cook</div>
 		<div class="label">password</div>
 		<input type="text" id="password">
 		<div class="button" id="worker-add-button">submit</div>
 	    </div>
-	    <div class="worker-del">
+	    <div class="worker-del tab">
 		<div class="heading">worker delete</div>
 		<div class="label">fid</div>
 		<input type="text" id="fid2">
 		<div class="button" id="worker-del-button">submit</div>
 	    </div>
-	    <div class="worker-show">
+	    <div class="worker-show tab">
 		<table border="1" cellspacing="0">
 		    <caption>worker</caption>
 		    <thead>
@@ -76,6 +77,6 @@
 	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
 	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
 	<script src="{{static_url("js/base.js")}}"></script>
-	<script src="{{static_url("js/manager-desk.js")}}"></script>
+	<script src="{{static_url("js/manager-worker.js")}}"></script>
     </body>
 </html>
