@@ -6,6 +6,7 @@ import logic
 import mysql
 import os
 import qrcode
+import MySQLdb
 
 from tornado.escape import json_encode, json_decode
 
@@ -408,5 +409,72 @@ class ManagerHistoryTrendHandler(tornado.web.RequestHandler):
             trend.append({'from': start, 'to': end, 'flow': flow})
         response = {'status': 'ok', 'trend': trend}
         self.write(json_encode(response))
+
+class ManagerCommentHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-comment.html')
+
+cursor = None
+class ManagerCommentShowHandler(tornado.web.RequestHandler):
+    def post(self):
+        global cursor
+        HOST = 'localhost'
+        PORT = 3306
+        USER = 'artoftime'
+        PASSWD = 'artoftime'
+        DB = 'artoftime'
+        conn = MySQLdb.connect(host=HOST, port=PORT, user=USER, passwd=PASSWD, db=DB, charset='utf8')
+        conn.autocommit(False)
+        cursor = conn.cursor()
+        sql = 'select * from comment'
+        cursor.execute(sql)
+        conn.commit()
+        comments = cursor.fetchmany(100)
+        response = {'status': 'ok', 'comments': comments}
+        self.write(json_encode(response))
+
+class ManagerCommentMoreHandler(tornado.web.RequestHandler):
+    def post(self):
+        global cursor
+        comments = cursor.fetchmany(100)
+        response = {'status': 'ok', 'comments': comments}
+        self.write(json_encode(response))
+
+class ManagerMaskHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-mask.html')
+
+class ManagerMaskDietHandler(tornado.web.RequestHandler):
+    def post(self):
+        diet = mysql.get_all('diet')
+        diet.sort(key=lambda one: one['cid'])
+        response = {'status': 'ok', 'diet': diet}
+        self.write(json_encode(response))
+
+class ManagerMaskInsHandler(tornado.web.RequestHandler):
+    def post(self):
+        ins = json_decode(self.get_argument('ins'))
+        logic.mask.ins(ins)
+        response = {'status': 'ok'}
+        self.write(json_encode(response))
         
+class ManagerMaskUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        stamp = json_decode(self.get_argument('stamp'))
+        mymask = yield logic.mask.update(stamp)
+        response = {'status': 'ok', 'mask': mymask, 'stamp': logic.mask.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
+        
+        
+        
+
+    
         

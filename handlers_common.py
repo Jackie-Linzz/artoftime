@@ -24,6 +24,7 @@ class EntryHandler(tornado.web.RequestHandler):
 
 class FacultyLoginHandler(tornado.web.RequestHandler):
     def get(self):
+        self.clear_cookie('fid')
         self.render('faculty-login.html')
 
     def post(self):

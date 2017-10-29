@@ -12,6 +12,7 @@ from handlers_waiting import *
 from handlers_common import *
 from handlers_customer import *
 from handlers_manager import *
+from handlers_cook import *
 
 define("port", default=8000, help="run on the given port", type=int)
 define("debug", default=False, help="run in debug mode")
@@ -59,7 +60,15 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/manager-history', ManagerHistoryHandler),
               (r'/manager-history-flow', ManagerHistoryFlowHandler),
               (r'/manager-history-fb', ManagerHistoryFeedbackHandler),
-              (r'/manager-history-trend', ManagerHistoryTrendHandler)]
+              (r'/manager-history-trend', ManagerHistoryTrendHandler),
+              (r'/manager-comment', ManagerCommentHandler),
+              (r'/manager-comment-show', ManagerCommentShowHandler),
+              (r'/manager-comment-more', ManagerCommentMoreHandler),
+              (r'/manager-mask', ManagerMaskHandler),
+              (r'/manager-mask-diet', ManagerMaskDietHandler),
+              (r'/manager-mask-ins', ManagerMaskInsHandler),
+              (r'/manager-mask-update', ManagerMaskUpdateHandler),
+              (r'/cook-home', CookHomeHandler)]
 settings = dict(
                 cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
                # login_url="/",

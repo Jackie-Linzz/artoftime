@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	<meta charset="utf-8" />
+
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+
+	
+	<link rel="stylesheet" type="text/css" href="cook-do.css">
+	
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/cook-do.css")}}">
+	
+
+    </head>
+
+    <body>
+	<div class="header">
+	    <div class="back">back</div>
+	    <div class="heading">cookdo range</div>
+	</div>
+
+	<div class="content">
+	    <table border="1" cellspacing="0" class="all">
+		<caption>all</caption>
+		<tr>
+		    <td>all</td>
+		    <td><input type="checkbox" value="all"></td>
+		</tr>
+		<tr>
+		    <td colspan="2"><div class="button" id="submit1">submit</div></td>
+		</tr>
+	    </table>
+	    <table border="1" cellspacing="0" class="some">
+		<caption>some</caption>
+		<thead>
+		    <tr>
+			<th>did</th>
+			<th>name</th>
+			<th>category</th>
+			<th>select</th>
+		    </tr>
+		</thead>
+		<tbody>
+		    <tr>
+			<td>0001</td>
+			<td>coffee</td>
+			<td>group1</td>
+			<td><input type="checkbox" value="0001" class="check"></td>
+		    </tr>
+		    {% for one in diet %}
+		    <tr data-did="one['did']">
+			<td>one['did']</td>
+			<td>one['name']</td>
+			<td>one['cid']</td>
+			<td><input type="checkbox" value="0001" class="check"></td>
+		    </tr>
+		    {% end %}
+		    <tr>
+			<td colspan="4"><div class="button" id="submit2">submit</div></td>
+		    </tr>
+		</tbody>
+	    </table>
+	    
+	</div>
+	
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/cook-do.js")}}"></script>
+    </body>
+</html>

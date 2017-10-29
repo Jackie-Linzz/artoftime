@@ -1,4 +1,7 @@
 $(document).ready(function(){
+    $(document).on('tap', '.logout', function(){
+	window.location.replace('/faculty-login');
+    });
     $(document).on('tap', '.manager', function(){
 	$.postJSON(
 	    'faculty-role',

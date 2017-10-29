@@ -1,4 +1,5 @@
 import time
+import mysql
 from tornado.concurrent import Future
 
 company_file = 'company-info'
@@ -201,3 +202,43 @@ def customer_ins(table, ins):
     table.set_future()
     return 0
     
+##manager mask update
+class Mask(object):
+    def __init__(self):
+        self.stamp = time.time()
+        self.waiters = set()
+
+    def ins(self, ins):
+        if ins[0] == '+':
+            did = ins[1]
+            mysql.insert('mask', {'did': did})
+        elif ins[0] == '-':
+            did = ins[1]
+            mysql.delete('mask', {'did': did})
+        self.stamp = time.time()
+        self.set_future()
+
+    def get_result(self):
+        temp = mysql.get_all('mask')
+        result = []
+        for one in temp:
+            result.append(one['did'])
+        result.sort()
+        return result
+
+    def set_future(self):
+        result = self.get_result()
+        for future in self.waiters:
+            future.set_result(result)
+        self.waiters = set()
+
+    def update(self, stamp):
+        future = Future()
+        if stamp < self.stamp:
+            result = self.get_result()
+            future.set_result(result)
+        else:
+            self.waiters.add(future)
+        return future
+
+mask = Mask()

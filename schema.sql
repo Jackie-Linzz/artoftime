@@ -76,3 +76,7 @@ create table if not exists comment (
 create table if not exists desks (
  desk char(20) not null primary key
 );
+
+create table if not exists mask (
+  did  char(20) not null primary key
+);

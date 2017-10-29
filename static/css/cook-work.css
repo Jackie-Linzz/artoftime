@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.head {
+    font-size: 26px;
+    color: white;
+}
+.head div {
+    display: inline-block;
+    padding: 5px 0;
+    text-align: center;
+}
+.head .back {
+    width: 10%;
+    background-color: #2a8fbd;
+}
+#select {
+    width: 30%;
+    background-color: #00343f;
+}
+#doing {
+    width: 30%;
+    background-color: #1db0b8;
+}
+#done {
+    width: 30%;
+    background-color: #37c6c0;
+}
+.select .button div {
+    display: inline-block;
+    margin: 5px 0;
+    padding: 15px 0;
+    font-size: 26px;
+    color: white;
+    text-align: center;
+}
+.select .button .refuse-button {
+    width: 20%;
+    background-color: #9c9;
+}
+.select .button .accept-button {
+    width: 80%;
+    background-color: #9cf;
+}
+.select .current {
+    margin: 5px 0;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    background-color: #9cf;
+    border-radius: 6px;
+}
+.select .current .info {
+    text-align: right;
+}
+.select .current .info div {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
+.select .byway .item {
+    position: relative;
+    margin: 5px;
+    color: white;
+    font-size: 18px;
+    background-color: #9c9;
+    border-radius: 6px;
+}
+.select .byway div.selected {
+    background-color: #9cf;
+}
+.select .byway .item .close {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+}
+.select .byway .item .title {
+    text-align: center;
+}
+.select .byway .item .info {
+    text-align: right;
+}
+.select .byway .item .info div {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
+.select .byway .item .demand {
+    text-align: center;
+}
+.doing .item {
+    position: relative;
+    margin: 5px;
+    padding-bottom: 20px;
+    color: white;
+    font-size: 18px;
+    background-color: #1db0b8;
+    border-radius: 6px;
+}
+.doing .item .close {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+}
+.doing .item .title,
+.doing .item .demand {
+    text-align: center;
+}
+.doing .item .info {
+    text-align: right;
+}
+.doing .item .info div {
+    display: inline-block;
+    width: 100px;
+}
+.doing .item .finish {
+    position: absolute;
+    bottom: 0px;
+    right: 6px;
+}
+.done .item {
+    position: relative;
+    margin: 5px;
+    color: white;
+    font-size: 18px;
+    background-color: #37c6c0;
+    border-radius: 6px;
+}
+.done .item .title,
+.done .item .demand {
+    text-align: center;
+}
+.done .item .close {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+}
+.done .item .info {
+    text-align: right;
+}
+.done .item .info div {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
