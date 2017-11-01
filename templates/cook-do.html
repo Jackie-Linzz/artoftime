@@ -44,17 +44,12 @@
 		    </tr>
 		</thead>
 		<tbody>
-		    <tr>
-			<td>0001</td>
-			<td>coffee</td>
-			<td>group1</td>
-			<td><input type="checkbox" value="0001" class="check"></td>
-		    </tr>
+		    
 		    {% for one in diet %}
-		    <tr data-did="one['did']">
-			<td>one['did']</td>
-			<td>one['name']</td>
-			<td>one['cid']</td>
+		    <tr data-did="{{one['did']}}">
+			<td>{{one['did']}}</td>
+			<td>{{one['name']}}</td>
+			<td>{{one['cid']}}</td>
 			<td><input type="checkbox" value="0001" class="check"></td>
 		    </tr>
 		    {% end %}

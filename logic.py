@@ -5,8 +5,15 @@ from tornado.concurrent import Future
 company_file = 'company-info'
 tables = {}
 waiting = {}
+uids = {}
+cooks = {}
 desks = set()
-desks.add('0001')
+diet = {}
+category = {}
+
+uid = 0
+pid = 0
+
 
 class waitingStatus(object):
     def __init__(self):
@@ -70,22 +77,15 @@ class WTable(object):
         return future
         
 ######################################################
-diet = {}
-category = {}
-ditem = {'did': '001', 'name': 'coffee', 'price': 25.00, 'price2': 0, 'ord': 1, 'base': 1, 'cid': '001', 'pic': '', 'desp': 'this is coffee'}
-diet[ditem['did']] = ditem
-citem = {'cid': '001', 'name': 'group1', 'ord': 1, 'desp': 'this is the first group'}
-category[citem['cid']] = citem
-uid = 0
-puid = 0
 
 
 class Order(object):
-    def __init__(self, did, demand=''):
+    def __init__(self, did, desk, demand=''):
         global diet, uid
         t = diet.get(did)
         if t is None:
             return
+        self.desk = desk
         self.did = t['did']
         self.name = t['name']
         self.price = t['price']
@@ -103,7 +103,9 @@ class Order(object):
         self.cook = ''
         self.fb = ''
         self.submit = 0
-        self.selected = 0
+        self.inbyway = 0
+        self.store = 0
+        self.status = 'left' # left, doind, done, payed
 
     def to_dict(self):
         r = {'uid': self.uid, 'did':self.did, 'name': self.name, 'price': self.price,
@@ -121,7 +123,7 @@ def waiting_ins(index, ins):
         return None
     wt.stamp = time.time()
     if ins[0] == '+':
-        one = Order(ins[1], ins[2])
+        one = Order(ins[1], index, ins[2])
         wt.orders.append(one)
     elif ins[0] == '-':
         wt.orders = filter(lambda one: one.uid != ins[1], wt.orders)
@@ -132,6 +134,9 @@ def waiting_ins(index, ins):
 
 class Table(object):
     def __init__(self, table):
+        global pid
+        self.pid = pid
+        pid = pid + 1
         self.table = table.upper()
 
         self.gdemand = ''
@@ -181,15 +186,15 @@ class Table(object):
 
 tables['0001'] = Table('0001')
 
-def customer_ins(table, ins):
+def customer_ins(desk, ins):
     global tables
-    table = table.upper()
-    table = tables.get(table)
+    desk = desk.upper()
+    table = tables.get(desk)
     if not isinstance(table, Table):
         return None
     table.stamp = time.time()
     if ins[0] == '+':
-        one = Order(ins[1], ins[2])
+        one = Order(ins[1], desk, ins[2])
         table.orders.append(one)
     elif ins[0] == '-':
         table.orders = filter(lambda one: one.uid != ins[1], table.orders)
@@ -242,3 +247,100 @@ class Mask(object):
         return future
 
 mask = Mask()
+
+
+class Cook(object):
+    def __init__(self, fid):
+        self.fid = fid
+        self.name = ''
+        self.current = None
+        self.byway = []
+        self.doing = []
+        self.done = []
+        self.deny = []
+        self.waiters = set()
+        self.stamp = time.time()
+        self.queue = []
+
+    def ins(self, ins):
+        #ins: accept,refuse,cancel-inway,cancel-doing,done
+        if ins[0] == 'accept':
+            if self.current is None:
+                self.current = self.select()
+                self.select_byway()
+               
+            else:
+                l = ins[1:]
+                
+        elif ins[0] == 'refuse':
+            pass
+        elif ins[0] == 'cancel-inway':
+            pass
+        elif ins[0] == 'cancel-doing':
+            pass
+        elif ins[0] == 'done':
+            pass
+        self.stamp = time.time()
+        self.set_future()
+        
+    def select(self):
+        global tables
+        current = time.time()
+        left = filter(lambda x: len(x.left)>0, tables.values())
+        for table in left:
+            table.power = (current-table.submit)*0.15+(current-table.last)*0.85
+        left.sort(key=lambda x: x.power)
+        self.queue = left
+        if len(left) == 0:
+            return None
+        else:
+            # select not in byway
+            for table in left:
+                for one in table.left:
+                    if one.inbyway == 0:
+                        one.inbyway = 1
+                        return one            
+            return None
+
+    def select_byway(self):
+        global tables
+        self.byway = []
+        if self.current is None:
+            return
+        did = self.current.did
+        for table in self.queue:
+            for one in table.left:
+                if one.did == did and one.inbyway == 0:
+                    one.inbyway = 1
+                    self.byway.append(one)
+                    if len(self.byway) >= 5:
+                        return
+
+    def to_dict(self):
+        if self.current is None:
+            cur = ''
+        else:
+            cur = self.current.to_dict()
+        result = {'fid': self.fid, 'name': self.name, 'current': cur,
+                  'byway': [one.to_dict() for one in self.byway],
+                  'doing': [one.to_dict() for one in self.doing],
+                  'done': [one.to_dict() for one in self.done]}
+        return result
+
+    def set_future(self):
+        result = self.to_dict()
+        for future in self.waiters:
+            future.set_result(result)
+        self.waiters = set()
+
+    def update(self, stamp):
+        future = Future()
+        if stamp < self.stamp:
+            result = self.get_result()
+            future.set_result(result)
+        else:
+            self.waiters.add(future)
+        return future
+    
+        
+        

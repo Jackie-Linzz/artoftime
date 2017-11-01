@@ -27,3 +27,30 @@ class CookDoHandler(tornado.web.RequestHandler):
             cookdo = ['all']
         response = {'status': 'ok', 'cookdo': cookdo}
         self.write(json_encode(response))
+
+class CookDoSubmitHandler(tornado.web.RequestHandler):
+    def post(self):
+        fid = self.get_cookie('fid')
+        content = json_decode(self.get_argument('content'))
+        mysql.delete('cook_do', {'fid': fid})
+        flag = False
+        for did in content:
+            if did == 'all':
+                flag = True
+                break
+        if flag:
+            rows = [{'fid': fid, 'did': 'all'}]
+        else:
+            rows = []
+            for did in content:
+                rows.append({'fid':fid, 'did': did})
+        result = mysql.insert_many('cook_do', rows)
+        if result:
+            response = {'status': 'ok', 'cookdo': content}
+        else:
+            response = {'status': 'error'}
+        self.write(json_encode(response))
+
+class CookWorkHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('cook-work.html')

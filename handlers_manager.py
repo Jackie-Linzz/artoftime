@@ -99,6 +99,7 @@ class ManagerDietAddHandler(tornado.web.RequestHandler):
         price = float(price)
         price2 = float(price2)
         base = float(base)
+        picture = ''
         
         if self.request.files:
             metas = self.request.files['picture']
@@ -126,7 +127,7 @@ class ManagerDietDelHandler(tornado.web.RequestHandler):
             picture = result[0]['pic']
             full_path = os.path.join(os.getcwd(), 'static/pictures/' + picture)
             
-            if mysql.delete('diet', {'did': did}):
+            if mysql.delete('diet', {'did': did}) and picture != '':
                 os.remove(full_path)
             response = {'status': 'ok'}
             self.finish(json_encode(response))

@@ -32,16 +32,16 @@ $(document).ready(function(){
 	$('.some input:checkbox:checked').each(function(){
 	    var did = $(this).parents('tr').data('did');
 	    content.push(did);
-	    $.postJSON(
-		'/cook-do-submit',
-		{'content': json(content)},
-		function(response) {
-		    if(response.status != 'ok') return;
-		    window.cookdo = response.cookdo;
-		    show();
-		}
-	    );
 	});
+	$.postJSON(
+	    '/cook-do-submit',
+	    {'content': json(content)},
+	    function(response) {
+		if(response.status != 'ok') return;
+		window.cookdo = response.cookdo;
+		show();
+	    }
+	);
     });
 });
 function show() {

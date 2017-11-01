@@ -116,6 +116,7 @@
 .doing .item .info div {
     display: inline-block;
     width: 100px;
+    text-align: center;
 }
 .doing .item .finish {
     position: absolute;
