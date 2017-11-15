@@ -11,8 +11,8 @@ desks = set()
 diet = {}
 category = {}
 
-uid = 0
-pid = 0
+global_uid = 0
+global_pid = 0
 
 
 class waitingStatus(object):
@@ -81,7 +81,7 @@ class WTable(object):
 
 class Order(object):
     def __init__(self, did, desk, demand=''):
-        global diet, uid
+        global diet, global_uid
         t = diet.get(did)
         if t is None:
             return
@@ -98,21 +98,70 @@ class Order(object):
         self.desp = t['desp']
         self.demand = demand
         
-        self.uid = uid
-        uid = uid + 1
+        self.uid = global_uid
+        global_uid += 1
         self.cook = ''
         self.fb = ''
-        self.submit = 0
+        self.submit = time.time()
         self.inbyway = 0
         self.store = 0
         self.status = 'left' # left, doind, done, payed
 
+    def set_left(self):
+        global tables
+        if self.status == 'left':
+            self.inbyway = 0
+        elif self.status == 'doing':
+            self.inbyway = 0
+            self.status = 'left'
+            table = tables.get(self.desk)
+            table.doing.remove(self)
+            table.left.insert(0, self)
+        elif self.status == 'done':
+            self.inbyway = 0
+            self.status = 'left'
+            table = tables.get(self.desk)
+            table.done.remove(self)
+            table.left.insert(0, self)
+            
+    def set_doing(self):
+        global tables
+        if self.status = 'left':
+            self.inbyway = 0
+            self.status = 'doing'
+            table = tables.get(self.desk)
+            table.left.remove(self)
+            table.doing.insert(0, self)
+        elif self.status = 'doing':
+            pass
+        elif self.status = 'done':
+            self.inbyway = 0
+            self.status = 'doing'
+            table = tables.get(self.desk)
+            table.done.remove(self)
+            table.doing.insert(0, self)
+            
+    def set_done(self):
+        global tables
+        if self.status = 'left':
+            self.inbyway = 0
+            self.status = 'done'
+            table = tables.get(self.desk)
+            table.left.remove(self)
+            table.done.insert(0, self)
+        elif self.status = 'doing':
+            self.inbyway = 0
+            self.status = 'done'
+            table = tables.get(self.desk)
+            table.doing.remove(self)
+            table.done.insert(0, self)
+            
     def to_dict(self):
-        r = {'uid': self.uid, 'did':self.did, 'name': self.name, 'price': self.price,
+        result = {'uid': self.uid, 'did':self.did, 'name': self.name, 'price': self.price,
              'price2': self.price2, 'ord': self.ord, 'base': self.base, 'cid': self.cid,
              'pic': self.pic, 'desp': self.desp, 'demand': self.demand, 'cook': self.cook,
              'fb': self.fb, 'num': self.num}
-        return r
+        return result
         
 
 def waiting_ins(index, ins):
@@ -134,9 +183,6 @@ def waiting_ins(index, ins):
 
 class Table(object):
     def __init__(self, table):
-        global pid
-        self.pid = pid
-        pid = pid + 1
         self.table = table.upper()
 
         self.gdemand = ''
@@ -263,27 +309,51 @@ class Cook(object):
         self.queue = []
 
     def ins(self, ins):
-        #ins: accept,refuse,cancel-inway,cancel-doing,done
+        #ins: accept,refuse,cancel-byway,cancel-doing,done
+        global uids
         if ins[0] == 'accept':
             if self.current is None:
                 self.current = self.select()
                 self.select_byway()
                
             else:
-                l = ins[1:]
+                items = ins[1:]
+                for uid in items:
+                    uid = int(uid)
+                    one = uids.get(uid)
+                    one.cook = self.fid
+                    one.set_doing()
+                    self.doing.append(one)
+                self.byway = []
+                self.current = None
                 
         elif ins[0] == 'refuse':
-            pass
-        elif ins[0] == 'cancel-inway':
-            pass
+            if self.current is None:
+                pass
+            else:
+                did = self.current.did
+                self.deny.append(did)
+        elif ins[0] == 'cancel-byway':
+            uid = ins[1]
+            one = uids.get(uid)
+            self.byway.remove(one)
+            one.set_left()
         elif ins[0] == 'cancel-doing':
-            pass
+            uid = ins[1]
+            one = uids.get(uid)
+            self.doing.remove(one)
+            one.set_left()
         elif ins[0] == 'done':
-            pass
+            uid = ins[1]
+            one = uids.get(uid)
+            self.doing.remove(one)
+            self.done.append(one)
+            one.set_done()
         self.stamp = time.time()
         self.set_future()
         
     def select(self):
+        # when selecting, consider cookdo and deny
         global tables
         current = time.time()
         left = filter(lambda x: len(x.left)>0, tables.values())
