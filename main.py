@@ -71,7 +71,9 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/cook-home', CookHomeHandler),
               (r'/cook-do', CookDoHandler),
               (r'/cook-do-submit', CookDoSubmitHandler),
-              (r'/cook-work', CookWorkHandler)]
+              (r'/cook-work', CookWorkHandler),
+              (r'/cook-ins', CookInsHandler),
+              (r'/cook-work-update', CookWorkUpdateHandler)]
 settings = dict(
                 cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
                # login_url="/",

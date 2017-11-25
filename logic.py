@@ -233,7 +233,7 @@ class Table(object):
 tables['0001'] = Table('0001')
 
 def customer_ins(desk, ins):
-    global tables
+    global tables, global_pid
     desk = desk.upper()
     table = tables.get(desk)
     if not isinstance(table, Table):
@@ -241,7 +241,11 @@ def customer_ins(desk, ins):
     table.stamp = time.time()
     if ins[0] == '+':
         one = Order(ins[1], desk, ins[2])
+        if len(table.orders)+len(table.left)+len(table.doing)+len(table.done) == 0:
+            table.pid = global_pid
+            global_pid += 1
         table.orders.append(one)
+        
     elif ins[0] == '-':
         table.orders = filter(lambda one: one.uid != ins[1], table.orders)
     elif ins[0] == 'g':
@@ -304,6 +308,7 @@ class Cook(object):
         self.doing = []
         self.done = []
         self.deny = []
+        self.cookdo = []
         self.waiters = set()
         self.stamp = time.time()
         self.queue = []
@@ -325,6 +330,7 @@ class Cook(object):
                     one.set_doing()
                     self.doing.append(one)
                 self.byway = []
+                self.deny = []
                 self.current = None
                 
         elif ins[0] == 'refuse':
@@ -367,7 +373,7 @@ class Cook(object):
             # select not in byway
             for table in left:
                 for one in table.left:
-                    if one.inbyway == 0:
+                    if one.did in self.cookdo and one.did not in self.deny and one.inbyway == 0:
                         one.inbyway = 1
                         return one            
             return None
@@ -391,7 +397,7 @@ class Cook(object):
             cur = ''
         else:
             cur = self.current.to_dict()
-        result = {'fid': self.fid, 'name': self.name, 'current': cur,
+        result = {'fid': self.fid, 'name': self.name, 'current': cur, 'stamp': self.stamp,
                   'byway': [one.to_dict() for one in self.byway],
                   'doing': [one.to_dict() for one in self.doing],
                   'done': [one.to_dict() for one in self.done]}

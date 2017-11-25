@@ -54,3 +54,25 @@ class CookDoSubmitHandler(tornado.web.RequestHandler):
 class CookWorkHandler(tornado.web.RequestHandler):
     def get(self):
         self.render('cook-work.html')
+
+class CookInsHandler(tornado.web.RequestHandler):
+    def post(self):
+        fid = self.get_argument('fid')
+        ins = json_decode(self.get_argument('ins'))
+        cook = logic.cooks.get(fid)
+        cook.ins(ins)
+        response = {'status': 'ok'}
+        self.write(json_encode(response))
+
+class CookWorkUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        fid = self.get_argument('fid')
+        stamp = json_decode(self.get_argument('stamp'))
+        cook = logic.cooks.get(fid)
+        thecook = yield cook.update(stamp)
+        response = {'cook': thecook}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
+        
+    
