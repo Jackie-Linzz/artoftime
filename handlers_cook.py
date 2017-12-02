@@ -6,6 +6,10 @@ from tornado.escape import json_encode, json_decode
 
 class CookHomeHandler(tornado.web.RequestHandler):
     def get(self):
+        #install cook in cooks
+        fid = self.get_cookie('fid')
+        if logic.cooks.get(fid) == None:
+            logic.cooks[fid] = logic.Cook(fid)
         self.render('cook-home.html')
         
 class CookDoHandler(tornado.web.RequestHandler):

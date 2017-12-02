@@ -94,12 +94,12 @@ function show_select() {
     var p = $('.byway').empty();
     for(var i in byway) {
 	var one = byway[i];
-	var item = $('<div class="item">
-		    <div class="close">X</div>
-		    <div class="title"></div>
-		    <div class="info"><div class="num"></div>::<div class="desk"></div></div>
-		    <div class="demand"></div>
-		</div>');
+	var item = $('<div class="item">'+
+		    '<div class="close">X</div>'+
+		    '<div class="title"></div>'+
+		    '<div class="info"><div class="num"></div>::<div class="desk"></div></div>'+
+		    '<div class="demand"></div>'+
+		'</div>');
 	item.data(one);
 	item.find('.title').text(one.name);
 	item.find('.num').text(one.num);
@@ -114,13 +114,13 @@ function show_doing() {
     var p = $('.doing').empty();
     for(var i in doing) {
 	var one = doing[i];
-	var item = $('<div class="item">
-		<div class="close">X</div>
-		<div class="title">宫保鸡丁</div>
-		<div class="info"><div class="num">1</div>::<div class="desk">1</div></div>
-		<div class="demand">不要辣</div>
-		<div class="finish">done</div>
-	    </div>');
+	var item = $('<div class="item">'+
+		'<div class="close">X</div>'+
+		'<div class="title">宫保鸡丁</div>'+
+		'<div class="info"><div class="num">1</div>::<div class="desk">1</div></div>'+
+		'<div class="demand">不要辣</div>'+
+		'<div class="finish">done</div>'+
+	    '</div>');
 	item.data(one);
 	item.find('.title').text(one.name);
 	item.find('.num').text(one.num);
@@ -134,12 +134,12 @@ function show_done() {
     var p = $('.done').empty();
     for(var i in done) {
 	var one = done[i];
-	var item = $('<div class="item">
+	var item = $('<div class="item">'+
 		
-		<div class="title">宫保鸡丁</div>
-		<div class="info"><div class="num">1</div>::<div class="desk">1</div></div>
-		<div class="demand">不要辣</div>
-	    </div>');
+		'<div class="title">宫保鸡丁</div>'+
+		'<div class="info"><div class="num">1</div>::<div class="desk">1</div></div>'+
+		'<div class="demand">不要辣</div>'+
+	    '</div>');
 	item.data(one);
 	item.find('.title').text(one.name);
 	item.find('.num').text(one.num);

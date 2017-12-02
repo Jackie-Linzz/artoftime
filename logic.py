@@ -126,15 +126,15 @@ class Order(object):
             
     def set_doing(self):
         global tables
-        if self.status = 'left':
+        if self.status == 'left':
             self.inbyway = 0
             self.status = 'doing'
             table = tables.get(self.desk)
             table.left.remove(self)
             table.doing.insert(0, self)
-        elif self.status = 'doing':
+        elif self.status == 'doing':
             pass
-        elif self.status = 'done':
+        elif self.status == 'done':
             self.inbyway = 0
             self.status = 'doing'
             table = tables.get(self.desk)
@@ -143,13 +143,13 @@ class Order(object):
             
     def set_done(self):
         global tables
-        if self.status = 'left':
+        if self.status == 'left':
             self.inbyway = 0
             self.status = 'done'
             table = tables.get(self.desk)
             table.left.remove(self)
             table.done.insert(0, self)
-        elif self.status = 'doing':
+        elif self.status == 'doing':
             self.inbyway = 0
             self.status = 'done'
             table = tables.get(self.desk)
@@ -412,7 +412,7 @@ class Cook(object):
     def update(self, stamp):
         future = Future()
         if stamp < self.stamp:
-            result = self.get_result()
+            result = self.to_dict()
             future.set_result(result)
         else:
             self.waiters.add(future)

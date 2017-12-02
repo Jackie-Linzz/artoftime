@@ -58,3 +58,11 @@ class FacultyRoleHandler(tornado.web.RequestHandler):
         self.set_cookie('role', role)
         response = {'status': 'ok'}
         self.write(json_encode(response))
+
+class FacultySecretHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('faculty-secret.html')
+
+    def post(self):
+        pass
+    

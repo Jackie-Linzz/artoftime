@@ -1,0 +1,110 @@
+body {
+    color: white;
+}
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0;
+    background-color: #9cf;
+}
+.content {
+    margin: 80px 0;
+}
+.header .heading {
+    margin: 0;
+    text-align: center
+}
+.header .left {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 3px 10px;
+    font-size: 18px;
+    font-weight: 400;
+    border: 1px solid white;
+    border-radius: 4px;
+}
+.input {
+    text-align: center;
+}
+.input input {
+    display: inline-block;
+    width: 400px;
+    font-size: 22px;
+    text-align: center;
+    color: #9cf;
+}
+.input .input-button {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 22px;
+    color: white;
+    background-color: #9cf;
+    border: 1px solid white;
+    border-radius: 6px;
+}
+.item {
+    margin: 10px 0;
+    padding: 0;
+    background-color: #BDB76A;
+    border-radius: 4px;
+}
+.item .row {
+    margin: 5px 0;
+    width: 100%;
+    text-align: left;
+}
+.item .name, .item .price, .item .num {
+    display: inline-block;    
+}
+.item .name {
+    width: 60%;
+    text-align: left;
+}
+.item .price, .item .num {
+    width: 20%;
+    text-align: center;
+}
+.item .button {
+    padding: 0;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    border: 1px dashed white;
+    border-radius: 4px;
+}
+.gdemand {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 20px;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 24px;
+    background-color: #9cf;
+}
+.prompt {
+    position: fixed;
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -40px;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    background-color: #9cf;
+    border: 1px solid white;
+    border-radius: 6px;
+}
+.ok-button {
+    
+    border-bottom: 1px dotted white;
+}
