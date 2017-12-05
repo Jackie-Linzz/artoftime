@@ -29,7 +29,11 @@ $(document).ready(function(){
 	$.postJSON(
 	    '/cashier-work-delete',
 	    {'uid': uid},
-	    function(response){}
+	    function(response){
+		if(response.status != 'ok') return;
+		window.myorder = response.myorder;
+		show_content();
+	    }
 	);
     });
     $(document).on('tap', '.cancel-button', function(){

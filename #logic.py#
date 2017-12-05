@@ -163,6 +163,9 @@ class Order(object):
         if self.inbyway == 1:
             cook = cooks.get(self.cook)
             cook.cash_delete(self)
+
+    def store(self):
+        pass
         
             
     def to_dict(self):
@@ -236,7 +239,8 @@ class Table(object):
         return future
 
     def cash(self):
-        
+        pass
+    
 
     def cash_delete(self, one):
         global cash_delete
