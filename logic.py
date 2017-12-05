@@ -105,7 +105,7 @@ class Order(object):
         self.submit = time.time()
         self.inbyway = 0
         self.store = 0
-        self.status = 'left' # left, doind, done, payed
+        self.status = 'left' # left, doind, done, payed, cash_delete
 
     def set_left(self):
         global tables
@@ -155,6 +155,9 @@ class Order(object):
             table = tables.get(self.desk)
             table.doing.remove(self)
             table.done.insert(0, self)
+
+    def cash_delete(self):
+        
             
     def to_dict(self):
         result = {'uid': self.uid, 'did':self.did, 'name': self.name, 'price': self.price,

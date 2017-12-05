@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    window.orders = {};
+    window.myorder = {};
     window.delete = '';
     $('.prompt').hide();
     $(document).on('tap', '.back', function(){
@@ -14,7 +14,7 @@ $(document).ready(function(){
 	    {'desk': desk},
 	    function(response){
 		if(response.status != 'ok') return;
-		window.orders = response.orders;
+		window.myorder = response.myorder;
 		show_content();
 	    }
 	);
@@ -47,3 +47,50 @@ $(document).ready(function(){
 	);
     });
 });
+
+function show_content() {
+    var orders = myorder.orders;
+    var left = myorder.left;
+    var doing = myorder.doing;
+    var done = myorder.done;
+    var cancel = myorder.cancel;
+
+    $('.one').remove();
+    var num = 0;
+    var total = 0;
+    for(i in done) {
+	var one = done[i]
+	num += one.num;
+	total += one.price * one.num;
+	var item = Item(one);
+	item.find('.name').text(one.name+'(done)');
+	$('.total').before(item);
+    }
+    for(i in doing) {
+	var one = doing[i]
+	num += one.num;
+	total += one.price * one.num;
+	var item = Item(one);
+	item.find('.name').text(one.name+'(doing)');
+	$('.total').before(item);
+    }
+    for(i in left) {
+	var one = left[i]
+	num += one.num;
+	total += one.price * one.num;
+	var item = Item(one);
+	item.find('.name').text(one.name+'(left)');
+	$('.total').before(item);
+    }
+    for(i in orders) {
+	var one = orders[i]
+	num += one.num;
+	total += one.price * one.num;
+	var item = Item(one);
+	item.find('.name').text(one.name);
+	$('.total').before(item);
+    }
+    $('.total').find('.price').text(total);
+    $('.total').find('.num').text(num);
+    $('.gdemand').val(myorder.gdemand);
+}
