@@ -53,11 +53,11 @@ $(document).ready(function(){
 });
 
 function show_content() {
-    var orders = myorder.orders;
+    
     var left = myorder.left;
     var doing = myorder.doing;
     var done = myorder.done;
-    var cancel = myorder.cancel;
+    
 
     $('.one').remove();
     var num = 0;
@@ -86,14 +86,7 @@ function show_content() {
 	item.find('.name').text(one.name+'(left)');
 	$('.total').before(item);
     }
-    for(i in orders) {
-	var one = orders[i]
-	num += one.num;
-	total += one.price * one.num;
-	var item = Item(one);
-	item.find('.name').text(one.name);
-	$('.total').before(item);
-    }
+    
     $('.total').find('.price').text(total);
     $('.total').find('.num').text(num);
     $('.gdemand').val(myorder.gdemand);

@@ -102,10 +102,10 @@ class Order(object):
         self.uid = global_uid
         global_uid += 1
         self.cook = ''
-        self.fb = ''
+        self.fb = None
         self.submit = time.time()
         self.inbyway = 0
-        self.store = 0
+        
         self.status = 'left' # left, doind, done, payed, cash_delete
 
     def set_left(self):
@@ -163,6 +163,12 @@ class Order(object):
         if self.inbyway == 1:
             cook = cooks.get(self.cook)
             cook.cash_delete(self)
+
+    def store(self):
+        #insert into order_history
+        global tables
+        mysql.insert('order_history', {'uid': self.uid, 'did': self.did, 'num': self.num, 'price': self.price, 'desk': self.desk,
+                                       'pid': tables.get(self.desk).pid, 'stamp': self.submit})
         
             
     def to_dict(self):
@@ -195,6 +201,7 @@ class Table(object):
         self.table = table.upper()
 
         self.gdemand = ''
+        self.comment = ''
         self.orders = []
         self.left = []
         
@@ -235,11 +242,34 @@ class Table(object):
             self.waiters.add(future)
         return future
 
-    def cash(self):
-        
+    def cash(self, fid):
+        self.payed = self.left + self.doing + self.done
+        self.orders = []
+        self.left = []
+        self.doing = []
+        self.done = []
+        self.cancel = []
+        cash_time = time.time()
+        for one in self.payed:
+            one.status = 'payed'
+            one.store()
+            mysql.insert('cash_history', {'fid': fid, 'uid': one.uid, 'status': 'ok', 'stamp': cash_time})
+            if one.fb is not None:
+                mysql.insert('feedback', {'uid': one.uid, 'fb': one.fb, 'stamp': cash_time})
+        for one in self.delete:
+            one.status = 'delete'
+            one.store()
+            mysql.insert('cash_history', {'fid': fid, 'uid': one.uid, 'status': 'failure', 'stamp': cash_time})
+        self.delete = []
+        self.payed = []
+        self.gdemand = ''
+        if self.comment != '':
+            mysql.insert('comment', {'desk': self.desk, 'comment': self.comment, 'stamp': time.time()})
+            self.comment = ''
+    
 
     def cash_delete(self, one):
-        global cash_delete
+        
         if not isinstance(one, Order):
             return
         if one.status == 'left':
@@ -248,11 +278,9 @@ class Table(object):
             self.doing.remove(one)     
         elif one.status == 'done':
             self.done.remove(one)
-        cash_delete.append(one)
+        self.delete.append(one)
         self.set_future()
-        #store order in database
-        if len(cash_delete) > 10:
-            pass
+        
 
     def feedback(self, fb):
         for f in fb:
@@ -382,10 +410,13 @@ class Cook(object):
             one.set_left()
         elif ins[0] == 'done':
             uid = ins[1]
+            uid = int(uid)
             one = uids.get(uid)
             self.doing.remove(one)
             self.done.append(one)
             one.set_done()
+            #store into cook_history
+            mysql.insert('cook_history', {'fid': self.fid, 'uid': uid, 'stamp': time.time()})
         self.stamp = time.time()
         self.set_future()
         
