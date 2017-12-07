@@ -57,7 +57,7 @@ function show_content() {
     var left = myorder.left;
     var doing = myorder.doing;
     var done = myorder.done;
-    var cancel = myorder.cancel;
+    
 
     $('.one').remove();
     var num = 0;
