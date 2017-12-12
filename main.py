@@ -14,6 +14,7 @@ from handlers_customer import *
 from handlers_manager import *
 from handlers_cook import *
 from handlers_cashier import *
+from handlers_waiter import *
 
 define("port", default=8000, help="run on the given port", type=int)
 define("debug", default=False, help="run in debug mode")
@@ -80,7 +81,8 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/cashier-work', CashierWorkHandler),
               (r'/cashier-work-desk', CashierWorkDeskHandler),
               (r'/cashier-work-delete', CashierWorkDeleteHandler),
-              (r'/cashier-work-cash', CashierWorkCashHandler)]
+              (r'/cashier-work-cash', CashierWorkCashHandler),
+              (r'/waiter-home', WaiterHomeHandler)]
 settings = dict(
                 cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
                # login_url="/",

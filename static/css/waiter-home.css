@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+    background-color: #ffc;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0;
+    background-color: #9cf;
+}
+.heading {
+    color: white;
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
+}
+.back {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 18px;
+    line-height: 18px;
+    padding: 3px 10px;
+    border: 1px solid white;
+    color: white;
+    border-radius: 4px;
+}
+.content {
+    padding: 60px 0;
+}
+
+div {
+    padding: 50px 0;
+    font-size: 24px;
+    line-height: 24px;
+    color: white;
+    text-align: center;
+}
+.order {
+    
+    background-color: #f17c67;
+}
+.request {
+    
+    background-color: #495a80;
+}
+.feedback {
+   
+    background-color: #2e68aa;
+}
+.clean {
+    padding: 40px 0;
+    font-size: 24px;
+    background-color: #376956;
+}
+.passwd {
+    
+    background-color: #9cf;
+}
