@@ -82,7 +82,10 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/cashier-work-desk', CashierWorkDeskHandler),
               (r'/cashier-work-delete', CashierWorkDeleteHandler),
               (r'/cashier-work-cash', CashierWorkCashHandler),
-              (r'/waiter-home', WaiterHomeHandler)]
+              (r'/waiter-home', WaiterHomeHandler),
+              (r'/waiter-order', WaiterOrderHandler),
+              (r'/waiter-ins', WaiterInsHandler),
+              (r'/waiter-update', WaiterUpdateHandler)]
 settings = dict(
                 cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
                # login_url="/",

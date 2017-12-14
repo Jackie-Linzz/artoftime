@@ -50,7 +50,7 @@ class CustomerInsHandler(tornado.web.RequestHandler):
 class CustomerUpdateHandler(tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def post(self):
-        desk = self.get_argument('desk')
+        desk = self.get_argument('desk').upper()
         stamp = json_decode(self.get_argument('stamp'))
         table = logic.tables.get(desk)
         myorder = yield table.update(stamp)

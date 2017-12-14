@@ -106,7 +106,7 @@ class Order(object):
         self.submit = time.time()
         self.inbyway = 0
         
-        self.status = 'left' # left, doind, done, payed, cash_delete
+        self.status = 'no' # no, left, doind, done, payed, cash_delete
 
     def set_left(self):
         global tables
@@ -315,7 +315,37 @@ def customer_ins(desk, ins):
         table.left = sorted(table.left, key=lambda one: one.ord)
     table.set_future()
     return 0
-    
+
+def waiter_ins(desk, ins):
+    global tables, global_pid, uids
+    desk = desk.upper()
+    table = tables.get(desk)
+    if not isinstance(table, Table):
+        return None
+    table.stamp = time.time()
+    if ins[0] == '+':
+        one = Order(ins[1], desk, ins[2])
+        if len(table.orders)+len(table.left)+len(table.doing)+len(table.done) == 0:
+            table.pid = global_pid
+            global_pid += 1
+        table.orders.append(one)
+    elif ins[0] == '-':
+        uid = ins[1]
+        one = uids.get(uid)
+        if one.status == 'no':
+            table.orders.remove(one)
+        elif one.status == 'left' and one.inbyway = 0:
+            table.left.remove(one)
+        uids.pop(uid)
+        
+    elif ins[0] == 'g':
+        table.gdemand = ins[1]
+    elif ins[0] == 'submit':
+        table.left = table.left + table.orders
+        table.orders = []
+        table.left = sorted(table.left, key=lambda one: one.ord)
+    table.set_future()
+    return 0
 ##manager mask update
 class Mask(object):
     def __init__(self):
