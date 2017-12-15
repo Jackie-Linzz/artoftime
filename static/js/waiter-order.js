@@ -145,11 +145,11 @@ var updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	var desk = window.desk;
+	
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({
-            url: '/waiter-update',
+            url: '/waiter-order-update',
             type: 'POST',
             dataType: 'json',
             data: {'desk': desk, 'stamp': json(updater.stamp)},

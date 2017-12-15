@@ -10,7 +10,7 @@ cooks = {}
 desks = set()
 diet = {}
 category = {}
-
+fids = {}
 
 global_uid = 0
 global_pid = 0
@@ -102,6 +102,7 @@ class Order(object):
         self.uid = global_uid
         global_uid += 1
         self.cook = ''
+        self.cookname = ''
         self.fb = None
         self.submit = time.time()
         self.inbyway = 0
@@ -175,7 +176,7 @@ class Order(object):
         result = {'uid': self.uid, 'did':self.did, 'name': self.name, 'price': self.price,
              'price2': self.price2, 'ord': self.ord, 'base': self.base, 'cid': self.cid,
              'pic': self.pic, 'desp': self.desp, 'demand': self.demand, 'cook': self.cook,
-             'fb': self.fb, 'num': self.num}
+             'cookname': self.cookname, 'fb': self.fb, 'num': self.num}
         return result
         
 
@@ -392,11 +393,87 @@ class Mask(object):
 
 mask = Mask()
 
+class PassMessage(object):
+    def __init__(self):
+        self.message = []
+        self.stamp = time.time()
+        self.waiter = set()
+
+    def add(self, one):
+        if not isinstance(one, Order):
+            return
+        self.message.append(one)
+        self.stamp = time.time()
+        self.set_future()
+
+    def remove(self, one):
+        global uids
+        if not isinstance(one, (int, Order)):
+            return
+        if isinstance(one, int):
+            one = uids.get(one)
+        self.message.remove(one)
+        self.stamp = time.time()
+        self.set_future()
+
+    def get_result(self):
+        result = [one.to_dict() for one in self.message]
+        return result
+
+    def set_future(self):
+        result = self.get_result()
+        for future in self.waiters:
+            future.set_result(result)
+        self.waiters = set()
+
+    def update(self, stamp):
+        future = Future()
+        if stamp < self.stamp:
+            result = self.get_result()
+            future.set_result(result)
+        else:
+            self.waiters.add(future)
+        return future
+
+passmsg = PassMessage()
+
+class FeedbackMessage(object):
+    def __init__(self):
+        self.message = []
+        self.stamp = time.time()
+        self.waiter = set()
+
+    def add(self, desk):
+        self.message.append(one)
+        self.stamp = time.time()
+        self.set_future()
+
+    def remove(self, desk):
+        self.message.remove(one)
+        self.stamp = time.time()
+        self.set_future()
+
+    def set_future(self):
+        result = self.message
+        for future in self.waiters:
+            future.set_result(result)
+        self.waiters = set()
+
+    def update(self, stamp):
+        future = Future()
+        if stamp < self.stamp:
+            result = self.message
+            future.set_result(result)
+        else:
+            self.waiters.add(future)
+        return future
+
+feedbackmsg = FeedbackMessage()
 
 class Cook(object):
     def __init__(self, fid):
         self.fid = fid
-        self.name = ''
+        self.name = fids.get(fid)['name']
         self.current = None
         self.byway = []
         self.doing = []
@@ -421,6 +498,7 @@ class Cook(object):
                     uid = int(uid)
                     one = uids.get(uid)
                     one.cook = self.fid
+                    one.cookname = self.name
                     one.set_doing()
                     self.doing.append(one)
                 self.byway = []
@@ -452,6 +530,12 @@ class Cook(object):
             one.set_done()
             #store into cook_history
             mysql.insert('cook_history', {'fid': self.fid, 'uid': uid, 'stamp': time.time()})
+            #insert pass message
+            passmsg.add(one)
+            #check feedback request
+            table = tables.get(one.desk)
+            if len(table.left)+len(table.doing) == 0:
+                feedbackmsg.add(one.desk)
         self.stamp = time.time()
         self.set_future()
         

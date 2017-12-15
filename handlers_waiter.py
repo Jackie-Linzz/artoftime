@@ -23,7 +23,7 @@ class WaiterInsHandler(tornado.web.RequestHandler):
         response = {'status': 'ok'}
         self.write(json_encode(response))
 
-class WaiterUpdateHandler(tornado.web.RequestHandler):
+class WaiterOrderUpdateHandler(tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def post(self):
         desk = self.get_argument('desk')
@@ -32,5 +32,50 @@ class WaiterUpdateHandler(tornado.web.RequestHandler):
         table = logic.tables.get(desk)
         myorder = yield table.update(stamp)
         response = {'myorder': myorder}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
+
+class WaiterPassHandler(tornado.web.RequestHandler):
+    def get(self):
+        fid = self.get_cookie('fid')
+        self.render('waiter-pass.html', fid=fid)
+
+class WaiterPassRemoveHandler(tornado.web.RequestHandler):
+    def post(self):
+        uid = self.get_argument('uid')
+        uid = int(uid)
+        logic.passmsg.remove(uid)
+        response = {'status': 'ok'}
+        self.write(json_encode(response))
+
+class WaiterPassUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        stamp = json_decode(self.get_argument('stamp'))
+        message = yield logic.passmsg.update(stamp)
+        response = {'status': 'ok', 'message': message, 'stamp': logic.passmsg.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
+
+
+class WaiterFeedbackHandler(tornado.web.RequestHandler):
+    def get(self):
+        fid = self.get_cookie('fid')
+        self.render('waiter-feedback.html', fid=fid)
+
+class WaiterFeedbackRemoveHandler(tornado.web.RequestHandler):
+    def post(self):
+        desk = self.get_argument('desk').upper()
+        logic.feedbackmsg.remove(desk)
+        response = {'status': 'ok'}
+        self.write(json_encode(response))
+
+
+class WaiterFeedbackUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        stamp = json_decode(self.get_argument('stamp'))
+        message = yield logic.feedbackmsg.update(stamp)
+        response = {'status': 'ok', 'message': message, 'stamp': logic.feedbackmsg.stamp}
         self.write(json_encode(response))
         raise tornado.gen.Return()

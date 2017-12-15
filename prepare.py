@@ -12,3 +12,6 @@ def prepare():
     diet = mysql.get_all('diet')
     for one in diet:
         logic.diet[one['did']] = one
+    faculty = mysql.get_all('faculty')
+    for one in faculty:
+        logic.fids[one['fid']] = one
