@@ -5,6 +5,7 @@ import tornado.web
 import tornado.iostream
 import os
 
+import prepare
 
 from tornado.options import define, options
 
@@ -107,6 +108,7 @@ def main():
 
 
 if __name__ == "__main__":
+    prepare.prepare()
     main()
 
 

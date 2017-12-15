@@ -2,6 +2,9 @@ $(document).ready(function(){
     window.myorder = {};
     window.desk = '';
     window.show = 1;
+    $('.back').on('tap', function(){
+	window.location.replace('/waiter-home');
+    });
     $('#desk').on('focusout', function(){
 	var desk = $(this).val().toUpperCase();
 	
@@ -47,7 +50,7 @@ $(document).ready(function(){
     $(document).on('focusout', '.gdemand', function(){
 	var gdemand = $(this).val();
 	gdemand = trim(gdemand);
-	var ins = ['g': gdemand];
+	var ins = ['g', gdemand];
 	$.postJSON(
 	    '/waiter-ins',
 	    {'desk': window.desk, 'ins': json(ins)},

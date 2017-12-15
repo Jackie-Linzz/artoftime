@@ -10,7 +10,7 @@ cooks = {}
 desks = set()
 diet = {}
 category = {}
-cash_delete = []
+
 
 global_uid = 0
 global_pid = 0
@@ -180,7 +180,7 @@ class Order(object):
         
 
 def waiting_ins(index, ins):
-    global waiting
+    global waiting, uids
     index = int(index)
     wt = waiting.get(index)
     if not isinstance(wt, WTable):
@@ -189,6 +189,7 @@ def waiting_ins(index, ins):
     if ins[0] == '+':
         one = Order(ins[1], index, ins[2])
         wt.orders.append(one)
+        uids[one.uid] = one
     elif ins[0] == '-':
         wt.orders = filter(lambda one: one.uid != ins[1], wt.orders)
     elif ins[0] == 'g':
@@ -287,12 +288,10 @@ class Table(object):
             for one in self.done:
                 if f['uid'] == one.uid:
                     one.fb = f['fb']
-    
 
-tables['0001'] = Table('0001')
 
 def customer_ins(desk, ins):
-    global tables, global_pid
+    global tables, global_pid, uids
     desk = desk.upper()
     table = tables.get(desk)
     if not isinstance(table, Table):
@@ -304,12 +303,15 @@ def customer_ins(desk, ins):
             table.pid = global_pid
             global_pid += 1
         table.orders.append(one)
+        uids[one.uid] = one
         
     elif ins[0] == '-':
         table.orders = filter(lambda one: one.uid != ins[1], table.orders)
     elif ins[0] == 'g':
         table.gdemand = ins[1]
     elif ins[0] == 'submit':
+        for one in table.orders:
+            one.status = 'left'
         table.left = table.left + table.orders
         table.orders = []
         table.left = sorted(table.left, key=lambda one: one.ord)
@@ -329,18 +331,21 @@ def waiter_ins(desk, ins):
             table.pid = global_pid
             global_pid += 1
         table.orders.append(one)
+        uids[one.uid] = one
     elif ins[0] == '-':
         uid = ins[1]
         one = uids.get(uid)
         if one.status == 'no':
             table.orders.remove(one)
-        elif one.status == 'left' and one.inbyway = 0:
+        elif one.status == 'left' and one.inbyway == 0:
             table.left.remove(one)
         uids.pop(uid)
         
     elif ins[0] == 'g':
         table.gdemand = ins[1]
     elif ins[0] == 'submit':
+        for one in table.orders:
+            one.status = 'left'
         table.left = table.left + table.orders
         table.orders = []
         table.left = sorted(table.left, key=lambda one: one.ord)
