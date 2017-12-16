@@ -268,6 +268,7 @@ class Table(object):
         if self.comment != '':
             mysql.insert('comment', {'desk': self.desk, 'comment': self.comment, 'stamp': time.time()})
             self.comment = ''
+        cleanmsg.add(self.desk)
     
 
     def cash_delete(self, one):
@@ -439,12 +440,12 @@ passmsg = PassMessage()
 
 class FeedbackMessage(object):
     def __init__(self):
-        self.message = []
+        self.message = set()
         self.stamp = time.time()
         self.waiter = set()
 
     def add(self, desk):
-        self.message.append(one)
+        self.message.add(one)
         self.stamp = time.time()
         self.set_future()
 
@@ -469,6 +470,8 @@ class FeedbackMessage(object):
         return future
 
 feedbackmsg = FeedbackMessage()
+requestmsg = FeedbackMessage()
+cleanmsg = FeedbackMessage()
 
 class Cook(object):
     def __init__(self, fid):

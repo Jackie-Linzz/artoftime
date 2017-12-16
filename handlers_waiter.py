@@ -79,3 +79,47 @@ class WaiterFeedbackUpdateHandler(tornado.web.RequestHandler):
         response = {'status': 'ok', 'message': message, 'stamp': logic.feedbackmsg.stamp}
         self.write(json_encode(response))
         raise tornado.gen.Return()
+
+
+class WaiterRequestHandler(tornado.web.RequestHandler):
+    def get(self):
+        fid = self.get_argument('fid')
+        self.render('waiter-request.html', fid=fid)
+
+class WaiterRequestRemoveHandler(tornado.web.RequestHandler):
+    def post(self):
+        desk = self.get_argument('desk').upper()
+        logic.requestmsg.remove(desk)
+        response = {'status': 'ok'}
+        self.write(json_encode(response))
+
+class WaiterRequestUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        stamp = json_decode(self.get_argument('stamp'))
+        message = yield logic.requestmsg.update(stamp)
+        response = {'status': 'ok', 'message': message, 'stamp': logic.requestmsg.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
+
+
+class WaiterCleanHandler(tornado.web.RequestHandler):
+    def get(self):
+        fid = self.get_argument('fid')
+        self.render('waiter-clean.html', fid=fid)
+
+class WaiterCleanRemoveHandler(tornado.web.RequestHandler):
+    def post(self):
+        desk = self.get_argument('desk').upper()
+        logic.cleanmsg.remove(desk)
+        response = {'status': 'ok'}
+        self.write(json_encode(response))
+
+class WaiterCleanUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        stamp = json_decode(self.get_argument('stamp'))
+        message = yield logic.cleanmsg.update(stamp)
+        response = {'status': 'ok', 'message': message, 'stamp': logic.cleanmsg.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
