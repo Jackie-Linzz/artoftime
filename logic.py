@@ -1,8 +1,13 @@
 import time
+import os
 import mysql
+import printer
 from tornado.concurrent import Future
 
-company_file = 'company-info'
+data_dir = os.path.expanduser('~/artoftime')
+company_file = os.path.expanduser('~/artoftime/company')
+data_file = os.path.expanduser('~/artoftime/data')
+info = {}
 tables = {}
 waiting = {}
 uids = {}
@@ -10,8 +15,7 @@ cooks = {}
 desks = set()
 diet = {}
 category = {}
-fids = {}
-
+cook_do = {}
 global_uid = 0
 global_pid = 0
 
@@ -170,7 +174,10 @@ class Order(object):
         global tables
         mysql.insert('order_history', {'uid': self.uid, 'did': self.did, 'num': self.num, 'price': self.price, 'desk': self.desk,
                                        'pid': tables.get(self.desk).pid, 'stamp': self.submit})
-        
+    def to_printer(self):
+        content = '%s\t%s\t%s\n' % (self.name, self.num, self.price*self.num)
+        result = content.decode('utf-8').encode('gb18030')
+        return bytes(result)
             
     def to_dict(self):
         result = {'uid': self.uid, 'did':self.did, 'name': self.name, 'price': self.price,
@@ -268,8 +275,22 @@ class Table(object):
         if self.comment != '':
             mysql.insert('comment', {'desk': self.desk, 'comment': self.comment, 'stamp': time.time()})
             self.comment = ''
+        #to printer
+        printer.gprint(self.to_printer())
         cleanmsg.add(self.desk)
-    
+
+    def to_printer(self):
+        global info
+        initialization = b'\x1b\x40'
+        align_left = b'\x1b\x61\x00'
+        align_center = b'\x1b\x61\x01'
+        align_right = b'\x1b\x61\x02'
+        content = initialization + align_center
+        company = info['company'].encode('gb18030')
+        content += bytes(company) + b'\n'
+
+        return content
+        
 
     def cash_delete(self, one):
         
@@ -287,9 +308,11 @@ class Table(object):
 
     def feedback(self, fb):
         for f in fb:
-            for one in self.done:
-                if f['uid'] == one.uid:
-                    one.fb = f['fb']
+            uid = f['uid']
+            one = uids.get(uid)
+            if one is None:
+                continue
+            one.fb = f['fb']
 
 
 def customer_ins(desk, ins):
@@ -308,7 +331,12 @@ def customer_ins(desk, ins):
         uids[one.uid] = one
         
     elif ins[0] == '-':
-        table.orders = filter(lambda one: one.uid != ins[1], table.orders)
+        uid = ins[1]
+        uid = int(uid)
+        one = uids.get(uid)
+        if one in table.orders:
+            table.orders.remove(one)
+            uids.pop(uid)
     elif ins[0] == 'g':
         table.gdemand = ins[1]
     elif ins[0] == 'submit':
@@ -356,29 +384,29 @@ def waiter_ins(desk, ins):
 ##manager mask update
 class Mask(object):
     def __init__(self):
+        self.content = set()
         self.stamp = time.time()
         self.waiters = set()
+        result = mysql.get_all('mask')
+        for one in result:
+            self.content.add(one['did'])
 
     def ins(self, ins):
         if ins[0] == '+':
             did = ins[1]
-            mysql.insert('mask', {'did': did})
+            if did not in self.content:
+                mysql.insert('mask', {'did': did})
+                self.content.add(did)
         elif ins[0] == '-':
             did = ins[1]
-            mysql.delete('mask', {'did': did})
+            if did in self.content:
+                mysql.delete('mask', {'did': did})
+                self.content.remove(did)
         self.stamp = time.time()
         self.set_future()
 
-    def get_result(self):
-        temp = mysql.get_all('mask')
-        result = []
-        for one in temp:
-            result.append(one['did'])
-        result.sort()
-        return result
-
     def set_future(self):
-        result = self.get_result()
+        result = self.content
         for future in self.waiters:
             future.set_result(result)
         self.waiters = set()
@@ -386,7 +414,7 @@ class Mask(object):
     def update(self, stamp):
         future = Future()
         if stamp < self.stamp:
-            result = self.get_result()
+            result = self.content
             future.set_result(result)
         else:
             self.waiters.add(future)
@@ -396,7 +424,7 @@ mask = Mask()
 
 class PassMessage(object):
     def __init__(self):
-        self.message = []
+        self.message = set()
         self.stamp = time.time()
         self.waiter = set()
 
@@ -442,10 +470,10 @@ class FeedbackMessage(object):
     def __init__(self):
         self.message = set()
         self.stamp = time.time()
-        self.waiter = set()
+        self.waiters = set()
 
     def add(self, desk):
-        self.message.add(one)
+        self.message.add(desk)
         self.stamp = time.time()
         self.set_future()
 
@@ -455,7 +483,7 @@ class FeedbackMessage(object):
         self.set_future()
 
     def set_future(self):
-        result = self.message
+        result = list(self.message)
         for future in self.waiters:
             future.set_result(result)
         self.waiters = set()
@@ -463,7 +491,7 @@ class FeedbackMessage(object):
     def update(self, stamp):
         future = Future()
         if stamp < self.stamp:
-            result = self.message
+            result = list(self.message)
             future.set_result(result)
         else:
             self.waiters.add(future)

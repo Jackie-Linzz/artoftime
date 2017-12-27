@@ -16,5 +16,5 @@ def gprint(content):
 
 if __name__ == '__main__':
     content = b'\x1b\x61\x00'
-    content += bytes(u'永恒时光北京科技有限公司\n'.encode('gb18030'))
+    content += bytes(u'永恒时光（北京）科技有限公司\n'.encode('gb18030'))
     gprint(content)

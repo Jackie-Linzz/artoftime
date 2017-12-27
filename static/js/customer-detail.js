@@ -13,7 +13,10 @@ $(document).ready(function(){
 	$.postJSON(
 	    '/customer-ins',
 	    {'desk': desk, 'ins': json(ins)},
-	    function(response){}
+	    function(response){
+		if(response.status != 'ok') return;
+		$('.demand').val('');
+	    }
 	);
     });
     updater.poll();
@@ -30,7 +33,7 @@ function show_num(){
     for (i in all) {
 	if(all[i].did == did) {
 	    num += all[i].num;
-	    $('.demand').val(all[i].demand);
+	    //$('.demand').val(all[i].demand);
 	}
     }
     $('.num').text(num);

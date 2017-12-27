@@ -32,13 +32,14 @@
     text-align: center;
 }
 .item .price {
-    width: 20%;
+    width: 23%;
 }
 .item .num {
     width: 20%;
 }
 .item .button {
-    width: 10%;
+    width: 50px;
+    max-width: 7%;
     border: 1px solid white;
     border-radius: 10px;
 }

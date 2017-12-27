@@ -1,6 +1,15 @@
 .header {
     background-color: #f17c67;
 }
+.back {
+    position: absolute;
+    top: 13px;
+    left: 15px;
+    padding: 0 10px;
+    font-size: 20px;
+    border: 1px dotted white;
+    border-radius: 4px;
+}
 .order {
     padding: 40px 0;
     font-size: 24px;
@@ -20,4 +29,9 @@
     padding: 40px 0;
     font-size: 24px;
     background-color: #376956;
+}
+.qrcode {
+    padding: 40px 0;
+    font-size: 24px;
+    background-color: #9cf;
 }

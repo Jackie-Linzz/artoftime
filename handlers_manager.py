@@ -7,6 +7,7 @@ import mysql
 import os
 import qrcode
 import MySQLdb
+import printer
 
 from tornado.escape import json_encode, json_decode
 
@@ -25,9 +26,12 @@ class ManagerCompanyHandler(tornado.web.RequestHandler):
         self.render('manager-company.html')
 
     def post(self):
-        file = logic.company_file
-        with open(file, 'rb') as f:
-            info = pickle.load(f)
+        file = os.path.expanduser(logic.company_file)
+        if not os.path.isfile(file):
+            info =  {'company': '', 'shop': '', 'location': '', 'heading': '', 'welcome': '', 'desp': ''}
+        else:
+            with open(file, 'rb') as f:
+                info = pickle.load(f)
         response = {'info': info}
         self.write(json_encode(response))
 
@@ -39,8 +43,17 @@ class ManagerCompanySetHandler(tornado.web.RequestHandler):
         heading = self.get_argument('heading')
         welcome = self.get_argument('welcome')
         desp = self.get_argument('desp')
+        #content = company +'\n'+shop+'\n'+location+'\n'
+        #print content
+        #content = content.encode('gb18030')
+        #printer.gprint(bytes(content))
         info = {'company': company, 'shop': shop, 'location': location, 'heading': heading, 'welcome': welcome, 'desp': desp}
-        file = logic.company_file
+        logic.info = info
+
+        data_dir = os.path.expanduser(logic.data_dir)
+        if not os.path.isdir(data_dir):
+            os.mkdir(data_dir)
+        file = os.path.expanduser(logic.company_file)
         with open(file, 'wb') as f:
             pickle.dump(info, f)
         response = {'status': 'ok'}
@@ -100,7 +113,9 @@ class ManagerDietAddHandler(tornado.web.RequestHandler):
         price2 = float(price2)
         base = float(base)
         picture = ''
-        
+        pic_dir = os.path.join(os.getcwd(), 'static/pictures')
+        if not os.path.isdir(pic_dir):
+            os.mkdir(pic_dir)
         if self.request.files:
             metas = self.request.files['picture']
             for meta in metas:
@@ -117,7 +132,10 @@ class ManagerDietAddHandler(tornado.web.RequestHandler):
         else:
             os.remove(os.path.join(os.getcwd(), 'static/pictures/' + picture))
             response = {'status': 'error'}
-        self.write(response)
+        #content = name+'\n'+ ('%s' % price) +'\n'
+        #content = content.encode('gb18030')
+        #printer.gprint(bytes(content))
+        self.write(json_encode(response))
 
 class ManagerDietDelHandler(tornado.web.RequestHandler):
     def post(self):

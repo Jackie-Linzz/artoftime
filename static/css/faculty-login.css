@@ -24,7 +24,11 @@ input {
     text-align: center;
 }
 
-div.button {
+div.confirm {
     margin-top: 20px;
+    border: 1px solid white;
+}
+div.back {
+    margin-top: 5px;
     border: 1px solid white;
 }

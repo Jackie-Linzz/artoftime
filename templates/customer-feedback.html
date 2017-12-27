@@ -17,49 +17,49 @@
 
     <body>
 	<div class="header">
-            <h2 class="heading" data-desk="{{table}}">feed back</h2>
-            <div class="left">back</div>
+            <h2 class="heading" data-desk="{{table}}">评价</h2>
+            <div class="left">返回</div>
 	</div>
 	<div class="content">
             <div class="item" data-uid="1">
 		<div class="row">
-                    <div class="name">name</div>
+                    <div class="name">名字</div>
 		</div>
 		<div class="row">
-                    <div class="fb selected" data-fb="1">good</div>
-		    <div class="fb" data-fb="0">normal</div>
-		    <div class="fb" data-fb="-1">bad</div>
+                    <div class="fb selected" data-fb="1">好吃</div>
+		    <div class="fb" data-fb="0">一般</div>
+		    <div class="fb" data-fb="-1">不好吃</div>
 		</div>
 		
             </div>
             <div class="item" data-uid="2">
 		<div class="row">
-                    <div class="name">name</div>
+                    <div class="name">名字</div>
 		</div>
 		<div class="row">
-                    <div class="fb selected" data-fb="1">good</div>
-		    <div class="fb" data-fb="0">normal</div>
-		    <div class="fb" data-fb="-1">bad</div>
+                    <div class="fb selected" data-fb="1">好吃</div>
+		    <div class="fb" data-fb="0">一般</div>
+		    <div class="fb" data-fb="-1">不好吃</div>
 		</div>
 		
             </div>
-	    {% for item in done %}
+	    {% for item in done%}
 	    <div class="item" data-uid="{{item.uid}}">
 		<div class="row">
                     <div class="name">{{item.name}}</div>
 		</div>
 		<div class="row">
-                    <div class="fb" data-fb="1">good</div>
-		    <div class="fb" data-fb="0">normal</div>
-		    <div class="fb" data-fb="-1">bad</div>
+                    <div class="fb" data-fb="1">好吃</div>
+		    <div class="fb" data-fb="0">一般</div>
+		    <div class="fb" data-fb="-1">不好吃</div>
 		</div>
 		
             </div>
 	    {% end %}
-	    <textarea class="comment" placeholder="comment" rows="3"></textarea>
+	    <textarea class="comment" placeholder="宝贵意见" rows="3"></textarea>
             
 	</div>
-	<div class="footer">submit</div>
+	<div class="footer">确定</div>
 	
 	
 

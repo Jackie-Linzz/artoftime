@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $(document).on('tap', '.button', function(){
+    $(document).on('tap', '.confirm', function(){
 	var fid = $('#fid').val();
 	var passwd = $('#passwd').val();
 	fid = trim(fid);
@@ -15,5 +15,8 @@ $(document).ready(function(){
 		}
 	    }
 	);
+    });
+    $(document).on('tap', '.back', function(){
+	window.location.replace('/');
     });
 });

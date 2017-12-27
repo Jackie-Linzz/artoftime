@@ -19,52 +19,52 @@
     <body>
 	
 	<div class="menu">
-	    <div class="back">back</div>
+	    <div class="back">返回</div>
 	    <div class="group">
-		<div class="head">group</div>
+		<div class="head">分组</div>
 		<div class="group-container">
-		    <div class="op add">add</div>
-		    <div class="op delete">delete</div>
-		    <div class="op show">show</div>
+		    <div class="op add">添加</div>
+		    <div class="op delete">删除</div>
+		    <div class="op show">显示</div>
 		</div>
 	    </div>
 	    <div class="diet">
-		<div class="head">diet</div>
+		<div class="head">餐单</div>
 		<div class="diet-container">
-		    <div class="op add">add</div>
-		    <div class="op delete">delete</div>
-		    <div class="op show">show</div>
+		    <div class="op add">添加</div>
+		    <div class="op delete">删除</div>
+		    <div class="op show">显示</div>
 		</div>
 	    </div>
 	</div>
 	<div class="content">
 	    <div class="group-add tab">
-		<div class="heading">add</div>
-		<div class="label">cid</div>
+		<div class="heading">添加分组</div>
+		<div class="label">编号</div>
 		<input type="text" id="cid">
-		<div class="label">name</div>
+		<div class="label">名字</div>
 		<input type="text" id="c-name">
-		<div class="label">order</div>
+		<div class="label">显示顺序</div>
 		<input type="text" id="c-order">
-		<div class="label">description</div>
+		<div class="label">描述</div>
 		<textarea rows="3" id="c-desp"></textarea>
-		<div id="group-add-button">submit</div>
+		<div id="group-add-button">提交</div>
 	    </div>
 	    <div class="group-del tab">
-		<div class="heading">delete</div>
-		<div class="label">cid</div>
+		<div class="heading">删除分组</div>
+		<div class="label">编号</div>
 		<input type="text" id="cid2">
-		<div id="group-del-button">submit</div>
+		<div id="group-del-button">提交</div>
 	    </div>
 	    <div class="group-show tab">
 		<table border="1" cellspacing="0">
-		    <caption>category</caption>
+		    <caption>分组</caption>
 		    <thead>
 			<tr>
-			    <th>cid</th>
-			    <th>name</th>
-			    <th>order</th>
-			    <th>description</th>
+			    <th>编号</th>
+			    <th>名称</th>
+			    <th>显示顺序</th>
+			    <th>描述</th>
 			</tr>
 		    </thead>
 		    <tbody>
@@ -78,48 +78,48 @@
 		</table>
 	    </div>
 	    <div class="diet-add tab">
-		<form action="/manager-diet-add" method="post" enctype="multipart/form-data" target="iframe">
-		    <div class="heading">add</div>
-		    <div class="label">did</div>
-		    <input type="text" name="did">
-		    <div class="label">name</div>
-		    <input type="text" name="name">
-		    <div class="label">order</div>
-		    <input type="text" name="order">
-		    <div class="label">price</div>
-		    <input type="text" name="price">
-		    <div class="label">price2</div>
-		    <input type="text" name="price2">
-		    <div class="label">base</div>
-		    <input type="text" name="base">
-		    <div class="label">category</div>
-		    <input type="text" name="cid">
-		    <div class="label">picture</div>
-		    <input type="file" name="picture">
-		    <div class="label">description</div>
-		    <textarea name="desp" rows="3"></textarea>
-		    <input type="submit" id="diet-add-button">
+		<form action="/manager-diet-add" method="post" enctype="multipart/form-data" id="diet-add-form">
+		    <div class="heading">添加</div>
+		    <div class="label">编号</div>
+		    <input type="text" name="did" id="did">
+		    <div class="label">名字</div>
+		    <input type="text" name="name" id="d-name">
+		    <div class="label">上菜顺序</div>
+		    <input type="text" name="order" id="d-order">
+		    <div class="label">价格1</div>
+		    <input type="text" name="price" id="d-price">
+		    <div class="label">价格2</div>
+		    <input type="text" name="price2" id="d-price2">
+		    <div class="label">最小份数</div>
+		    <input type="text" name="base" id="d-base">
+		    <div class="label">分组</div>
+		    <input type="text" name="cid" id="d-cid">
+		    <div class="label">图片</div>
+		    <input type="file" name="picture" id="d-pic">
+		    <div class="label">描述</div>
+		    <textarea name="desp" rows="3" id="d-desp"></textarea>
+		    <input type="button" id="diet-add-button" value="提交">
 		</form>
 		
-		<iframe name="iframe"></iframe>
+		
 	    </div>
 	    <div class="diet-del tab">
-		<div class="heading">delete</div>
-		<div class="label">did</div>
+		<div class="heading">删除</div>
+		<div class="label">编号</div>
 		<input type="text" id="did2">
-		<div id="diet-del-button">submit</div>
+		<div id="diet-del-button">提交</div>
 	    </div>
 	    <div class="diet-show tab">
 		<table border="1" cellspacing="0">
-		    <caption>diet show</caption>
+		    <caption>餐单显示</caption>
 		    <thead>
 			<tr>
-			    <th>did</th>
-			    <th>name</th>
-			    <th>order</th>
-			    <th>price</th>
-			    <th>cid</th>
-			    <th>detail</th>
+			    <th>编号</th>
+			    <th>名字</th>
+			    <th>上菜顺序</th>
+			    <th>价格</th>
+			    <th>分组</th>
+			    <th>详细</th>
 			</tr>
 		    </thead>
 		    <tbody>
@@ -136,23 +136,23 @@
 	    </div>
 	    <div class="diet-detail tab">
 		<div class="close">X</div>
-		<div class="label">did</div>
+		<div class="label">编号</div>
 		<div class="did">0001</div>
-		<div class="label">name</div>
+		<div class="label">名字</div>
 		<div class="name">coffee</div>
-		<div class="label">picture</div>
+		<div class="label">图片</div>
 		<img src="" alt="this is picture">
-		<div class="label">price</div>
+		<div class="label">价格1</div>
 		<div class="price">18.00</div>
-		<div class="label">price2</div>
+		<div class="label">价格2</div>
 		<div class="price2">0</div>
-		<div class="label">order</div>
+		<div class="label">上菜顺序</div>
 		<div class="order">1</div>
-		<div class="label">base</div>
+		<div class="label">最小份数</div>
 		<div class="base">1</div>
-		<div class="label">category</div>
+		<div class="label">分组</div>
 		<div class="cid">001</div>
-		<div class="label">description</div>
+		<div class="label">描述</div>
 		<div class="desp">this is description</div>
 	    </div>
 	    

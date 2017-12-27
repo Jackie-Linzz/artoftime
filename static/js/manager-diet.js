@@ -112,6 +112,42 @@ $(document).ready(function(){
 	    }
 	);
     });
+    $(document).on('tap', '#diet-add-button', function(){
+	var did = trim($('#did').val());
+	var name = trim($('#d-name').val());
+	var order = trim($('#d-order').val());
+	var price = trim($('#d-price').val());
+	var price2 = trim($('#d-price2').val());
+	var base = trim($('#d-base').val());
+	var cid = trim($('#d-cid').val());
+	var desp = trim($('#d-desp').val());
+	if(did == '' || name == '' || order == '' || price == '' || price2 == '' || base == '' || cid == '') return;
+	var formdata = new FormData($('#diet-add-form')[0]);
+	$.ajax({
+	    url: '/manager-diet-add',
+	    type: 'POST',
+	    cache: false,
+	    data: formdata,
+	    dataType: 'json',
+	    processData: false,
+	    contentType: false,
+	    success: function(response) {
+		if(response.status != 'ok') return;
+		$('#did').val('');
+		$('#d-name').val('');
+		$('#d-order').val('');
+		$('#d-price').val('');
+		$('#d-price2').val('');
+		$('#d-base').val('');
+		$('#d-cid').val('');
+		$('#d-pic').val('');
+		$('#d-desp').val('');
+	    },
+	    error: function(response) {
+		console.log('ERROR:', response);
+	    }
+	});
+    });
     $(document).on('tap', '#diet-del-button', function(){
 	var did = $('#did2').val();
 	did = trim(did);

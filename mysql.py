@@ -16,10 +16,12 @@ def insert(table, row):
     columns = []
     values = []
     for k, v in row.items():
-        columns.append(str(k))
+        
+        columns.append(unicode(k))
         if isinstance(v, (str, unicode)):
             v = '"%s"' % v
-        values.append(str(v))
+            
+        values.append(unicode(v))
     columns = ','.join(columns)
     values = ','.join(values)
 

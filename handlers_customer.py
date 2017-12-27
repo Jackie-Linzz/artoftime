@@ -22,7 +22,7 @@ class CustomerDietHandler(tornado.web.RequestHandler):
         cid = self.get_argument('cid')
         group = []
         for k, v in logic.diet.items():
-            if v['cid'] == cid:
+            if v['cid'] == cid and v['did'] not in logic.mask.content:
                 group.append(v)
         cname = logic.category.get(cid)['name']
         self.render('customer-diet.html', table=desk, cname=cname, group=group, cid=cid)
@@ -62,7 +62,8 @@ class CustomerFeedbackHandler(tornado.web.RequestHandler):
     def get(self):
         desk = self.get_argument('desk')
         table = logic.tables.get(desk)
-        self.render('customer-feedback.html', table=desk, done=table.done)
+        done = [one for one in table.done if one.fb is None]
+        self.render('customer-feedback.html', table=desk, done=done)
 
     def post(self):
         desk = self.get_argument('desk')
@@ -73,4 +74,27 @@ class CustomerFeedbackHandler(tornado.web.RequestHandler):
         table.feedback(fb)
         response = {'status': 'ok'}
         self.write(json_encode(response))
+
+class CustomerCommentHandler(tornado.web.RequestHandler):
+    def post(self):
+        desk = self.get_argument('desk').upper()
+        comment = logic.tables.get(desk).comment
+        response = {'status': 'ok', 'comment': comment}
+        self.write(json_encode(response))
+
+class CustomerCallHandler(tornado.web.RequestHandler):
+    def post(self):
+        desk = self.get_argument('desk').upper()
+        logic.requestmsg.add(desk)
+        response = {'status': 'ok'}
+        self.write(json_encode(response))
+        
+class CustomerRequestUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        stamp = json_decode(self.get_argument('stamp'))
+        message = yield logic.requestmsg.update(stamp)
+        response = {'status': 'ok', 'message': message, 'stamp': logic.requestmsg.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
         

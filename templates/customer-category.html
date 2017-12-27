@@ -20,13 +20,10 @@
 
 	<div class="header">
 	    <h2 class="heading" data-desk="{{table}}">{{table}}</h2>
-	    <div class="left">back</div>
+	    <div class="back">返回</div>
 	</div>
 	<div class="content">
-	    <div class="item" data-cid="001">
-		<div class="name">group1</div>
-		<div class="num">8</div>
-	    </div>
+	   
 	    {% for v in groups %}
 	    <div class="item" data-cid="{{v['cid']}}">
 		<div class="name">{{v['name']}}</div>

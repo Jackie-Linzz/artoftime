@@ -6,14 +6,14 @@ from tornado.escape import json_encode, json_decode
 
 class EntryHandler(tornado.web.RequestHandler):
     def get(self):
-        heading = 'ART OF TIME'
-        message = 'welcome'
+        heading = logic.info['heading']
+        message = logic.info['welcome']
         self.render('entry.html', heading=heading, message=message)
 
     def post(self):
         desk = self.get_argument('desk')
         desk = desk.upper()
-        if desk in logic.desks:
+        if desk in logic.tables:
             response = {'status': 'ok'}
         else:
             response = {'status': 'error'}
@@ -51,7 +51,7 @@ class FacultyRoleHandler(tornado.web.RequestHandler):
             return
         roles = roles[0]['role']
         roles = roles.split(',')
-        self.render('faculty-role.html', roles=roles)
+        self.render('faculty-role.html', roles=roles, fid=fid)
 
     def post(self):
         role = self.get_argument('role')

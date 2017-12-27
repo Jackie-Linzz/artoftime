@@ -37,4 +37,7 @@ $(document).ready(function(){
 	    }
 	);
     });
+    $(document).on('tap', '.back', function(){
+	window.location.replace('/manager-home');
+    });
 });

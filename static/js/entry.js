@@ -3,7 +3,7 @@ $(document).ready(function(){
 	var desk = $('.desk').val();
 	desk = trim(desk);
 	$.postJSON(
-	    '/entry',
+	    '/',
 	    {'desk': desk},
 	    function(response){
 		if(response.status == 'ok') {
@@ -11,5 +11,8 @@ $(document).ready(function(){
 		}
 	    }
 	);
+    });
+    $(document).on('taphold', '.header', function(){
+	window.location.replace('/faculty-login');
     });
 });

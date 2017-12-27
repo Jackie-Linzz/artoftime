@@ -4,7 +4,17 @@ $(document).ready(function(){
     $(document).on('tap', '.left', function(){
 	window.location.replace('/customer-home?desk='+desk);
     });
-    $(document).on('input propertychange', '.gdemand', function(){
+    $(document).on('tap', '.item .button', function(){
+	var uid = $(this).parents('.item').data('uid');
+	var ins = ['-', uid];
+	$.postJSON(
+	    '/customer-ins',
+	    {'desk': desk, 'ins': json(ins)},
+	    function(){}
+	);
+    });
+    $(document).on('change', '.gdemand', function(){
+	//input propertychange
 	var gdemand = $('.gdemand').val();
 	gdemand = trim(gdemand);
 	var ins = ['g', gdemand];
@@ -53,7 +63,7 @@ function show_order(){
     var left = myorder.left;
     var doing = myorder.doing;
     var done = myorder.done;
-    var cancel = myorder.cancel;
+    
 
     $('.one').remove();
     var num = 0;

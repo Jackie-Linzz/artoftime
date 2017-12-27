@@ -18,8 +18,8 @@
 
     <body>
 	<div class="header">
-	    <div class="logout">logout</div>
-	    <div class="heading">fid</div>
+	    <div class="logout">退出</div>
+	    <div class="heading">{{fid}}</div>
 	</div>
 	<br>
 	<br>
@@ -29,19 +29,19 @@
 	<br>
 	<br>
 	{% if one == 'manager' %}
-	<div class="manager">manager</div>
+	<div class="manager">经理</div>
 	{% end %}
 	
 	{% if one == 'waiter' %}
-	<div class="waiter">waiter</div>
+	<div class="waiter">服务员</div>
 	{% end %}
 
 	{% if one == 'cashier' %}
-	<div class="cashier">cashier</div>
+	<div class="cashier">收银员</div>
 	{% end %}
 
 	{% if one == 'cook' %}
-	<div class="cook">cook</div>
+	<div class="cook">厨师</div>
 	{% end %}
 	{% end %}
 	

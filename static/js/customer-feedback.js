@@ -1,6 +1,16 @@
 $(document).ready(function(){
     window.fb = [];
-    var desk = $('.heading').attr('data-desk');
+    window.desk = $('.heading').attr('data-desk');
+
+    $.postJSON(
+	'/customer-comment',
+	{'desk': window.desk},
+	function(response) {
+	    if(response.status != 'ok') return;
+	    $('.comment').val(response.comment);
+	}
+    );
+    
     $(document).on('tap', '.left', function(){
 	window.location.replace('/customer-home?desk='+desk);
     });
@@ -17,12 +27,16 @@ $(document).ready(function(){
 	    var item = $(this).parents('.item');
 	    var uid = item.attr('data-uid');
 	    var f = $(this).attr('data-fb');
-	    fb.push({'uid': uid, 'fb': Number(f)});
+	    fb.push({'uid': Number(uid), 'fb': Number(f)});
 	});
+	console.log(fb);
 	$.postJSON(
 	    '/customer-feedback',
 	    {'desk': desk, 'comment': json(comment), 'fb': json(fb)},
-	    function(){}
+	    function(response){
+		if(response.status != 'ok') return;
+		$('.selected').parents('.item').remove();
+	    }
 	);
     });
 });
