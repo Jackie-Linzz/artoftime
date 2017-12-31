@@ -18,46 +18,46 @@
 
     <body>
 	<div class="menu">
-	    <div class="back">back</div>
-	    <div class="head">worker</div>
+	    <div class="back">返回</div>
+	    <div class="head">员工</div>
 	    <div class="worker-container">
-		<div class="op add">add</div>
-		<div class="op del">delete</div>
-		<div class="op show">show</div>
+		<div class="op add">添加</div>
+		<div class="op del">删除</div>
+		<div class="op show">显示</div>
 	    </div>
 	</div>
 
 	<div class="content">
 	    <div class="worker-add tab">
-		<div class="heading">worker add</div>
-		<div class="label">fid</div>
+		<div class="heading">添加员工</div>
+		<div class="label">编号：</div>
 		<input type="text" id="fid">
-		<div class="label">name</div>
+		<div class="label">名字：</div>
 		<input type="text" id="name">
-		<div class="label">role</div>
-		<div class="role"><input type="checkbox" value="manager">manager</div>
-		<div class="role"><input type="checkbox" value="waiter">waiter</div>
-		<div class="role"><input type="checkbox" value="cashier">cashier</div>
-		<div class="role"><input type="checkbox" value="cook">cook</div>
-		<div class="label">password</div>
+		<div class="label">职位：</div>
+		<div class="role"><input type="checkbox" value="manager">经理</div>
+		<div class="role"><input type="checkbox" value="waiter">服务员</div>
+		<div class="role"><input type="checkbox" value="cashier">收银员</div>
+		<div class="role"><input type="checkbox" value="cook">厨师</div>
+		<div class="label">登录密码</div>
 		<input type="text" id="password">
-		<div class="button" id="worker-add-button">submit</div>
+		<div class="button" id="worker-add-button">提交</div>
 	    </div>
 	    <div class="worker-del tab">
-		<div class="heading">worker delete</div>
-		<div class="label">fid</div>
+		<div class="heading">删除员工</div>
+		<div class="label">编号：</div>
 		<input type="text" id="fid2">
-		<div class="button" id="worker-del-button">submit</div>
+		<div class="button" id="worker-del-button">提交</div>
 	    </div>
 	    <div class="worker-show tab">
 		<table border="1" cellspacing="0">
-		    <caption>worker</caption>
+		    <caption>员工</caption>
 		    <thead>
 			<tr>
-			    <th>fid</th>
-			    <th>name</th>
-			    <th>role</th>
-			    <th>password</th>
+			    <th>编号</th>
+			    <th>名字</th>
+			    <th>职位</th>
+			    <th>密码</th>
 			</tr>
 		    </thead>
 		    <tbody>

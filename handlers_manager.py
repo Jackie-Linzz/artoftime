@@ -73,8 +73,10 @@ class ManagerGroupAddHandler(tornado.web.RequestHandler):
         corder = self.get_argument('corder')
         cdesp = self.get_argument('cdesp')
         corder = int(corder)
-        result = mysql.insert('category', {'cid':cid, 'name': cname, 'ord': corder, 'desp': cdesp})
+        row = {'cid':cid, 'name': cname, 'ord': corder, 'desp': cdesp}
+        result = mysql.insert('category', row)
         if result:
+            logic.category[cid] = row
             response = {'status': 'ok'}
         else:
             response = {'status': 'error'}
@@ -85,6 +87,7 @@ class ManagerGroupDelHandler(tornado.web.RequestHandler):
         cid = self.get_argument('cid')
         result = mysql.delete('category', {'cid': cid})
         if result:
+            logic.category.pop(cid)
             response = {'status': 'ok'}
         else:
             response = {'status': 'error'}
@@ -113,7 +116,7 @@ class ManagerDietAddHandler(tornado.web.RequestHandler):
         price2 = float(price2)
         base = float(base)
         picture = ''
-        pic_dir = os.path.join(os.getcwd(), 'static/pictures')
+        pic_dir = os.path.join(logic.data_dir, 'pictures')
         if not os.path.isdir(pic_dir):
             os.mkdir(pic_dir)
         if self.request.files:
@@ -123,11 +126,13 @@ class ManagerDietAddHandler(tornado.web.RequestHandler):
                 content = meta['body']
                 ext = os.path.splitext(file_name)[-1]
                 picture = str(did) + ext
-                full_path = os.path.join(os.getcwd(), 'static/pictures/' + picture)
+                full_path = os.path.join(logic.data_dir, 'pictures/' + picture)
                 with open(full_path, 'wb') as f:
                     f.write(content)
-        result = mysql.insert('diet', {'did': did, 'name': name, 'ord': order, 'price': price, 'price2': price2, 'base': base, 'cid': cid, 'desp': desp, 'pic': picture})
+        row = {'did': did, 'name': name, 'ord': order, 'price': price, 'price2': price2, 'base': base, 'cid': cid, 'desp': desp, 'pic': picture}
+        result = mysql.insert('diet', row)
         if result:
+            logic.diet[did] = row
             response = {'status': 'ok'}
         else:
             os.remove(os.path.join(os.getcwd(), 'static/pictures/' + picture))
@@ -140,13 +145,17 @@ class ManagerDietAddHandler(tornado.web.RequestHandler):
 class ManagerDietDelHandler(tornado.web.RequestHandler):
     def post(self):
         did = self.get_argument('did')
+        if did in logic.diet:
+            logic.diet.pop(did)
         result = mysql.get('diet', {'did': did})
         if result and result[0]:
             picture = result[0]['pic']
-            full_path = os.path.join(os.getcwd(), 'static/pictures/' + picture)
+            full_path = os.path.join(logic.data_dir, 'pictures/' + picture)
             
             if mysql.delete('diet', {'did': did}) and picture != '':
-                os.remove(full_path)
+                if os.path.isfile(full_path):
+                    os.remove(full_path)
+
             response = {'status': 'ok'}
             self.finish(json_encode(response))
             return
@@ -172,11 +181,15 @@ class ManagerDeskAddHandler(tornado.web.RequestHandler):
         desk = self.get_argument('desk')
         desk = desk.upper()
         result = mysql.insert('desks', {'desk': desk})
+        if desk not in logic.desks:
+            logic.desks.add(desk)
+        if desk not in logic.tables:
+            logic.tables[desk] = logic.Table(desk)
         if result:
-            path = os.path.join(os.getcwd(), 'static/desks/' + desk)
-            data = desk
-            img = qrcode.make(data)
-            img.save(path)
+            #path = os.path.join(logic.data_dir, 'desks/' + desk)
+            #data = desk
+            #img = qrcode.make(data)
+            #img.save(path)
             response = {'status': 'ok'}
         else:
             response = {'status': 'error'}
@@ -187,9 +200,13 @@ class ManagerDeskDelHandler(tornado.web.RequestHandler):
         desk = self.get_argument('desk')
         desk = desk.upper()
         result = mysql.delete('desks', {'desk': desk})
+        if desk in logic.desks:
+            logic.desks.remove(desk)
+        if desk in logic.tables:
+            logic.tables.pop(desk)
         if result:
-            path = os.path.join(os.getcwd(), 'static/desks/' + desk)
-            os.remove(path)
+            #path = os.path.join(logic.data_dir, 'desks/' + desk)
+            #os.remove(path)
             response = {'status': 'ok'}
         else:
             response = {'status': 'error'}
@@ -198,7 +215,7 @@ class ManagerDeskDelHandler(tornado.web.RequestHandler):
 class ManagerDeskShowHandler(tornado.web.RequestHandler):
     def post(self):
         desks = mysql.get_all('desks')
-        desks.sort()
+        desks.sort(key=lambda x: x['desk'])
         response = {'status': 'ok', 'desks': desks}
         self.write(json_encode(response))
 
@@ -241,6 +258,8 @@ class ManagerWorkerShowHandler(tornado.web.RequestHandler):
     def post(self):
         sql = 'select faculty.fid, name, role, passwd from faculty, password where faculty.fid = password.fid'
         result = mysql.query(sql)
+        result.sort(key=lambda x: x['fid'])
+        #print result
         response = {'status': 'ok', 'workers': result}
         self.write(json_encode(response))
 
@@ -256,13 +275,14 @@ class ManagerCookdoHandler(tornado.web.RequestHandler):
         sql = 'select did from cook_do where fid = "%s"' % fid
         #sql = 'select diet.did, name, cid from cookdo, diet where fid = "%s" and cookdo.did = diet.did' % fid
         result = mysql.query(sql)
-        if len(result) == 0:
-            return
+            
         all = False
         for one in result:
             if one['did'] == all:
                 all = True
                 break
+        if len(result) == 0:
+            all = True
         if all:
             response = {'status': 'ok', 'result': 'all'}
         else:
@@ -308,6 +328,16 @@ class ManagerAchievementHandler(tornado.web.RequestHandler):
         if 'cook' in roles:
             sql = 'select name, sum(num) as number from diet,order_history,cook_history where diet.did = order_history.did and order_history.uid = cook_history.uid and fid = "%s" and cook_history.stamp > %s and cook_history.stamp < %s group by name' % (fid, t1, t2)
             result = mysql.query(sql)
+            set1 = set()
+            for one in result:
+                set1.add(one['name'])
+            set2 = set()
+            for one in logic.diet.values():
+                set2.add(one['name'])
+            set3 = set2 - set1
+            for one in set3:
+                result.append({'name': one, 'number': 0})
+            result.sort(key=lambda x: x['name'])
             response['flow'] = result
             sql = 'select name, sum(num) as number, fb from diet,order_history,cook_history,feedback where diet.did = order_history.did and order_history.uid = cook_history.uid and cook_history.uid = feedback.uid and fid = "%s" and cook_history.stamp > %s and cook_history.stamp < %s group by name,fb' % (fid, t1, t2)
             result = mysql.query(sql)
@@ -316,6 +346,7 @@ class ManagerAchievementHandler(tornado.web.RequestHandler):
             for one in result:
                 name = one['name']
                 number = one['number']
+                temp[name] = {}
                 if one['fb'] == -1:
                     temp[name]['bad'] = number
                 elif one['fb'] == 0:
@@ -323,6 +354,12 @@ class ManagerAchievementHandler(tornado.web.RequestHandler):
                 else:
                     temp[name]['good'] = number
             for k, v in temp.items():
+                if 'good' not in v:
+                    v['good'] = 0
+                if 'normal' not in v:
+                    v['normal'] = 0
+                if 'bad' not in v:
+                    v['bad'] = 0
                 total = v['good'] + v['normal'] + v['bad']
                 if total == 0:
                     fb.append({'name': k, 'good': v['good'], 'normal': v['normal'], 'bad': v['bad'], 'goodrate': '0%', 'badrate': '0%'})
@@ -330,7 +367,18 @@ class ManagerAchievementHandler(tornado.web.RequestHandler):
                     total = float(total)
                     rate1 = v['good'] * 100 / total
                     rate2 = v['bad'] * 100 / total
-                    fb.append({'name': k, 'good': v['good'], 'normal': v['normal'], 'bad': v['bad'], 'goodrate': str(rate1)+'%', 'badrate': str(rate2)+'%'})
+                    fb.append({'name': k, 'good': v['good'], 'normal': v['normal'], 'bad': v['bad'], 'goodrate': unicode(rate1)+u'%', 'badrate': unicode(rate2)+u'%'})
+            set1 = set()
+            for one in fb:
+                set1.add(one['name'])
+            set2 = set()
+            for one in logic.diet.values():
+                set2.add(one['name'])
+            set3 = set2 -set1
+            for one in set3:
+                fb.append({'name': one, 'good': 0, 'normal': 0, 'bad': 0, 'goodrate': u'0%', 'badrate': u'0%'})
+
+            fb.sort(key=lambda x: x['name'])
             response['fb'] = fb
         self.write(json_encode(response))
 

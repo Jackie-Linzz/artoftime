@@ -56,6 +56,7 @@ create table if not exists cash_history (
   th    bigint unsigned not null primary key auto_increment,
   fid   char(100) not null,
   uid   bigint unsigned not null,
+  pid   bigint unsigned not null,
   status  char(10) not null,
   stamp double(20,6) not null
 );

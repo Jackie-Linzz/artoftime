@@ -28,6 +28,9 @@
     width: 100%;
     background-color: #BDB76A;
 }
+img {
+    width: 100%;
+}
 .desc {
     text-align: left;
 }

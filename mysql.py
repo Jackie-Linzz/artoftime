@@ -42,7 +42,7 @@ def insert(table, row):
         cursor.close()
         conn.close()
 
-
+#for modification
 def insert_many(table, rows):
     #check row key consistence
     if not isinstance(rows, (list, tuple)):

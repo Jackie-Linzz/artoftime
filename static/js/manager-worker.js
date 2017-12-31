@@ -20,6 +20,7 @@ $(document).ready(function(){
 	    function(response) {
 		if(response.status != 'ok') return;
 		var workers = response.workers;
+		//console.log('workers:', workers);
 		var p = $('.worker-show tbody').empty();
 		for(var i in workers) {
 		    var tr = $('<tr>'+
@@ -30,7 +31,13 @@ $(document).ready(function(){
 			       '</tr>');
 		    tr.find('.fid').text(workers[i].fid);
 		    tr.find('.name').text(workers[i].name);
-		    tr.find('.role').text(workers[i].role);
+		    var role = workers[i].role;
+		    role = role.replace(/waiter/g, '服务员');
+		    role = role.replace(/manager/g, '经理');
+		    role = role.replace(/cashier/g, '收银员');
+		    role = role.replace(/cook/g, '厨师');
+		    //console.log(role,typeof role);
+		    tr.find('.role').text(role);
 		    tr.find('.passwd').text(workers[i].passwd);
 		    p.append(tr);
 		}

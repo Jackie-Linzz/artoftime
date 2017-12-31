@@ -6,7 +6,7 @@ $(document).ready(function(){
 	var cid = $(this).attr('data-cid');
 	window.location.replace('/customer-diet?desk='+desk+'&cid='+cid);
     });
-    $(document).on('tap', '.left', function(e){
+    $(document).on('tap', '.back', function(e){
 	
 	window.location.replace('/customer-home?desk='+desk);
     });

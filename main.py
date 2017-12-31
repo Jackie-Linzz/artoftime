@@ -101,7 +101,8 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/waiter-request-update', WaiterRequestUpdateHandler),
               (r'/waiter-clean', WaiterCleanHandler),
               (r'/waiter-clean-remove', WaiterCleanRemoveHandler),
-              (r'/waiter-clean-update', WaiterCleanUpdateHandler)]
+              (r'/waiter-clean-update', WaiterCleanUpdateHandler),
+              (r'/pictures/(.+)', PictureHandler)]
 settings = dict(
                 cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
                # login_url="/",

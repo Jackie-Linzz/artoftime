@@ -5,6 +5,9 @@ $(document).ready(function(){
 	window.location.replace('/manager-home');
     });
     $(document).on('tap', '#cookdo-button', function(){
+	$('.result1').hide();
+	$('.result2').hide();
+	
 	var fid = $('#fid').val();
 	fid = trim(fid);
 	if(fid == '') return;

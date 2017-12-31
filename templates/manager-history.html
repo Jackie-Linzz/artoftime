@@ -18,23 +18,23 @@
 
     <body>
 	<div class="menu">
-	    <div class="back">back</div>
+	    <div class="back">返回</div>
 	    <div class="flow">
-		<div class="head">flow</div>
+		<div class="head">流水</div>
 		<div class="flow-container">
-		    <div class="op">query</div>
+		    <div class="op">查看</div>
 		</div>
 	    </div>
 	    <div class="fb">
-		<div class="head">feed back</div>
+		<div class="head">反馈信息</div>
 		<div class="fb-container">
-		    <div class="op">query</div>
+		    <div class="op">查看</div>
 		</div>
 	    </div>
 	    <div class="trend">
-		<div class="head">trend</div>
+		<div class="head">趋势</div>
 		<div class="trend-container">
-		    <div class="op">query</div>
+		    <div class="op">查看</div>
 		</div>
 	    </div>
 	    
@@ -43,22 +43,22 @@
 	<div class="content">
 	    <div class="flow-content tab">
 		<div class="query">
-		    <div class="heading">flow</div>
-		    <div class="label">from</div>
+		    <div class="heading">流水</div>
+		    <div class="label">从：</div>
 		    <input type="date" id="flow-from">
-		    <div class="label">to</div>
+		    <div class="label">到：</div>
 		    <input type="date" id="flow-to">
-		    <div class="button" id="flow-query">query</div>
+		    <div class="button" id="flow-query">查看</div>
 		</div>
 		<table border="1" cellspacing="0">
-		    <caption>Flow</caption>
+		    <caption>流水</caption>
 		    <thead>
 			<tr>
-			    <th>did</th>
-			    <th>name</th>
-			    <th>price</th>
-			    <th>number</th>
-			    <th>flow</th>
+			    <th>编号</th>
+			    <th>名字</th>
+			    <th>价格</th>
+			    <th>数量</th>
+			    <th>销售额</th>
 			</tr>
 		    </thead>
 		    <tbody>
@@ -74,25 +74,25 @@
 	    </div>
 	    <div class="fb-content tab">
 		<div class="query">
-		    <div class="heading">feed back</div>
-		    <div class="label">from</div>
+		    <div class="heading">反馈</div>
+		    <div class="label">从：</div>
 		    <input type="date" id="fb-from">
-		    <div class="label">to</div>
+		    <div class="label">到：</div>
 		    <input type="date" id="fb-to">
-		    <div class="button" id="fb-query">query</div>
+		    <div class="button" id="fb-query">查看</div>
 		</div>
 		<table border="1" cellspacing="0">
-		    <caption>feed back</caption>
+		    <caption>反馈</caption>
 		    <thead>
 			<tr>
-			    <th>did</th>
-			    <th>name</th>
-			    <th>number</th>
-			    <th>good</th>
-			    <th>normal</th>
-			    <th>bad</th>
-			    <th>good rate</th>
-			    <th>bad rate</th>
+			    <th>编号</th>
+			    <th>名字</th>
+			    <th>总数</th>
+			    <th>好吃</th>
+			    <th>一般</th>
+			    <th>难吃</th>
+			    <th>好评率</th>
+			    <th>差评率</th>
 			</tr>
 		    </thead>
 		    <tbody>
@@ -111,20 +111,20 @@
 	    </div>
 	    <div class="trend-content tab">
 		<div class="query">
-		    <div class="heading">trend</div>
-		    <div class="label">from</div>
+		    <div class="heading">趋势</div>
+		    <div class="label">从：</div>
 		    <input type="date" id="trend-from">
-		    <div class="label">to</div>
+		    <div class="label">到：</div>
 		    <input type="date" id="trend-to">
-		    <div class="button" id="trend-query">query</div>
+		    <div class="button" id="trend-query">查看</div>
 		</div>
 		<table border="1" cellspacing="0">
-		    <caption>trend</caption>
+		    <caption>趋势</caption>
 		    <thead>
 			<tr>
-			    <th>from</th>
-			    <th>to</th>
-			    <th>flow</th>
+			    <th>从：</th>
+			    <th>到：</th>
+			    <th>流水</th>
 			</tr>
 		    </thead>
 		    <tbody>

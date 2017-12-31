@@ -1,4 +1,7 @@
 $(document).ready(function(){
+    $(document).on('tap', '.back', function(){
+	window.location.replace('/faculty-role');
+    });
     $(document).on('tap', '.company', function(){
 	window.location.replace('/manager-company');
     });

@@ -95,3 +95,6 @@ body {
     margin-bottom: 20px;
     font-size: 24px;
 }
+.desk-show table td {
+    min-width: 100px;
+}

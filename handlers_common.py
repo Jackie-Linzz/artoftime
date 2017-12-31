@@ -1,4 +1,5 @@
 import tornado.web
+import os
 import logic
 import mysql
 
@@ -65,4 +66,19 @@ class FacultySecretHandler(tornado.web.RequestHandler):
 
     def post(self):
         pass
-    
+
+
+class PictureHandler(tornado.web.RequestHandler):
+    def get(self, arg):
+        #print "arg:", arg
+        #self.set_header('Content-Type', 'application/octet-stream')
+        #self.set_header('Content-Disposition', 'attachment; filename='+arg)
+        path = os.path.join(logic.data_dir, 'pictures/'+arg)
+        if os.path.isfile(path):
+            with open(path, 'rb') as f:
+                while True:
+                    data = f.read(40960)
+                    if not data:
+                        break
+                    self.write(data)
+        self.finish()

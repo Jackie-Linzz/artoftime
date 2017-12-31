@@ -19,6 +19,8 @@ $(document).ready(function(){
 	$('.trend-content table').hide();
     });
     $(document).on('tap', '#flow-query', function(){
+	$('.flow-content table').hide();
+	
 	var from = $('#flow-from').val();
 	var to = $('#flow-to').val();
 
@@ -74,6 +76,8 @@ $(document).ready(function(){
 	);
     });
     $(document).on('tap', '#fb-query', function(){
+	$('.fb-content table').hide();
+	
 	var from = $('#fb-from').val();
 	var to = $('#fb-to').val();
 
@@ -157,6 +161,8 @@ $(document).ready(function(){
 	);
     });
     $(document).on('tap', '#trend-query', function(){
+	$('.trend-content table').hide();
+	
 	var from = $('#trend-from').val();
 	var to = $('#trend-to').val();
 

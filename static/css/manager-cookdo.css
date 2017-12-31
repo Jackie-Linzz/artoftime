@@ -73,6 +73,13 @@ body {
 .result2 {
     width: 100%;
 }
+table {
+    margin: 30px auto 0 auto;
+    
+}
+table td {
+    min-width: 100px;
+}
 .result2 caption {
     margin-bottom: 20px;
     font-size: 24px;

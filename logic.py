@@ -208,7 +208,7 @@ def waiting_ins(index, ins):
 class Table(object):
     def __init__(self, table):
         self.table = table.upper()
-
+        self.pid = 0
         self.gdemand = ''
         self.comment = ''
         self.orders = []
@@ -262,13 +262,13 @@ class Table(object):
         for one in self.payed:
             one.status = 'payed'
             one.store()
-            mysql.insert('cash_history', {'fid': fid, 'uid': one.uid, 'status': 'ok', 'stamp': cash_time})
+            mysql.insert('cash_history', {'fid': fid, 'uid': one.uid, 'pid': self.pid, 'status': 'success', 'stamp': cash_time})
             if one.fb is not None:
                 mysql.insert('feedback', {'uid': one.uid, 'fb': one.fb, 'stamp': cash_time})
         for one in self.delete:
             one.status = 'delete'
             one.store()
-            mysql.insert('cash_history', {'fid': fid, 'uid': one.uid, 'status': 'failure', 'stamp': cash_time})
+            mysql.insert('cash_history', {'fid': fid, 'uid': one.uid, 'pid': self.pid, 'status': 'failure', 'stamp': cash_time})
         self.delete = []
         self.payed = []
         self.gdemand = ''

@@ -5,6 +5,9 @@ $(document).ready(function(){
 	window.location.replace('/manager-home');
     });
     $(document).on('tap', '.button', function(){
+	$('.cashier').hide();
+	$('.cook').hide();
+	
 	var from = $('#from').val();
 	var to = $('#to').val();
 	var fid = $('#fid').val();
@@ -28,7 +31,7 @@ $(document).ready(function(){
 			$('.cashier').show();
 			var p = $('.cashier tbody').empty();
 			var cashier = response.cashier;
-			console.log(cashier);
+			//console.log(cashier);
 			var tr = $('<tr><td>'+cashier.failure+'</td><td>'+cashier.success+'</td></tr>');
 			p.append(tr);
 			

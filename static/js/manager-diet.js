@@ -166,7 +166,7 @@ $(document).ready(function(){
 	var tr = $(this).parents('tr');
 	$('.diet-detail .did').text(tr.data('did'));
 	$('.diet-detail .name').text(tr.data('name'));
-	$('.diet-detail img').attr('src', '/static/pictures/'+tr.data('pic'));
+	$('.diet-detail img').attr('src', '/pictures/'+tr.data('pic'));
 	$('.diet-detail .price').text(tr.data('price'));
 	$('.diet-detail .price2').text(tr.data('price2'));
 	$('.diet-detail .order').text(tr.data('ord'));

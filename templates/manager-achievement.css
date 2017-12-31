@@ -67,15 +67,15 @@ body {
     color: white;
     background-color: #2a8fbd;
 }
-.cashier {
-    width: 50%;
-    margin: 0 auto;
-}
+
 table {
-    margin: 0 auto;
+    margin: 30px auto 0 auto;
     text-align: center;
+}
+table td {
+    min-width: 100px;
 }
 caption {
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }

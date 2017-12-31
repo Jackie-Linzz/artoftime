@@ -11,11 +11,14 @@ def prepare():
 
 def save():
     #save data for resume
-    if not os.path.isdir(logic.data_dir):
-        os.mkdir(logic.data_dir)
-    with open(logic.company_file, 'wb') as f:
+    data_dir = os.path.expanduser(logic.data_dir)
+    if not os.path.isdir(data_dir):
+        os.mkdir(data_dir)
+    company_file = os.path.expanduser(logic.company_file)
+    with open(company_file, 'wb') as f:
         pickle.dump(logic.info, f)
-    with open(logic.data_file, 'wb') as f:
+    data_file = os.path.expanduser(logic.data_file)
+    with open(data_file, 'wb') as f:
         logic.waiting.waiters = set()
         logic.tables.waiters = set()
         logic.cooks.waiters = set()
