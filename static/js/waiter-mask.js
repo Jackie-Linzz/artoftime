@@ -1,26 +1,19 @@
 $(document).ready(function(){
-    window.message = [];
-    $('.back').on('tap', function(){
+    window.mask = [];
+    
+    $(document).on('tap', '.back', function(){
 	window.location.replace('/waiter-home');
-    });
-    $(document).on('tap', '.item .button', function(){
-	var uid = $(this).parents('.item').data('uid');
-	$.postJSON(
-	    '/waiter-pass-remove',
-	    {'uid': uid},
-	    function(response){}
-	);
     });
     updater.poll();
 });
 
-function show_message() {
+function show_mask() {
     var p = $('.content').empty();
-    for(var i in window.message) {
-	var one = window.message[i];
-	var item = $('<div class="item"><div class="msg">diet:desk:cook</div><div class="button">确定</div></div>');
-	item.data(one);
-	item.find('.msg').text(one.name+':'+one.desk+':'+one.cookname);
+    for(var i in window.mask) {
+	var one = window.mask[i];
+	var item = $('<div class="item">did:name</div>');
+	item.data(one);//one is dict
+	item.text(one.did+':'+one.name+':'+one.cid);
 	p.append(item);
     }
 }
@@ -30,11 +23,11 @@ var updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	var desk = window.desk;
+	
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({
-            url: '/waiter-pass-update',
+            url: '/manager-mask-update',
             type: 'POST',
             dataType: 'json',
             data: {'stamp': json(updater.stamp)},
@@ -44,9 +37,9 @@ var updater = {
 
     },
     onSuccess: function(response){
-        window.message = response.message;
+        window.mask = response.mask;
         updater.stamp = response.stamp;
-        show_message();
+        show_mask();
         updater.interval = 800;
         setTimeout(updater.poll, updater.interval);
     },
@@ -62,3 +55,4 @@ var updater = {
         updater.xhr.abort();
     }
 };
+

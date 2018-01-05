@@ -37,24 +37,25 @@ $(document).ready(function(){
 		if(response.status != 'ok') return;
 		$('.flow-content table').show();
 		var flow = response.flow;
+		//console.log(flow);
 		var p = $('.flow-content tbody').empty();
 		var all_flow = 0;
 		var all_num = 0;
 		for(var i in flow) {
 		    var one = flow[i];
 		    var tr = $('<tr>'+
-			    '<td class="did">0001</td>'+
-			    '<td class="name">coffee</td>'+
-			    '<td class="price">18.00</td>'+
-			    '<td class="num">100</td>'+
-			    '<td class="fl">1800</td>'+
+			    '<td class="did"></td>'+
+			    '<td class="name"></td>'+
+			    '<td class="price"></td>'+
+			    '<td class="num"></td>'+
+			    '<td class="fl"></td>'+
 			       '</tr>');
-		    var fl = one.price * one.number;
+		    var fl = one.total;
 		    all_flow += fl;
 		    all_num += one.number;
 		    tr.find('.did').text(one.did);
 		    tr.find('.name').text(one.name);
-		    tr.find('price').text(one.price);
+		    tr.find('.price').text(one.price);
 		    tr.find('.num').text(one.number);
 		    tr.find('.fl').text(fl);
 		    p.append(tr);
@@ -67,7 +68,7 @@ $(document).ready(function(){
 			     '<td class="fl"></td>'+
 			     '</tr>');
 		last.find('.did').text('');
-		last.find('.name').text('all');
+		last.find('.name').text('全部');
 		last.find('price').text('');
 		last.find('.num').text(all_num);
 		last.find('.fl').text(all_flow);
@@ -103,8 +104,16 @@ $(document).ready(function(){
 		    var one = fb[i];
 		    
 		    var num = one.good+one.normal+one.bad;
-		    var goodrate = one.good*100/num;
-		    var badrate = one.bad*100/num;
+		    var goodrate = 0;
+		    var badrate = 0;
+		    if(num == 0) {
+			goodrate = 0;
+			badrate = 0;
+		    } else {
+			goodrate = one.good*100/num;
+			badrate = one.bad*100/num;
+		    }
+		    
 		    all_num += num;
 		    all_good += one.good;
 		    all_normal += one.normal;
@@ -149,7 +158,7 @@ $(document).ready(function(){
 		}
 		
 		last.find('.did').text('');
-		last.find('.name').text('all');
+		last.find('.name').text('全部');
 		last.find('.num').text(all_num);
 		last.find('.good').text(all_good);
 		last.find('.normal').text(all_normal);

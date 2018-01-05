@@ -15,8 +15,12 @@ $(document).ready(function(){
 		var comments = response.comments;
 		for(var i in comments) {
 		    var one = comments[i];
-		    var div = $('<div class="comment"></div>');
-		    div.text(one.comment);
+		    var div = $('<div class="comment">'+
+				'<div class="message">liuyan</div>'+
+				'<div class="stamp">2017-12-31</div>'+
+				'</div>');
+		    div.find('.message').text(one.comment);
+		    div.find('.stamp').text(one.stamp);
 		    more.before(div);
 		}
 	    }
@@ -32,8 +36,12 @@ $(document).ready(function(){
 		var comments = response.comments;
 		for(var i in comments) {
 		    var one = comments[i];
-		    var div = $('<div class="comment"></div>');
-		    div.text(one.comment);
+		    var div = $('<div class="comment">'+
+				'<div class="message">liuyan</div>'+
+				'<div class="stamp">2017-12-31</div>'+
+				'</div>');
+		    div.find('.message').text(one.comment);
+		    div.find('.stamp').text(one.stamp);
 		    more.before(div);
 		}
 	    }

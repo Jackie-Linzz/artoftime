@@ -19,20 +19,24 @@ def save():
         pickle.dump(logic.info, f)
     data_file = os.path.expanduser(logic.data_file)
     with open(data_file, 'wb') as f:
-        logic.waiting.waiters = set()
-        logic.tables.waiters = set()
-        logic.cooks.waiters = set()
+        for k, v in logic.waiting.items():
+            v.waiters = set()
+        for k, v in logic.tables.items():
+            v.waiters = set()
+        for k, v in logic.cooks.items():
+            v.waiters = set()
         logic.mask.waiters = set()
         data = {'waiting': logic.waiting, 'tables': logic.tables, 'uids': logic.uids, 'cooks': logic.cooks, 'diet': logic.diet,
                 'category': logic.category, 'desks': logic.desks, 'cook_do': logic.cook_do, 'uid': logic.global_uid,
-                'pid': logic.global_pid, 'mask': logic.mask}
+                'pid': logic.global_pid}
         pickle.dump(data, f)
 
 
 def resume():
     #consider the difference between first time and not first time
-    if not os.path.exists(logic.data_file):
+    if not os.path.isfile(logic.data_file):
         sync()
+        return
     # not first time
     if os.path.exists(logic.company_file):
         with open(logic.company_file, 'rb') as f:
@@ -53,7 +57,7 @@ def resume():
         logic.cook_do = data['cook_do']
         logic.global_pid = data['pid']
         logic.global_uid = data['uid']
-        logic.mask = data['mask']
+        
 
 def sync():
     #company_file
@@ -81,10 +85,10 @@ def sync():
     for one in diet:
         logic.diet[one['did']] = one
     #mask
-    mask = mysql.get_all('mask')
-    logic.mask.content = set()
-    for one in mask:
-        logic.mask.add(one['did'])
+    #mask = mysql.get_all('mask')
+    #logic.mask.content = set()
+    #for one in mask:
+    #    logic.mask.add(one['did'])
     #cook_do
     cook_do = mysql.get_all('cook_do')
     logic.cook_do = {}

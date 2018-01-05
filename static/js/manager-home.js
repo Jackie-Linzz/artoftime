@@ -29,6 +29,9 @@ $(document).ready(function(){
     $(document).on('tap', '.mask', function(){
 	window.location.replace('/manager-mask');
     });
+    $(document).on('tap', '.passwd', function(){
+	window.location.replace('/faculty-secret?back=manager-home');
+    });
     $(document).on('tap', '.shutdown', function(){
 	window.location.replace('/manager-shutdown');
     });

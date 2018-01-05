@@ -14,10 +14,13 @@ $(document).ready(function(){
     $(document).on('tap', '.request', function(){
 	window.location.replace('/waiter-request');
     });
+    $(document).on('tap', '.mask', function(){
+	window.location.replace('/waiter-mask');
+    });
     $(document).on('tap', '.clean', function(){
 	window.location.replace('/waiter-clean');
     });
     $(document).on('tap', '.passwd', function(){
-	window.location.replace('/faculty-secret');
+	window.location.replace('/faculty-secret?back=waiter-home');
     });
 });

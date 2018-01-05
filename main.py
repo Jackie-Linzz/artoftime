@@ -75,6 +75,8 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/manager-mask-diet', ManagerMaskDietHandler),
               (r'/manager-mask-ins', ManagerMaskInsHandler),
               (r'/manager-mask-update', ManagerMaskUpdateHandler),
+              (r'/manager-shutdown', ManagerShutdownHandler),
+              (r'/manager-reboot', ManagerRebootHandler),
               (r'/cook-home', CookHomeHandler),
               (r'/cook-do', CookDoHandler),
               (r'/cook-do-submit', CookDoSubmitHandler),
@@ -99,6 +101,7 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/waiter-request', WaiterRequestHandler),
               (r'/waiter-request-remove', WaiterRequestRemoveHandler),
               (r'/waiter-request-update', WaiterRequestUpdateHandler),
+              (r'/waiter-mask', WaiterMaskHandler),
               (r'/waiter-clean', WaiterCleanHandler),
               (r'/waiter-clean-remove', WaiterCleanRemoveHandler),
               (r'/waiter-clean-update', WaiterCleanUpdateHandler),
@@ -124,7 +127,7 @@ def main():
 
 
 if __name__ == "__main__":
-    prepare.prepare()
+    prepare.resume()
     main()
 
 

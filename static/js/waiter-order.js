@@ -1,7 +1,10 @@
 $(document).ready(function(){
     window.myorder = {};
+    window.mask = [];
     window.desk = '';
     window.show = 1;
+
+    $('.msg').hide();
     $('.back').on('tap', function(){
 	window.location.replace('/waiter-home');
     });
@@ -14,10 +17,25 @@ $(document).ready(function(){
 	updater.poll();
     });
     $('#submit').on('tap', function(){
+	$('.msg').hide();
+	
 	var did = trim($('#did').val());
 	var demand = trim($('#demand').val());
 	if(window.desk == '') return;
 	if(did == '') return;
+	//test did in mask
+	var flag = false;
+	for(var i in window.mask) {
+	    if(did == window.mask[i].did) {
+		flag = true;
+		break;
+	    }
+	}
+	if(flag) {
+	    $('.msg').text('缺单');
+	    $('.msg').show();
+	    return;
+	}
 	var ins = ['+', did, demand];
 	$.postJSON(
 	    '/waiter-ins',
@@ -65,6 +83,7 @@ $(document).ready(function(){
 	    function(){}
 	);
     });
+    updater2.poll();
 });
 
 function Item(data) {
@@ -175,5 +194,44 @@ var updater = {
         updater.cursor = 0;
         updater.interval = 800;
         updater.xhr.abort();
+    }
+};
+
+var updater2 = {
+    interval: 800,
+    stamp: 0,
+    cursor: 0,
+    xhr: null,
+    poll: function(){
+	
+        console.log('polling', updater2.cursor);
+        updater2.cursor += 1;
+        updater2.xhr = $.ajax({
+            url: '/manager-mask-update',
+            type: 'POST',
+            dataType: 'json',
+            data: {'stamp': json(updater2.stamp)},
+            success: updater2.onSuccess,
+            error: updater2.onError
+        });
+
+    },
+    onSuccess: function(response){
+        window.mask = response.mask;
+        updater2.stamp = response.stamp;
+        
+        updater2.interval = 800;
+        setTimeout(updater2.poll, updater2.interval);
+    },
+    onError: function(response, error) {
+        console.log(error);
+        updater2.interval = updater2.interval*2;
+        setTimeout(updater2.poll, updater2.interval);
+    },
+    reset: function(){
+        updater2.stamp = 0;
+        updater2.cursor = 0;
+        updater2.interval = 800;
+        updater2.xhr.abort();
     }
 };

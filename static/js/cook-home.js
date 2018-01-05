@@ -9,6 +9,6 @@ $(document).ready(function(){
 	window.location.replace('/cook-do');
     });
     $(document).on('tap', '.passwd', function(){
-	window.location.replace('/faculty-secret');
+	window.location.replace('/faculty-secret?back=cook-home');
     });
 });

@@ -50,6 +50,7 @@ class CookDoSubmitHandler(tornado.web.RequestHandler):
                 rows.append({'fid':fid, 'did': did})
         result = mysql.insert_many('cook_do', rows)
         if result:
+            logic.cooks.get(fid).cookdo = content
             response = {'status': 'ok', 'cookdo': content}
         else:
             response = {'status': 'error'}

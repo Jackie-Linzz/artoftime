@@ -65,7 +65,7 @@ function show_mask() {
 	//console.log('did:', did);
 	var flag = false;
 	for(var i in mask) {
-	    if(mask[i] == did) {
+	    if(mask[i].did == did) {
 		console.log('equal');
 		flag = true;
 		
@@ -75,16 +75,10 @@ function show_mask() {
 	$(element).find('.did-mask').attr('checked', flag);
     });
     //show part
-    var result = [];
-    for(var i in diet) {
-	var one = diet[i];
-	for(var j in mask) {
-	    if(one.did == mask[j]) result.push(one);
-	}
-    }
+    
     var p = $('.show tbody').empty();
-    for(var i in result) {
-	var one = result[i];
+    for(var i in window.mask) {
+	var one = window.mask[i];
 	var tr = $('<tr>'+
 			    '<td class="did"></td>'+
 			    '<td class="name"></td>'+

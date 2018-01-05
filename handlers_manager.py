@@ -5,9 +5,11 @@ import time
 import logic
 import mysql
 import os
+import subprocess
 import qrcode
 import MySQLdb
 import printer
+import prepare
 
 from tornado.escape import json_encode, json_decode
 
@@ -281,13 +283,14 @@ class ManagerCookdoHandler(tornado.web.RequestHandler):
             if one['did'] == all:
                 all = True
                 break
-        if len(result) == 0:
-            all = True
+        
         if all:
             response = {'status': 'ok', 'result': 'all'}
         else:
-            sql = 'select diet.did, name, cid from cook_do, diet where fid = "%s" and cook_do.did = diet.did' % fid
-            cookdo = mysql.query(sql)
+            cookdo = []
+            for one in result:
+                item = logic.diet.get(one['did'])
+                cookdo.append({'did': one['did'], 'name': item['name'], 'cid': item['cid']})
             response = {'status': 'ok', 'result': 'some', 'cookdo': cookdo}
         self.write(json_encode(response))
         
@@ -346,7 +349,7 @@ class ManagerAchievementHandler(tornado.web.RequestHandler):
             for one in result:
                 name = one['name']
                 number = one['number']
-                temp[name] = {}
+                
                 if one['fb'] == -1:
                     temp[name]['bad'] = number
                 elif one['fb'] == 0:
@@ -398,8 +401,21 @@ class ManagerHistoryFlowHandler(tornado.web.RequestHandler):
         end = datetime.datetime.strptime(end, format)
         start = time.mktime(start.timetuple())
         end = time.mktime(end.timetuple())
-        sql = 'select order_history.did,name,diet.price,sum(num) as number from order_history,diet where order_history.did = diet.did and stamp > %s and stamp < %s group by name' % (start, end)
+        sql = 'select order_history.did,name,diet.price,sum(num) as number, sum(order_history.price*order_history.num) as total from diet,order_history,cash_history where diet.did = order_history.did and order_history.uid = cash_history.uid and status ="success" and order_history.stamp > %s and order_history.stamp < %s group by name' % (start, end)
         result = mysql.query(sql)
+        set1 = set()
+        for one in result:
+            set1.add(one['name'])
+        set2 = set()
+        for one in logic.diet.values():
+            set2.add(one['name'])
+        set3 = set2-set1
+        for one in set3:
+            for v in logic.diet.values():
+                if v['name'] == one:
+                    result.append({'did': v['did'], 'name': v['name'], 'price': v['price'], 'number': 0, 'total': 0})
+                    break
+        result.sort(key=lambda x: x['did'])
         response = {'status': 'ok', 'flow': result}
         self.write(json_encode(response))
 
@@ -412,8 +428,9 @@ class ManagerHistoryFeedbackHandler(tornado.web.RequestHandler):
         end = datetime.datetime.strptime(end, format)
         start = time.mktime(start.timetuple())
         end = time.mktime(end.timetuple())
-        sql = 'select diet.did,name,fb,sum(num) as number from order_history,feedback,diet where order_history.uid = feedback.uid and order_history.did = diet.did and order_history.stamp > %s and order_history.stamp < %s group by diet.did,fb' % (start, end)
+        sql = 'select diet.did,name,fb,sum(num) as number from diet,order_history,feedback where order_history.uid = feedback.uid and order_history.did = diet.did and order_history.stamp > %s and order_history.stamp < %s group by diet.did,fb' % (start, end)
         result = mysql.query(sql)
+        #print result
         temp = {}
         for one in result:
             did = one['did']
@@ -426,7 +443,20 @@ class ManagerHistoryFeedbackHandler(tornado.web.RequestHandler):
                 temp[did]['normal'] = one['number']
             else:
                 temp[did]['bad'] = one['number']
+        for k, v in temp.items():
+            if 'good' not in v:
+                v['good'] = 0
+            if 'normal' not in v:
+                v['normal'] = 0
+            if 'bad' not in v:
+                v['bad'] = 0
+        set1 = set(temp.keys())
+        set2 = set(logic.diet.keys())
+        set3 = set2 - set1
+        for one in set3:
+            temp[one] = {'did': one, 'name': logic.diet[one]['name'], 'good': 0, 'normal': 0, 'bad': 0}
         feedback = temp.values()
+        feedback.sort(key=lambda x: x['did'])
         response = {'status': 'ok', 'fb': feedback}
         self.write(json_encode(response))
 
@@ -455,6 +485,7 @@ class ManagerHistoryTrendHandler(tornado.web.RequestHandler):
             next_day = day
             t.append((datetime.datetime(year,month,day), datetime.datetime(next_year,next_month,next_day)))
             m = datetime.datetime(next_year,next_month,next_day)
+        #print 't:', t
         s = []
         for one in t:
             start = one[0]
@@ -462,18 +493,22 @@ class ManagerHistoryTrendHandler(tornado.web.RequestHandler):
             start = time.mktime(start.timetuple())
             end = time.mktime(end.timetuple())
             s.append((start, end))
-        
+        #print 's:', s
         trend = []
         for one in s:
-            sql = 'select sum(order_history.price*num) as flow from order_history,diet where order_history.did = diet.did and stamp > %s and stamp < %s'
+            sql = 'select sum(price*num) as flow from order_history,cash_history where order_history.uid = cash_history.uid and cash_history.status = "success" and order_history.stamp > %s and order_history.stamp < %s'
             sql = sql % one
             result = mysql.query(sql)
+            #print 'result:', result
             flow = result[0]['flow']
+            if flow is None:
+                flow = 0
             start = datetime.datetime.fromtimestamp(one[0])
             end = datetime.datetime.fromtimestamp(one[1])
             start = start.strftime(format)
             end = end.strftime(format)
             trend.append({'from': start, 'to': end, 'flow': flow})
+        #print 'trend:', trend
         response = {'status': 'ok', 'trend': trend}
         self.write(json_encode(response))
 
@@ -496,10 +531,15 @@ class ManagerCommentShowHandler(tornado.web.RequestHandler):
         conn = MySQLdb.connect(host=HOST, port=PORT, user=USER, passwd=PASSWD, db=DB, charset='utf8')
         conn.autocommit(False)
         cursor = conn.cursor()
-        sql = 'select * from comment'
+        sql = 'select * from comment order by stamp desc'
         cursor.execute(sql)
         conn.commit()
         comments = cursor.fetchmany(100)
+        for one in comments:
+            stamp = one['stamp']
+            stamp = datetime.datetime.fromtimestamp(stamp)
+            stamp = stamp.strftime('%Y-%m-%d %H:%M:%S')
+            one['stamp'] = stamp
         response = {'status': 'ok', 'comments': comments}
         self.write(json_encode(response))
 
@@ -507,6 +547,11 @@ class ManagerCommentMoreHandler(tornado.web.RequestHandler):
     def post(self):
         global cursor
         comments = cursor.fetchmany(100)
+        for one in comments:
+            stamp = one['stamp']
+            stamp = datetime.datetime.fromtimestamp(stamp)
+            stamp = stamp.strftime('%Y-%m-%d %H:%M:%S')
+            one['stamp'] = stamp
         response = {'status': 'ok', 'comments': comments}
         self.write(json_encode(response))
 
@@ -520,7 +565,7 @@ class ManagerMaskHandler(tornado.web.RequestHandler):
 class ManagerMaskDietHandler(tornado.web.RequestHandler):
     def post(self):
         diet = mysql.get_all('diet')
-        diet.sort(key=lambda one: one['cid'])
+        diet.sort(key=lambda one: one['did'])
         response = {'status': 'ok', 'diet': diet}
         self.write(json_encode(response))
 
@@ -539,8 +584,25 @@ class ManagerMaskUpdateHandler(tornado.web.RequestHandler):
         response = {'status': 'ok', 'mask': mymask, 'stamp': logic.mask.stamp}
         self.write(json_encode(response))
         raise tornado.gen.Return()
+
+
+class ManagerShutdownHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-shutdown.html')
+
+    def post(self):
+        prepare.save()
+        echo = subprocess.Popen(['echo', 'jerrylan418'], stdout=subprocess.PIPE)
+        shutdown = subprocess.Popen(['sudo', '-S', 'shutdown', '-h', 'now'], stdin=echo.stdout)
         
-        
+class ManagerRebootHandler(tornado.web.RequestHandler):
+    def post(self):
+        prepare.save()
+        echo = subprocess.Popen(['echo', 'jerrylan418'], stdout=subprocess.PIPE)
+        reboot = subprocess.Popen(['sudo', '-S', 'reboot'], stdin=echo.stdout)
         
 
     

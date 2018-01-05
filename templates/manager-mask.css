@@ -42,9 +42,10 @@ body {
     border: 1px dotted white;
 }
 table {
-    margin: 0 auto;
+    margin: 50px auto;
     font-size: 20px;
 }
 table td {
+    min-width: 100px;
     text-align: center;
 }

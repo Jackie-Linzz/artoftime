@@ -83,7 +83,7 @@ class WaiterFeedbackUpdateHandler(tornado.web.RequestHandler):
 
 class WaiterRequestHandler(tornado.web.RequestHandler):
     def get(self):
-        fid = self.get_argument('fid')
+        fid = self.get_cookie('fid')
         self.render('waiter-request.html', fid=fid)
 
 class WaiterRequestRemoveHandler(tornado.web.RequestHandler):
@@ -102,6 +102,10 @@ class WaiterRequestUpdateHandler(tornado.web.RequestHandler):
         self.write(json_encode(response))
         raise tornado.gen.Return()
 
+class WaiterMaskHandler(tornado.web.RequestHandler):
+    def get(self):
+        fid = self.get_cookie('fid')
+        self.render('waiter-mask.html', fid=fid)
 
 class WaiterCleanHandler(tornado.web.RequestHandler):
     def get(self):
@@ -123,3 +127,5 @@ class WaiterCleanUpdateHandler(tornado.web.RequestHandler):
         response = {'status': 'ok', 'message': message, 'stamp': logic.cleanmsg.stamp}
         self.write(json_encode(response))
         raise tornado.gen.Return()
+
+    

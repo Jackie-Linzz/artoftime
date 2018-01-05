@@ -18,29 +18,29 @@
 
     <body>
 	<div class="header">
-	    <div class="back">back</div>
-	    <div class="heading">cookdo range</div>
+	    <div class="back">返回</div>
+	    <div class="heading">设置偏好</div>
 	</div>
 
 	<div class="content">
 	    <table border="1" cellspacing="0" class="all">
-		<caption>all</caption>
+		<caption>全部</caption>
 		<tr>
-		    <td>all</td>
+		    <td>全部</td>
 		    <td><input type="checkbox" value="all"></td>
 		</tr>
 		<tr>
-		    <td colspan="2"><div class="button" id="submit1">submit</div></td>
+		    <td colspan="2"><div class="button" id="submit1">提交</div></td>
 		</tr>
 	    </table>
 	    <table border="1" cellspacing="0" class="some">
-		<caption>some</caption>
+		<caption>部分</caption>
 		<thead>
 		    <tr>
-			<th>did</th>
-			<th>name</th>
-			<th>category</th>
-			<th>select</th>
+			<th>编号</th>
+			<th>名字</th>
+			<th>分组</th>
+			<th>选择</th>
 		    </tr>
 		</thead>
 		<tbody>
@@ -50,11 +50,11 @@
 			<td>{{one['did']}}</td>
 			<td>{{one['name']}}</td>
 			<td>{{one['cid']}}</td>
-			<td><input type="checkbox" value="0001" class="check"></td>
+			<td><input type="checkbox" class="check"></td>
 		    </tr>
 		    {% end %}
 		    <tr>
-			<td colspan="4"><div class="button" id="submit2">submit</div></td>
+			<td colspan="4"><div class="button" id="submit2">提交</div></td>
 		    </tr>
 		</tbody>
 	    </table>

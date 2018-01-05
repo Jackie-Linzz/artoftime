@@ -18,7 +18,7 @@ function show_message() {
     var p = $('.content').empty();
     for(var i in window.message) {
 	var one = window.message[i];
-	var item = $('<div class="item"><div class="msg">desk</div><div class="button">OK</div></div>');
+	var item = $('<div class="item"><div class="msg">desk</div><div class="button">确定</div></div>');
 	item.data('desk', one);
 	item.find('.msg').text(one);
 	p.append(item);

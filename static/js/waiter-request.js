@@ -6,7 +6,7 @@ $(document).ready(function(){
     $(document).on('tap', '.item .button', function(){
 	var desk = $(this).parents('.item').data('desk');
 	$.postJSON(
-	    '/waiter-clean-remove',
+	    '/waiter-request-remove',
 	    {'desk': desk},
 	    function(response){}
 	);
@@ -18,7 +18,7 @@ function show_message() {
     var p = $('.content').empty();
     for(var i in window.message) {
 	var one = window.message[i];
-	var item = $('<div class="item"><div class="msg">desk</div><div class="button">OK</div></div>');
+	var item = $('<div class="item"><div class="msg">desk</div><div class="button">确定</div></div>');
 	item.data('desk', one);
 	item.find('.msg').text(one);
 	p.append(item);
@@ -34,7 +34,7 @@ var updater = {
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({
-            url: '/waiter-clean-update',
+            url: '/waiter-request-update',
             type: 'POST',
             dataType: 'json',
             data: {'stamp': json(updater.stamp)},

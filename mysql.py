@@ -42,7 +42,7 @@ def insert(table, row):
         cursor.close()
         conn.close()
 
-#for modification
+
 def insert_many(table, rows):
     #check row key consistence
     if not isinstance(rows, (list, tuple)):
@@ -62,8 +62,8 @@ def insert_many(table, rows):
         temp = []
         for key in keys:
             v = row[key]
-            #if isinstance(v, (str, unicode)):
-             #   v = '"%s"' % v
+            #if isinstance(v, (str, unicode)):#error
+            #    v = '"%s"' % v
             temp.append(v)
         values.append(temp)
 
@@ -96,6 +96,7 @@ def delete(table, con):
             v = '"%s"' % v
         condition.append('%s = %s' % (k, v))
     condition = ' and '.join(condition)
+    condition = unicode(condition)
     sql = 'delete from %s where %s' % (table, condition)
 
     conn = MySQLdb.connect(host=HOST, port=PORT, user=USER, passwd=PASSWD, db=DB, charset='utf8')

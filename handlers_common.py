@@ -62,11 +62,25 @@ class FacultyRoleHandler(tornado.web.RequestHandler):
 
 class FacultySecretHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render('faculty-secret.html')
+        back = self.get_argument('back')
+        self.render('faculty-secret.html', back=back)
 
     def post(self):
-        pass
-
+        fid = self.get_cookie('fid')
+        passwd1 = self.get_argument('passwd1')
+        passwd2 = self.get_argument('passwd2')
+        result = mysql.get('password', {'fid': fid})
+        #print result
+        response = {'status': 'failure'}
+        if result and result[0] and result[0]['passwd'] == passwd1:
+            sql = 'update password set passwd = "%s" where fid = "%s"' % (passwd2, fid)
+            #print sql
+            r = mysql.execute(sql)
+            #print r
+            if r:
+                response = {'status': 'success'}
+        self.write(json_encode(response))
+        
 
 class PictureHandler(tornado.web.RequestHandler):
     def get(self, arg):

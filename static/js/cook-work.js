@@ -33,6 +33,7 @@ $(document).ready(function(){
     });
     $(document).on('tap', '.accept-button', function(){
 	var ins = ['accept'];
+	ins.push($('.current').data('uid'));
 	$('.byway .selected').each(function(){
 	    var uid = $(this).data('uid');
 	    ins.push(uid);
@@ -88,7 +89,7 @@ function show_select() {
 	$('.current .title').text(current.name);
 	$('.current .num').text(current.num);
 	$('.current .desk').text(current.desk);
-	$('.current .demand').text(current.demand);
+	$('.current .demand').text(current.demand+'|'+current.gdemand);
     }
     //show byway
     var p = $('.byway').empty();
@@ -104,7 +105,7 @@ function show_select() {
 	item.find('.title').text(one.name);
 	item.find('.num').text(one.num);
 	item.find('.desk').text(one.desk);
-	item.find('.demand').text(one.demand);
+	item.find('.demand').text(one.demand+'|'+one.gdemand);
 	p.append(item);
     }
     
@@ -119,13 +120,13 @@ function show_doing() {
 		'<div class="title">宫保鸡丁</div>'+
 		'<div class="info"><div class="num">1</div>::<div class="desk">1</div></div>'+
 		'<div class="demand">不要辣</div>'+
-		'<div class="finish">done</div>'+
+		'<div class="finish">完成</div>'+
 	    '</div>');
 	item.data(one);
 	item.find('.title').text(one.name);
 	item.find('.num').text(one.num);
 	item.find('.desk').text(one.desk);
-	item.find('.demand').text(one.demand);
+	item.find('.demand').text(one.demand+'|'+one.gdemand);
 	p.append(item);
     }
 }
@@ -144,7 +145,7 @@ function show_done() {
 	item.find('.title').text(one.name);
 	item.find('.num').text(one.num);
 	item.find('.desk').text(one.desk);
-	item.find('.demand').text(one.demand);
+	item.find('.demand').text(one.demand+'|'+one.gdemand);
 	p.append(item);
     }
 }

@@ -60,9 +60,10 @@ div {
    
     background-color: #2e68aa;
 }
+.mask {
+    background-color: #1db0b8;
+}
 .clean {
-    padding: 40px 0;
-    font-size: 24px;
     background-color: #376956;
 }
 .passwd {

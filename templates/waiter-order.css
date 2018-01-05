@@ -57,7 +57,7 @@ table input {
     color: white;
     background-color: #9cf;
 }
-.bar {
+.bar, .msg {
     margin-top: 20px;
     padding: 5px 0;
     text-align: center;

@@ -47,6 +47,13 @@ body {
     font-size: 22px;
     text-align: center;
 }
+.comment .message {
+    text-align: left;
+}
+.comment .stamp {
+    font-size: 18px;
+    text-align: right;
+}
 .more {
     color: white;
     background-color: #2a8fbd;
