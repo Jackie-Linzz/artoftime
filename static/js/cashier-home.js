@@ -6,6 +6,6 @@ $(document).ready(function(){
 	window.location.replace('/cashier-work');
     });
     $(document).on('tap', '.passwd', function(){
-	window.location.replace('/faculty-secret');
+	window.location.replace('/faculty-secret?back=cashier-home');
     });
 });

@@ -125,6 +125,7 @@ function show_order(){
 	total += one.price * one.num;
 	var item = Item(one);
 	item.find('.name').text(one.name+'(done)');
+	item.find('.button').remove();
 	$('.total').before(item);
     }
     for(i in doing) {
@@ -133,6 +134,7 @@ function show_order(){
 	total += one.price * one.num;
 	var item = Item(one);
 	item.find('.name').text(one.name+'(doing)');
+	item.find('.button').remove();
 	$('.total').before(item);
     }
     for(i in left) {

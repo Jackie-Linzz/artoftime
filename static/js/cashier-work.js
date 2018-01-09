@@ -2,6 +2,8 @@ $(document).ready(function(){
     window.myorder = {};
     window.delete = '';
     $('.prompt').hide();
+    $('.message').hide();
+    
     $(document).on('tap', '.back', function(){
 	window.location.replace('/cashier-home');
     });
@@ -35,6 +37,7 @@ $(document).ready(function(){
 		show_content();
 	    }
 	);
+	$('.prompt').hide();
     });
     $(document).on('tap', '.cancel-button', function(){
 	window.delete = '';
@@ -46,11 +49,47 @@ $(document).ready(function(){
 	    '/cashier-work-cash',
 	    {'desk': desk},
 	    function(response){
-		if(response.status != 'ok') return;
+		if(response.status == 'success') {
+		    $('.message').show();
+		    $('.message .msg').text('成功');
+		    window.myorder = response.myorder;
+		    show_content();
+		}
+		if(response.status == 'failure') {
+		    $('.message').show();
+		    $('.message .msg').text('失败，请等待所有订单完成！');
+		    window.myorder = response.myorder;
+		    show_content();
+		}
 	    }
 	);
     });
+    $(document).on('tap', '.message .button', function(){
+	$('.message').hide();
+    });
 });
+function Item(data) {
+    var item = $('<div class="item one">'+
+		 '<div class="row">'+
+                 '<div class="name">名字</div><!--'+
+		 '--><div class="price">18.0</div><!--'+
+		 '--><div class="num">0</div>'+
+		 '</div>'+
+		 '<div class="row">'+
+                 '<div class="demand">这是特殊要求</div>'+
+		 '</div>'+
+		 '<div class="row">'+
+                 ' <div class="button">-</div>'+
+		 '</div>'+
+		 '</div>');
+    item.data(data);
+    item.find('.name').text(data.name);
+    item.find('.price').text(data.price);
+    item.find('.num').text(data.num);
+    item.find('.demand').text(data.demand);
+    if(data.demand == '') item.find('.demand').remove();
+    return item;
+}
 
 function show_content() {
     
@@ -68,6 +107,7 @@ function show_content() {
 	total += one.price * one.num;
 	var item = Item(one);
 	item.find('.name').text(one.name+'(done)');
+	item.find('.button').remove();
 	$('.total').before(item);
     }
     for(i in doing) {
@@ -76,6 +116,7 @@ function show_content() {
 	total += one.price * one.num;
 	var item = Item(one);
 	item.find('.name').text(one.name+'(doing)');
+	item.find('.button').remove();
 	$('.total').before(item);
     }
     for(i in left) {

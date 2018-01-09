@@ -109,7 +109,7 @@ class WaiterMaskHandler(tornado.web.RequestHandler):
 
 class WaiterCleanHandler(tornado.web.RequestHandler):
     def get(self):
-        fid = self.get_argument('fid')
+        fid = self.get_cookie('fid')
         self.render('waiter-clean.html', fid=fid)
 
 class WaiterCleanRemoveHandler(tornado.web.RequestHandler):

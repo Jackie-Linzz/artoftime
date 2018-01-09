@@ -45,6 +45,9 @@ div {
     color: white;
     text-align: center;
 }
+.num {
+    display: inline;
+}
 .order {
     
     background-color: #f17c67;

@@ -79,5 +79,14 @@ class CookWorkUpdateHandler(tornado.web.RequestHandler):
         response = {'cook': thecook}
         self.write(json_encode(response))
         raise tornado.gen.Return()
+
+class CookLeftUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        stamp = json_decode(self.get_argument('stamp'))
+        left = yield logic.leftmsg.update(stamp)
+        response = {'left': left, 'stamp': logic.leftmsg.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
         
     

@@ -18,6 +18,11 @@ pic     char(100),
 desp    varchar(1000)
 );
 
+create table if not exists id (
+name   char(20) not null primary key,
+num    bigint unsigned not null
+);
+
 create table if not exists password (
 fid       char(100) not null primary key,
 passwd    char(50) not null
@@ -36,7 +41,7 @@ create table if not exists cook_do (
 );
 
 create table if not exists order_history (
-  uid     bigint unsigned not null,
+  uid     bigint unsigned not null primary key,
   did     char(20)  not null,
   num     float(8,2) not null,
   price   float(8,2) not null,

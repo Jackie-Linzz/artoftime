@@ -72,6 +72,7 @@ $(document).ready(function(){
 	);
     });
     updater.poll();
+    left_updater.poll();
 });
 
 function show_select() {
@@ -191,5 +192,46 @@ var updater = {
         updater.cursor = 0;
         updater.interval = 800;
         updater.xhr.abort();
+    }
+};
+function show_left() {
+    $('.left').text(window.left);
+}
+var left_updater = {
+    interval: 500,
+    stamp: 0,
+    cursor: 0,
+    xhr: null,
+    poll: function(){
+	
+        console.log('polling', left_updater.cursor);
+        left_updater.cursor += 1;
+        left_updater.xhr = $.ajax({
+            url: '/cook-left-update',
+            type: 'POST',
+            dataType: 'json',
+            data: {'stamp': json(left_updater.stamp)},
+            success: left_updater.onSuccess,
+            error: left_updater.onError
+        });
+
+    },
+    onSuccess: function(response){
+        window.left = response.left;
+        left_updater.stamp = response.stamp;
+        show_left();
+        left_updater.interval = 500;
+        setTimeout(left_updater.poll, left_updater.interval);
+    },
+    onError: function(response, error) {
+        console.log(error);
+        left_updater.interval = left_updater.interval*2;
+        setTimeout(left_updater.poll, left_updater.interval);
+    },
+    reset: function(){
+        left_updater.stamp = 0;
+        left_updater.cursor = 0;
+        left_updater.interval = 800;
+        left_updater.xhr.abort();
     }
 };

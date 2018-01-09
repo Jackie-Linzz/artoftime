@@ -83,6 +83,7 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/cook-work', CookWorkHandler),
               (r'/cook-ins', CookInsHandler),
               (r'/cook-work-update', CookWorkUpdateHandler),
+              (r'/cook-left-update', CookLeftUpdateHandler),
               (r'/cashier-home', CashierHomeHandler),
               (r'/cashier-work', CashierWorkHandler),
               (r'/cashier-work-desk', CashierWorkDeskHandler),
@@ -127,7 +128,7 @@ def main():
 
 
 if __name__ == "__main__":
-    prepare.resume()
+    prepare.prepare()
     main()
 
 

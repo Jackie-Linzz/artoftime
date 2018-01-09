@@ -67,6 +67,8 @@ def sync():
     else:
         info =  {'company': '', 'shop': '', 'location': '', 'heading': '', 'welcome': '', 'desp': ''}
     logic.info = info
+    sync_pid()
+    sync_uid()
     #desks and tables
     desks = mysql.get_all('desks')
     logic.desks = set()
@@ -99,3 +101,19 @@ def sync():
     for k, v in logic.cook_do.items():
         if u'all' in v:
             v = set([u'all'])
+
+def sync_pid():
+    result = mysql.get('id', {'name': 'pid'})
+    if len(result) == 0:
+        mysql.insert('id', {'name': 'pid', 'num': 0})
+        logic.global_pid = 0
+    else:
+        logic.global_pid = result[0]['num']
+
+def sync_uid():
+    result = mysql.get('id', {'name': 'uid'})
+    if len(result) == 0:
+        mysql.insert('id', {'name': 'uid', 'num': 0})
+        logic.global_uid = 0
+    else:
+        logic.global_uid = result[0]['num']

@@ -1,6 +1,8 @@
 import tornado.web
 import logic
 
+from tornado.escape import json_encode, json_decode
+
 class CashierHomeHandler(tornado.web.RequestHandler):
     def get(self):
         self.render('cashier-home.html')
@@ -37,8 +39,8 @@ class CashierWorkCashHandler(tornado.web.RequestHandler):
         desk = desk.upper()
         table = logic.tables.get(desk)
         fid = self.get_cookie('fid')
-        table.cash(fid)
-        response = {'status': 'ok', 'myorder': table.to_dict()}
+        result = table.cash(fid)
+        response = {'status': result, 'myorder': table.to_dict()}
         self.write(json_encode(response))
         
         

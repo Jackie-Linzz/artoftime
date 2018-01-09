@@ -280,7 +280,7 @@ class ManagerCookdoHandler(tornado.web.RequestHandler):
             
         all = False
         for one in result:
-            if one['did'] == all:
+            if one['did'] == 'all':
                 all = True
                 break
         
@@ -349,7 +349,8 @@ class ManagerAchievementHandler(tornado.web.RequestHandler):
             for one in result:
                 name = one['name']
                 number = one['number']
-                
+                if name not in temp:
+                    temp[name] = {}
                 if one['fb'] == -1:
                     temp[name]['bad'] = number
                 elif one['fb'] == 0:
@@ -435,6 +436,8 @@ class ManagerHistoryFeedbackHandler(tornado.web.RequestHandler):
         for one in result:
             did = one['did']
             fb = one['fb']
+            if did not in temp:
+                temp[did] = {}
             temp[did]['did'] = did
             temp[did]['name'] = one['name']
             if fb == 1:
