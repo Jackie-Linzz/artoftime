@@ -289,7 +289,7 @@ class Table(object):
             one.store()
             mysql.insert('cash_history', {'fid': fid, 'uid': one.uid, 'pid': self.pid, 'status': 'failure', 'stamp': cash_time})
         # to gprinter
-        printer.gprint(self.to_printer())
+        #printer.gprint(self.to_printer())
         self.delete = []
         self.payed = []
         self.gdemand = ''
