@@ -75,7 +75,7 @@ class ManagerGroupAddHandler(tornado.web.RequestHandler):
         corder = self.get_argument('corder')
         cdesp = self.get_argument('cdesp')
         corder = int(corder)
-        row = {'cid':cid, 'name': cname, 'ord': corder, 'desp': cdesp}
+        row = {'cid':cid, 'name': unicode(cname), 'ord': corder, 'desp': cdesp}
         result = mysql.insert('category', row)
         if result:
             logic.category[cid] = row
@@ -597,7 +597,7 @@ class ManagerShutdownHandler(tornado.web.RequestHandler):
         self.render('manager-shutdown.html')
 
     def post(self):
-        prepare.save()
+        #prepare.save()
         echo = subprocess.Popen(['echo', 'jerrylan418'], stdout=subprocess.PIPE)
         shutdown = subprocess.Popen(['sudo', '-S', 'shutdown', '-h', 'now'], stdin=echo.stdout)
         
