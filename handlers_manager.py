@@ -6,7 +6,7 @@ import logic
 import mysql
 import os
 import subprocess
-import qrcode
+#import qrcode
 import MySQLdb
 import printer
 import prepare
