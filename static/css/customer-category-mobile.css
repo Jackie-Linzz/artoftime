@@ -1,0 +1,33 @@
+.header {
+    padding: 20px 0;
+    font-size: 60px;
+    background-color: #f17c67;
+    z-index: 1;
+}
+.back {
+    position: absolute;
+    left: 15px;
+    top: 20px;
+    font-size: 40px;
+    padding: 4px;
+    border: 1px solid white;
+    border-radius: 4px;
+    
+}
+.content {
+    padding: 100px 0;
+}
+.item {
+    position: relative;
+    margin: 20px 0;
+    padding: 25px 0;
+    font-size: 40px;
+    background-color: #f17c67;
+    z-index: 0;
+}
+.num {
+    position: absolute;
+    right: 10px;
+    bottom: 25px;
+    font-size: 35px;
+}

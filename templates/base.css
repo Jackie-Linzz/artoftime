@@ -16,7 +16,7 @@ body {
 	font-family:  "Hiragino Sans GB", "Microsoft YaHei",
 					 "WenQuanYi Micro Hei", sans-serif;
         font-size: 18px;
-	line-height: 18px;
+	
 }
 
 .header {
@@ -28,8 +28,7 @@ body {
     
 }
 .header h1, .header h2, .header h3, .header h4, .header h5 , .header h6 {
-	font-size: 26px;
-	line-height: 26px;
+	font-size: 40px;
         font-weight: 400;
 }
 .content {
@@ -71,7 +70,7 @@ input {
     height: 36px;
     color: white;
     font-size: 18px;
-    line-height: 18px;
+    
 }
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 

@@ -1,0 +1,26 @@
+body {
+    padding: 200px 0;
+}
+
+.header {
+    
+    background-color: #f17c67;
+}
+.heading {
+    font-size: 60px;
+}
+.message {
+    padding: 100px 0;
+    font-size: 40px;
+    background-color: #495a80;
+}
+.button {
+    margin-top: 10px;
+    font-size: 60px;
+    background-color: #f17c67;
+}
+input {
+    font-size: 40px;
+    color: #495a80;
+    text-align: center;
+}

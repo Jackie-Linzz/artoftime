@@ -1,0 +1,42 @@
+.header {
+    padding: 20px 0;
+    font-size: 60px;
+    background-color: #f17c67;
+}
+.back {
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    padding: 0 10px;
+    font-size: 40px;
+    border: 1px dotted white;
+    border-radius: 4px;
+}
+.content {
+    padding: 200px 0;
+}
+.order {
+    padding: 100px 0;
+    font-size: 50px;
+    background-color: #f17c67;
+}
+.myorder {
+    padding: 100px 0;
+    font-size: 50px;
+    background-color: #495a80;
+}
+.fb {
+    padding: 100px 0;
+    font-size: 50px;
+    background-color: #2e68aa;
+}
+.call {
+    padding: 100px 0;
+    font-size: 50px;
+    background-color: #376956;
+}
+.qrcode {
+    padding: 100px 0;
+    font-size: 50px;
+    background-color: #9cf;
+}

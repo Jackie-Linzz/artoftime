@@ -305,9 +305,11 @@ class ManagerAchievementHandler(tornado.web.RequestHandler):
         t1 = self.get_argument('from')
         t2 = self.get_argument('to')
         fid = self.get_argument('fid')
+        #print t1, t2
         format = '%Y-%m-%d'
         t1 = datetime.datetime.strptime(t1, format)
         t2 = datetime.datetime.strptime(t2, format)
+        #print t1, t2
         if t1 >= t2:
             return
         sql = 'select role from faculty where fid = "%s" ' % fid
@@ -316,6 +318,7 @@ class ManagerAchievementHandler(tornado.web.RequestHandler):
             return
         roles = result[0]['role']
         roles = roles.split(',')
+        #print roles
         response = {'status': 'ok', 'roles': roles}
 
         t1 = time.mktime(t1.timetuple())

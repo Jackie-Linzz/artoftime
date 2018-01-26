@@ -5,9 +5,9 @@ import mysql
 import printer
 from tornado.concurrent import Future
 
-data_dir = os.path.expanduser('~/artoftime')
-company_file = os.path.expanduser('~/artoftime/company')
-data_file = os.path.expanduser('~/artoftime/data')
+data_dir = os.path.expanduser('~/data')
+company_file = os.path.expanduser('~/data/company')
+data_file = os.path.expanduser('~/data/data')
 info = {}
 tables = {}
 waiting = {}

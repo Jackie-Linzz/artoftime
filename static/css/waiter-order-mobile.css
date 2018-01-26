@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 0;
+    background-color: #9cf;
+}
+.heading {
+    color: white;
+    font-size: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+#desk {
+    color: white;
+    font-size: 40px;
+    line-height: 40px;
+    height: 40px;
+    text-align: center;
+    background-color: #9cf;
+    border: 1px solid white;
+}
+.back {
+    position: absolute;
+    left: 15px;
+    top: 20px;
+    font-size: 40px;
+    line-height: 40px;
+    padding: 0px 15px;
+    border: 1px solid white;
+    color: white;
+    border-radius: 8px;
+}
+.content {
+    padding: 150px 0;
+}
+table {
+    margin: 0 auto;
+    font-size: 40px;
+}
+table input {
+    margin: 10px 0;
+    font-size: 40px;
+    width: 600px;
+}
+#submit {
+    margin-top: 20px;
+    padding: 10px 0;
+    text-align: center;
+    color: white;
+    background-color: #9cf;
+}
+.bar, .msg {
+    margin-top: 20px;
+    padding: 10px 0;
+    font-size: 40px;
+    text-align: center;
+    color: white;
+    background-color: #9cf;
+}
+.item {
+    margin: 20px 0;
+    padding: 0;
+    font-size: 40px;
+    color: white;
+    background-color: #9cf;
+    border-radius: 8px;
+}
+.item .row {
+    margin: 10px 0;
+    width: 100%;
+    text-align: left;
+}
+.item .name, .item .price, .item .num {
+    display: inline-block;    
+}
+.item .name {
+    width: 60%;
+    text-align: left;
+}
+.item .price, .item .num {
+    width: 20%;
+    text-align: center;
+}
+.item .button {
+    padding: 10px 0;
+    font-size: 40px;
+    line-height: 40px;
+    text-align: center;
+    border: 1px dashed white;
+    border-radius: 8px;
+}
+.gdemand {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 40px;
+}
+.submit {
+    margin-top: 20px;
+    padding: 20px 0;
+    font-size: 40px;
+    text-align: center;
+    color: white;
+    background-color: #bdb76a;
+}
