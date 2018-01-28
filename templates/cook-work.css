@@ -39,11 +39,15 @@
     text-align: center;
 }
 .select .button .refuse-button {
-    width: 20%;
+    width: 30%;
     background-color: #9c9;
 }
+.select .button .prepare-button {
+    width: 40%;
+    background-color: #00343f;
+}
 .select .button .accept-button {
-    width: 80%;
+    width: 30%;
     background-color: #9cf;
 }
 .select .current {

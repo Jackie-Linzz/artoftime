@@ -621,11 +621,13 @@ class Cook(object):
     def ins(self, ins):#waiter-ins remove one when one in byway
         #ins: accept,refuse,cancel-byway,cancel-doing,done
         global uids
-        if ins[0] == 'accept':
+        if ins[0] == 'prepare':
             if self.current is None:
                 self.current = self.select()
                 self.select_byway()
-               
+        if ins[0] == 'accept':
+            if self.current is None:
+                pass               
             else:
                 items = ins[1:]
                 for uid in items:

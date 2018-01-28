@@ -22,9 +22,18 @@ $(document).ready(function(){
     $(document).on('tap', '.byway .item', function(){
 	$(this).toggleClass('selected');
     });
+    $('#select').trigger('tap');
     //instructions
     $(document).on('tap', '.refuse-button', function(){
 	var ins = ['refuse'];
+	$.postJSON(
+	    '/cook-ins',
+	    {'fid': window.cook.fid, 'ins': json(ins)},
+	    function(){}
+	);
+    });
+    $(document).on('tap', '.prepare-button', function(){
+	var ins = ['prepare'];
 	$.postJSON(
 	    '/cook-ins',
 	    {'fid': window.cook.fid, 'ins': json(ins)},
@@ -43,6 +52,7 @@ $(document).ready(function(){
 	    {'fid': window.cook.fid, 'ins': json(ins)},
 	    function(){}
 	);
+	$('#doing').trigger('tap');
     });
     $(document).on('tap', '.byway .item .close', function(){
 	var uid = $(this).parent().data('uid');

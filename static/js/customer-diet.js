@@ -9,6 +9,9 @@ $(document).ready(function(){
 	window.location.replace('/customer-detail?desk='+desk+'&did='+did);
     });
     $(document).on('tap', '.button', function(){
+	$(this).addClass('animation');
+	//$(this).removeClass('animation');
+	//setTimeout("$(this).removeClass('animation')", 1500);
 	var did = $(this).parents('.item').attr('data-did');
 	var ins = ['+', did, ''];
 	$.postJSON(

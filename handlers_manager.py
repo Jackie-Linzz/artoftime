@@ -28,7 +28,7 @@ class ManagerCompanyHandler(tornado.web.RequestHandler):
         self.render('manager-company.html')
 
     def post(self):
-        file = os.path.expanduser(logic.company_file)
+        file = logic.company_file
         if not os.path.isfile(file):
             info =  {'company': '', 'shop': '', 'location': '', 'heading': '', 'welcome': '', 'desp': ''}
         else:
@@ -52,10 +52,10 @@ class ManagerCompanySetHandler(tornado.web.RequestHandler):
         info = {'company': company, 'shop': shop, 'location': location, 'heading': heading, 'welcome': welcome, 'desp': desp}
         logic.info = info
 
-        data_dir = os.path.expanduser(logic.data_dir)
+        data_dir = logic.data_dir
         if not os.path.isdir(data_dir):
             os.mkdir(data_dir)
-        file = os.path.expanduser(logic.company_file)
+        file = logic.company_file
         with open(file, 'wb') as f:
             pickle.dump(info, f)
         response = {'status': 'ok'}
@@ -128,7 +128,7 @@ class ManagerDietAddHandler(tornado.web.RequestHandler):
                 content = meta['body']
                 ext = os.path.splitext(file_name)[-1]
                 picture = str(did) + ext
-                full_path = os.path.join(logic.data_dir, 'pictures/' + picture)
+                full_path = os.path.join(pic_dir, picture)
                 with open(full_path, 'wb') as f:
                     f.write(content)
         row = {'did': did, 'name': name, 'ord': order, 'price': price, 'price2': price2, 'base': base, 'cid': cid, 'desp': desp, 'pic': picture}
@@ -137,7 +137,8 @@ class ManagerDietAddHandler(tornado.web.RequestHandler):
             logic.diet[did] = row
             response = {'status': 'ok'}
         else:
-            os.remove(os.path.join(os.getcwd(), 'static/pictures/' + picture))
+            if os.path.isfile(full_path):
+                os.remove(full_path)
             response = {'status': 'error'}
         #content = name+'\n'+ ('%s' % price) +'\n'
         #content = content.encode('gb18030')

@@ -6,6 +6,7 @@ $(document).ready(function(){
 	window.location.replace('/customer-diet?desk='+desk+'&cid='+cid);
     });
     $(document).on('tap', '.footer', function(){
+	//$(this).addClass('animation');
 	var did = $('.heading').attr('data-did');
 	var demand = $('.demand').val();
 	demand = trim(demand);

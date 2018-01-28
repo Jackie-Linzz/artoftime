@@ -25,7 +25,7 @@ $(document).ready(function(){
 	);
     });
     $(document).on('tap', '.footer', function(){
-	
+	//$(this).addClass('animation');
 	var ins = ['submit'];
 	$.postJSON(
 	    '/customer-ins',
