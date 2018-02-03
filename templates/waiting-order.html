@@ -12,58 +12,58 @@
 	<link rel="stylesheet" type="text/css" href="waiting-order.css">
 
 	<link rel="stylesheet" type="text/css" href="{{static_url('css/base.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{static_url('css/waiting-order.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{static_url('css/waiting-order.css')}}" id="css">
 
-</head>
+    </head>
 
-<body>
-    <div class="header">
-        <h2 class="heading">{{table}}</h2>
-        <div class="left">继续</div>
-    </div>
-    <div class="content">
-        <div class="item one">
-            <div class="row">
-                <div class="name">名字</div><!--
-                --><div class="price">18.0</div><!--
-                --><div class="num">0</div>
+    <body>
+	<div class="header">
+            <h2 class="heading">{{table}}</h2>
+            <div class="left">继续</div>
+	</div>
+	<div class="content">
+            <div class="item one">
+		<div class="row">
+                    <div class="name">名字</div><!--
+						   --><div class="price">18.0</div><!--
+										      --><div class="num">0</div>
+		</div>
+		<div class="row">
+                    <div class="demand">这是特殊要求</div>
+		</div>
+		<div class="row">
+                    <div class="button">-</div>
+		</div>
             </div>
-            <div class="row">
-                <div class="demand">这是特殊要求</div>
+            <div class="item one">
+		<div class="row">
+                    <div class="name">名字</div><!--
+						   --><div class="price">18.0</div><!--
+										      --><div class="num">0</div>
+		</div>
+		<div class="row">
+                    <div class="demand">这是特殊要求</div>
+		</div>
+		<div class="row">
+                    <div class="button">-</div>
+		</div>
             </div>
-            <div class="row">
-                <div class="button">-</div>
+            <div class="item total">
+		<div class="row">
+                    <div class="name">共</div><!--
+						 --><div class="price">188.0</div><!--
+										     --><div class="num">10</div>
+		</div>
             </div>
-        </div>
-        <div class="item one">
-            <div class="row">
-                <div class="name">名字</div><!--
-                --><div class="price">18.0</div><!--
-                --><div class="num">0</div>
-            </div>
-            <div class="row">
-                <div class="demand">这是特殊要求</div>
-            </div>
-            <div class="row">
-                <div class="button">-</div>
-            </div>
-        </div>
-        <div class="item total">
-            <div class="row">
-                <div class="name">共</div><!--
-                --><div class="price">188.0</div><!--
-                --><div class="num">10</div>
-            </div>
-        </div>
-	<textarea class="gdemand" rows="3" placeholder="general demand"></textarea>
-    </div>
-    
-    
+	    <textarea class="gdemand" rows="3" placeholder="general demand"></textarea>
+	</div>
+	
+	
 
-    <script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
-    <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
-    <script src="{{static_url("js/base.js")}}"></script>
-    <script src="{{static_url("js/waiting-order.js")}}"></script>
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/waiting-order.js")}}"></script>
 
-</body>
+    </body>
 </html>

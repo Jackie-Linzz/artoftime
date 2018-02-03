@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="customer-diet.css">
 
 	<link rel="stylesheet" type="text/css" href="{{static_url("css/base.css")}}">
-	<link rel="stylesheet" type="text/css" href="{{static_url("css/customer-diet-mobile.css")}}">
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/customer-diet-mobile.css")}}" id="css">
 
     </head>
 
@@ -23,7 +23,7 @@
 	    <div class="left">返回</div>
 	</div>
 	<div class="content">
-	   
+	    
 	    {% for v in group %}
 	    <div class="item" data-did="{{v['did']}}">
 		<div class="name">{{v['name']}}</div><div class="detail">...</div><div class="price">{{v['price']}}</div><div class="num">0</div><div class="button">+</div>

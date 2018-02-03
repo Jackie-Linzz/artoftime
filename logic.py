@@ -271,6 +271,8 @@ class Table(object):
     def cash(self, fid):
         if len(self.left)+len(self.doing) >0:
             return 'failure'
+        if len(self.done) == 0:
+            return 'failure'
         self.payed = self.done
         self.orders = []
         self.left = []
@@ -333,7 +335,10 @@ class Table(object):
         if not isinstance(one, Order):
             return
         if one.status == 'left':
-            self.left.remove(one)  
+            self.left.remove(one)
+            if one.inbyway == 1:
+                cook = cooks.get(one.cook)
+                cook.ins(['remove', one.uid])
         self.delete.append(one)
         self.set_future()
         
@@ -537,7 +542,8 @@ class FeedbackMessage(object):
         self.set_future()
 
     def remove(self, desk):
-        self.message.remove(desk)
+        if desk in self.message:
+            self.message.remove(desk)
         self.stamp = time.time()
         self.set_future()
 

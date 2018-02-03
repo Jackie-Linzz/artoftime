@@ -1,4 +1,12 @@
 $(document).ready(function(){
+
+    //for mobile css
+    if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
+    } else {
+	var css = $('#css').attr('href');
+	css = css.replace(/-mobile/g, '');
+	$('#css').attr('href', css);
+    }
     var desk = $('.heading').attr('data-desk');
     var cid = $('.heading').attr('data-cid');
     $(document).on('tap', '.left', function(){
@@ -9,6 +17,7 @@ $(document).ready(function(){
 	window.location.replace('/customer-detail?desk='+desk+'&did='+did);
     });
     $(document).on('tap', '.button', function(){
+	$(this).removeClass('animation');
 	$(this).addClass('animation');
 	//$(this).removeClass('animation');
 	//setTimeout("$(this).removeClass('animation')", 1500);

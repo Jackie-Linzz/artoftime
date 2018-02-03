@@ -1,4 +1,12 @@
 $(document).ready(function(){
+
+    //for mobile css
+    if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
+    } else {
+	var css = $('#css').attr('href');
+	css = css.replace(/-mobile/g, '');
+	$('#css').attr('href', css);
+    }
     window.myorder = {};
     var desk = $('.heading').attr('data-desk');
     $(document).on('tap', '.item', function(e){

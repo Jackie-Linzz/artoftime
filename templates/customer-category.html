@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="customer-category.css">
 
 	<link rel="stylesheet" type="text/css" href="{{static_url("css/base.css")}}">
-	<link rel="stylesheet" type="text/css" href="{{static_url("css/customer-category-mobile.css")}}">
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/customer-category-mobile.css")}}" id="css">
 
     </head>
 
@@ -23,7 +23,7 @@
 	    <div class="back">返回</div>
 	</div>
 	<div class="content">
-	   
+	    
 	    {% for v in groups %}
 	    <div class="item" data-cid="{{v['cid']}}">
 		<div class="name">{{v['name']}}</div>

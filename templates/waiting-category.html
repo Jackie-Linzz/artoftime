@@ -12,28 +12,28 @@
 	<link rel="stylesheet" type="text/css" href="waiting-category.css">
 
 	<link rel="stylesheet" type="text/css" href="{{static_url('css/base.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{static_url('css/waiting-category.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{static_url('css/waiting-category.css')}}" id="css">
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-  <div class="header">
-    <h2 class="heading">{{table}}</h2>
-  </div>
-  <div class="content">
-    
-    {% for k,v in category.items()%}
-    <div class="item" data-cid="{{v['cid']}}">{{v['name']}}</div>
-    {% end %}
-  </div>
-  <div class="footer">我的订单</div>
+	<div class="header">
+	    <h2 class="heading">{{table}}</h2>
+	</div>
+	<div class="content">
+	    
+	    {% for k,v in category.items()%}
+	    <div class="item" data-cid="{{v['cid']}}">{{v['name']}}</div>
+	    {% end %}
+	</div>
+	<div class="footer">我的订单</div>
 
-  <script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
-  <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
-  <script src="{{static_url("js/base.js")}}"></script>
-  <script src="{{static_url("js/waiting-category.js")}}"></script>
-  
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/waiting-category.js")}}"></script>
+	
 
-</body>
+    </body>
 </html>

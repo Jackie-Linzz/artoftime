@@ -1,4 +1,12 @@
 $(document).ready(function(){
+
+    //for mobile css
+    if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
+    } else {
+	var css = $('#css').attr('href');
+	css = css.replace(/-mobile/g, '');
+	$('#css').attr('href', css);
+    }
     $('.content').hide();
     $(document).on('tap', '.back', function(){
 	window.location.replace('/manager-home');
@@ -13,6 +21,7 @@ $(document).ready(function(){
 	    function(response) {
 		if(response.status != 'ok') return;
 		var comments = response.comments;
+		console.log(comments);
 		for(var i in comments) {
 		    var one = comments[i];
 		    var div = $('<div class="comment">'+

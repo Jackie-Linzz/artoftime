@@ -12,30 +12,30 @@
 	<link rel="stylesheet" type="text/css" href="waiting-diet.css">
 
 	<link rel="stylesheet" type="text/css" href="{{static_url('css/base.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{static_url('css/waiting-diet.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{static_url('css/waiting-diet.css')}}" id="css">
 
-</head>
+    </head>
 
-<body>
-  <div class="header">
-      <h2 class="heading">{{table}}</h2>
-      <div class="left" data-cid="{{cid}}">返回</div>
-  </div>
-  <div class="content">
-  
-      {% for v in diet %}
-      <div class="item" data-did="{{v['did']}}">
-	  <div class="name">{{v['name']}}</div><div class="detail">...</div><div class="price">{{v['price']}}</div><div class="num">0</div><div class="button">+</div>
-      </div>
-      {% end %}
-  </div>
-  <div class="footer">我的订单</div>
+    <body>
+	<div class="header">
+	    <h2 class="heading">{{table}}</h2>
+	    <div class="left" data-cid="{{cid}}">返回</div>
+	</div>
+	<div class="content">
+	    
+	    {% for v in diet %}
+	    <div class="item" data-did="{{v['did']}}">
+		<div class="name">{{v['name']}}</div><div class="detail">...</div><div class="price">{{v['price']}}</div><div class="num">0</div><div class="button">+</div>
+	    </div>
+	    {% end %}
+	</div>
+	<div class="footer">我的订单</div>
 
-  <script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
-  <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
-  <script src="{{static_url("js/base.js")}}"></script>
-  <script src="{{static_url("js/waiting-diet.js")}}"></script>
-  
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/waiting-diet.js")}}"></script>
+	
 
-</body>
+    </body>
 </html>

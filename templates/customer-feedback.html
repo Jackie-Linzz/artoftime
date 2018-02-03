@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="customer-feedback.css">
 
 	<link rel="stylesheet" type="text/css" href="{{static_url("css/base.css")}}">
-	<link rel="stylesheet" type="text/css" href="{{static_url("css/customer-feedback-mobile.css")}}">
+	<link rel="stylesheet" type="text/css" href="{{static_url("css/customer-feedback-mobile.css")}}" id="css">
     </head>
 
     <body>
@@ -21,7 +21,7 @@
             <div class="left">返回</div>
 	</div>
 	<div class="content">
-           
+            
 	    {% for item in done%}
 	    <div class="item" data-uid="{{item.uid}}">
 		<div class="row">

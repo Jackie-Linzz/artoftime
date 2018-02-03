@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
 
-    <meta charset="utf-8" />
+	<meta charset="utf-8" />
 
-    <meta http-equiv="expires" content="0">
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
 
-    <link rel="stylesheet" type="text/css" href="base.css">
-    <link rel="stylesheet" type="text/css" href="waiting-entry.css">
+	<link rel="stylesheet" type="text/css" href="base.css">
+	<link rel="stylesheet" type="text/css" href="waiting-entry.css">
 
-    <link rel="stylesheet" type="text/css" href="{{static_url('css/base.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{static_url('css/waiting-entry.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{static_url('css/base.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{static_url('css/waiting-entry.css')}}" id="css">
 
-</head>
+    </head>
 
-<body>
-    <div class="header">
-        <h2 class="heading">排队</h2>
-    </div>
-    <div class="content">
-        <div>{{message}}</div>
-        <br>
-        <br>
-        <div>您的序号是{{th}}号</div>
-        <br>
-        <br>
-        <div>您的前面有{{number}}桌</div>
-        <br>
-        <br>
-        <div>请输入您的人数：<input type="number" class="number">人</div>
-        <br>
-        <div class="button">确定</div>
-    </div>
+    <body>
+	<div class="header">
+            <h2 class="heading">排队</h2>
+	</div>
+	<div class="content">
+            <div>{{message}}</div>
+            <br>
+            <br>
+            <div>您的序号是{{th}}号</div>
+            <br>
+            <br>
+            <div>您的前面有{{number}}桌</div>
+            <br>
+            <br>
+            <div>请输入您的人数：<input type="number" class="number">人</div>
+            <br>
+            <div class="button">确定</div>
+	</div>
 
-    <script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
-    <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
-    <script src="{{static_url("js/base.js")}}"></script>
-    <script src="{{static_url("js/waiting-entry.js")}}"></script>
-</body>
+	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<script src="{{static_url("js/base.js")}}"></script>
+	<script src="{{static_url("js/waiting-entry.js")}}"></script>
+    </body>
 </html>

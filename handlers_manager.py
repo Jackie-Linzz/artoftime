@@ -542,24 +542,29 @@ class ManagerCommentShowHandler(tornado.web.RequestHandler):
         cursor.execute(sql)
         conn.commit()
         comments = cursor.fetchmany(100)
+        #print comments
+        result = []
         for one in comments:
-            stamp = one['stamp']
+            stamp = one[3]
             stamp = datetime.datetime.fromtimestamp(stamp)
             stamp = stamp.strftime('%Y-%m-%d %H:%M:%S')
-            one['stamp'] = stamp
-        response = {'status': 'ok', 'comments': comments}
+            t = {'desk': one[1], 'comment': one[2], 'stamp': stamp}
+            result.append(t)
+        response = {'status': 'ok', 'comments': result}
         self.write(json_encode(response))
 
 class ManagerCommentMoreHandler(tornado.web.RequestHandler):
     def post(self):
         global cursor
         comments = cursor.fetchmany(100)
+        result = []
         for one in comments:
-            stamp = one['stamp']
+            stamp = one[3]
             stamp = datetime.datetime.fromtimestamp(stamp)
             stamp = stamp.strftime('%Y-%m-%d %H:%M:%S')
-            one['stamp'] = stamp
-        response = {'status': 'ok', 'comments': comments}
+            t = {'desk': one[1], 'comment': one[2], 'stamp': stamp}
+            result.append(t)
+        response = {'status': 'ok', 'comments': result}
         self.write(json_encode(response))
 
 class ManagerMaskHandler(tornado.web.RequestHandler):
