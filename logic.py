@@ -336,9 +336,7 @@ class Table(object):
             return
         if one.status == 'left':
             self.left.remove(one)
-            if one.inbyway == 1:
-                cook = cooks.get(one.cook)
-                cook.ins(['remove', one.uid])
+            
         self.delete.append(one)
         self.set_future()
         
