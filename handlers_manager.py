@@ -222,6 +222,34 @@ class ManagerDeskShowHandler(tornado.web.RequestHandler):
         response = {'status': 'ok', 'desks': desks}
         self.write(json_encode(response))
 
+class ManagerOrderHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-order.html')
+
+    def post(self):
+        pid = self.get_argument('order')
+        pid = int(pid)
+        sql = 'select diet.name as name,num,order_history.price as price,cook_history.fid as cook,cash_history.fid as cashier,status from cash_history,order_history,cook_history,diet where cash_history.uid=order_history.uid and order_history.uid=cook_history.uid and order_history.did=diet.did and cash_history.pid=%s' % pid
+        result = mysql.query(sql)
+        result2 = mysql.get_all('faculty')
+        faculty = {}
+        for one in result2:
+            faculty[one['fid']] = one['name']
+        total = 0
+        for one in result:
+            one['price'] = one['num'] * one['price']
+            one['cook'] = faculty[one['cook']]
+            one['cashier'] = faculty[one['cashier']]
+            if one['status'] == 'success':
+                total += one['price']
+        result.append({'name': '', 'num': 'all', 'price': total, 'cook': '', 'cashier': '', 'status': ''})
+        response = {'status': 'ok', 'pid': pid, 'items': result}
+        self.write(json_encode(response))
+        
+
 class ManagerWorkerHandler(tornado.web.RequestHandler):
     def get(self):
         role = self.get_cookie('role')

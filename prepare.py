@@ -61,6 +61,9 @@ def resume():
 
 def sync():
     #company_file
+    #import pdb
+    #pdb.set_trace()
+    #print logic.company_file
     if os.path.isfile(logic.company_file):
         with open(logic.company_file, 'rb') as f:
             info = pickle.load(f)

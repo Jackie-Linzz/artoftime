@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+    color: black;
+    background-color: white;
+}
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    color: white;
+    background-color: #2a8fbd;
+    font-size: 22px;
+}
+.content {
+    margin-left: 200px;
+}
+.menu .back {
+    margin-bottom: 30px;
+    padding: 10px;
+    font-size: 24px;
+    text-align: center;
+}
+.menu .back:hover {
+    border: 1px solid white;
+}
+.menu .head, .menu .op {
+    padding: 10px 0;
+    text-align: center;
+}
+.menu .head {
+    font-size: 24px;
+}
+.menu .op:hover {
+    border: 1px dotted white;
+}
+.query-order {
+    width: 50%;
+    margin: 0 auto;
+}
+.query-order .heading {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+.query-order .label {
+    margin: 10px 0;
+    font-size: 22px;
+}
+.query-order input {
+    width: 100%;
+    font-size: 22px;
+}
+#query-button {
+    margin-top: 30px;
+    padding: 10px 0;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    background-color: #2a8fbd;
+}
+
+.order-show table {
+    margin: 30px auto;
+    text-align: center;
+}
+.order-show caption {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+.order-show table td {
+    min-width: 100px;
+}
