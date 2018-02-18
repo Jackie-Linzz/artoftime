@@ -3,34 +3,34 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     var desk = $('.heading').attr('data-desk');
     var cid = $('.heading').attr('data-cid');
     $(document).on('tap', '.left', function(){
-	window.location.replace('/customer-category?desk='+desk);
+	    window.location.replace('/customer-category?desk='+desk);
     });
     $(document).on('tap', '.detail', function(){
-	var did = $(this).parents('.item').attr('data-did');
-	window.location.replace('/customer-detail?desk='+desk+'&did='+did);
+	    var did = $(this).parents('.item').attr('data-did');
+	    window.location.replace('/customer-detail?desk='+desk+'&did='+did);
     });
     $(document).on('tap', '.button', function(){
-	$(this).removeClass('animation');
-	$(this).addClass('animation');
-	//$(this).removeClass('animation');
-	//setTimeout("$(this).removeClass('animation')", 1500);
-	var did = $(this).parents('.item').attr('data-did');
-	var ins = ['+', did, ''];
-	$.postJSON(
-	    '/customer-ins',
-	    {'desk': desk, 'ins': json(ins)},
-	    function(response){}
-	);
+	    $(this).removeClass('animation');
+	    $(this).addClass('animation');
+	    //$(this).removeClass('animation');
+	    //setTimeout("$(this).removeClass('animation')", 1500);
+	    var did = $(this).parents('.item').attr('data-did');
+	    var ins = ['+', did, ''];
+	    $.postJSON(
+	        '/customer-ins',
+	        {'desk': desk, 'ins': json(ins)},
+	        function(response){}
+	    );
     });
     $(document).on('tap', '.footer', function(){
-	window.location.replace('/customer-order?desk='+desk);
+	    window.location.replace('/customer-order?desk='+desk);
     });
     updater.poll();
 });
@@ -42,12 +42,12 @@ function show_num(){
     var done = myorder.done;
     var all = orders.concat(left, doing, done);
     $('.item').each(function(){
-	var did = $(this).attr('data-did');
-	var num = 0;
-	for(i in all) {
-	    if(all[i].did == did) num += all[i].num;
-	}
-	$(this).find('.num').text(num);
+	    var did = $(this).attr('data-did');
+	    var num = 0;
+	    for(i in all) {
+	        if(all[i].did == did) num += all[i].num;
+	    }
+	    $(this).find('.num').text(num);
     });
 }
 var updater = {
@@ -56,7 +56,7 @@ var updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	var desk = $('.heading').attr('data-desk');
+	    var desk = $('.heading').attr('data-desk');
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({

@@ -3,20 +3,20 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     window.myorder = {};
     var desk = $('.heading').attr('data-desk');
     $(document).on('tap', '.item', function(e){
-	
-	var cid = $(this).attr('data-cid');
-	window.location.replace('/customer-diet?desk='+desk+'&cid='+cid);
+
+	    var cid = $(this).attr('data-cid');
+	    window.location.replace('/customer-diet?desk='+desk+'&cid='+cid);
     });
     $(document).on('tap', '.back', function(e){
-	
-	window.location.replace('/customer-home?desk='+desk);
+
+	    window.location.replace('/customer-home?desk='+desk);
     });
     updater.poll();
 });
@@ -27,12 +27,12 @@ function show_num(){
     var done = myorder.done;
     var all = orders.concat(left, doing, done);
     $('.item').each(function(){
-	var cid = $(this).attr('data-cid');
-	var num = 0;
-	for(i in all) {
-	    if(all[i].cid == cid) num += all[i].num;
-	}
-	$(this).find('.num').text(num);
+	    var cid = $(this).attr('data-cid');
+	    var num = 0;
+	    for(i in all) {
+	        if(all[i].cid == cid) num += all[i].num;
+	    }
+	    $(this).find('.num').text(num);
     });
 }
 
@@ -42,7 +42,7 @@ var updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	var desk = $('.heading').attr('data-desk');
+	    var desk = $('.heading').attr('data-desk');
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({

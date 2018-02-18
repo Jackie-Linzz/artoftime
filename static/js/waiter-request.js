@@ -3,21 +3,21 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     window.message = [];
     $('.back').on('tap', function(){
-	window.location.replace('/waiter-home');
+	    window.location.replace('/waiter-home');
     });
     $(document).on('tap', '.item .button', function(){
-	var desk = $(this).parents('.item').data('desk');
-	$.postJSON(
-	    '/waiter-request-remove',
-	    {'desk': desk},
-	    function(response){}
-	);
+	    var desk = $(this).parents('.item').data('desk');
+	    $.postJSON(
+	        '/waiter-request-remove',
+	        {'desk': desk},
+	        function(response){}
+	    );
     });
     updater.poll();
 });
@@ -25,11 +25,11 @@ $(document).ready(function(){
 function show_message() {
     var p = $('.content').empty();
     for(var i in window.message) {
-	var one = window.message[i];
-	var item = $('<div class="item"><div class="msg">desk</div><div class="button">确定</div></div>');
-	item.data('desk', one);
-	item.find('.msg').text(one);
-	p.append(item);
+	    var one = window.message[i];
+	    var item = $('<div class="item"><div class="msg">desk</div><div class="button">确定</div></div>');
+	    item.data('desk', one);
+	    item.find('.msg').text(one);
+	    p.append(item);
     }
 }
 var updater = {
@@ -38,7 +38,7 @@ var updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	
+
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({

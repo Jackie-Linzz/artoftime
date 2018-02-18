@@ -3,14 +3,14 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     window.mask = [];
-    
+
     $(document).on('tap', '.back', function(){
-	window.location.replace('/waiter-home');
+	    window.location.replace('/waiter-home');
     });
     updater.poll();
 });
@@ -18,11 +18,11 @@ $(document).ready(function(){
 function show_mask() {
     var p = $('.content').empty();
     for(var i in window.mask) {
-	var one = window.mask[i];
-	var item = $('<div class="item">did:name</div>');
-	item.data(one);//one is dict
-	item.text(one.did+':'+one.name+':'+one.cid);
-	p.append(item);
+	    var one = window.mask[i];
+	    var item = $('<div class="item">did:name</div>');
+	    item.data(one);//one is dict
+	    item.text(one.did+':'+one.name+':'+one.cid);
+	    p.append(item);
     }
 }
 var updater = {
@@ -31,7 +31,7 @@ var updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	
+
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({
@@ -63,4 +63,3 @@ var updater = {
         updater.xhr.abort();
     }
 };
-

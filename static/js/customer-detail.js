@@ -3,30 +3,30 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     window.myorder = {};
     var desk = $('.heading').attr('data-desk');
     var cid = $('.heading').attr('data-cid');
     $(document).on('tap', '.left', function(){
-	window.location.replace('/customer-diet?desk='+desk+'&cid='+cid);
+	    window.location.replace('/customer-diet?desk='+desk+'&cid='+cid);
     });
     $(document).on('tap', '.footer', function(){
-	//$(this).addClass('animation');
-	var did = $('.heading').attr('data-did');
-	var demand = $('.demand').val();
-	demand = trim(demand);
-	var ins = ['+', did, demand];
-	$.postJSON(
-	    '/customer-ins',
-	    {'desk': desk, 'ins': json(ins)},
-	    function(response){
-		if(response.status != 'ok') return;
-		$('.demand').val('');
-	    }
-	);
+	    //$(this).addClass('animation');
+	    var did = $('.heading').attr('data-did');
+	    var demand = $('.demand').val();
+	    demand = trim(demand);
+	    var ins = ['+', did, demand];
+	    $.postJSON(
+	        '/customer-ins',
+	        {'desk': desk, 'ins': json(ins)},
+	        function(response){
+		        if(response.status != 'ok') return;
+		        $('.demand').val('');
+	        }
+	    );
     });
     updater.poll();
 });
@@ -40,10 +40,10 @@ function show_num(){
     var did = $('.heading').attr('data-did');
     var num = 0;
     for (i in all) {
-	if(all[i].did == did) {
-	    num += all[i].num;
-	    //$('.demand').val(all[i].demand);
-	}
+	    if(all[i].did == did) {
+	        num += all[i].num;
+	        //$('.demand').val(all[i].demand);
+	    }
     }
     $('.num').text(num);
 }
@@ -54,7 +54,7 @@ var updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	var desk = $('.heading').attr('data-desk');
+	    var desk = $('.heading').attr('data-desk');
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({

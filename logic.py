@@ -312,6 +312,7 @@ class Table(object):
         content = initialization + align_center
         company = info['company'].encode('gb18030')
         content += bytes(company) + b'\n\n'
+        content += bytes(unicode(self.pid).encode('gb18030')) + b'\n\n'
         times = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         times += '\n'
         content += align_right
@@ -634,6 +635,10 @@ class Cook(object):
                 pass               
             else:
                 items = ins[1:]
+                items = []
+                items.append(self.current.uid)
+                for one in self.byway:
+                    items.append(one.uid)
                 for uid in items:
                     uid = int(uid)
                     one = uids.get(uid)
@@ -761,7 +766,7 @@ class Cook(object):
                     self.byway.append(one)
                     one.cook = self.fid
                     one.cookname = self.name
-                    if len(self.byway) >= 5:
+                    if len(self.byway) > 3:
                         return
 
     def cash_delete(self, one):

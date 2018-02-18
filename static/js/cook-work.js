@@ -3,91 +3,93 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     window.cook = {};
-    
+
 
     $('.tab').hide();
-    
+
     $(document).on('tap', '#select', function(){
-	$('.tab').hide();
-	$('.select').show();
+	    $('.tab').hide();
+	    $('.select').show();
+        $('.prepare-button').trigger('tap');
     });
     $(document).on('tap', '#doing', function(){
-	$('.tab').hide();
-	$('.doing').show();
+	    $('.tab').hide();
+	    $('.doing').show();
     });
     $(document).on('tap', '#done', function(){
-	$('.tab').hide();
-	$('.done').show();
+	    $('.tab').hide();
+	    $('.done').show();
     });
     $(document).on('tap', '.back', function(){
-	window.location.replace('/cook-home');
+	    window.location.replace('/cook-home');
     });
     $(document).on('tap', '.byway .item', function(){
-	$(this).toggleClass('selected');
+	    $(this).toggleClass('selected');
     });
     $('#select').trigger('tap');
     //instructions
     $(document).on('tap', '.refuse-button', function(){
-	var ins = ['refuse'];
-	$.postJSON(
-	    '/cook-ins',
-	    {'fid': window.cook.fid, 'ins': json(ins)},
-	    function(){}
-	);
+	    var ins = ['refuse'];
+	    $.postJSON(
+	        '/cook-ins',
+	        {'fid': window.cook.fid, 'ins': json(ins)},
+	        function(){}
+	    );
     });
     $(document).on('tap', '.prepare-button', function(){
-	var ins = ['prepare'];
-	$.postJSON(
-	    '/cook-ins',
-	    {'fid': window.cook.fid, 'ins': json(ins)},
-	    function(){}
-	);
+	    var ins = ['prepare'];
+	    $.postJSON(
+	        '/cook-ins',
+	        {'fid': window.cook.fid, 'ins': json(ins)},
+	        function(){}
+	    );
     });
     $(document).on('tap', '.accept-button', function(){
-	var ins = ['accept'];
-	ins.push($('.current').data('uid'));
-	$('.byway .selected').each(function(){
-	    var uid = $(this).data('uid');
-	    ins.push(uid);
-	});
-	$.postJSON(
-	    '/cook-ins',
-	    {'fid': window.cook.fid, 'ins': json(ins)},
-	    function(){}
-	);
-	$('#doing').trigger('tap');
+	    var ins = ['accept'];
+	    ins.push($('.current').data('uid'));
+	    $('.byway .selected').each(function(){
+	        var uid = $(this).data('uid');
+	        ins.push(uid);
+	    });
+	    $.postJSON(
+	        '/cook-ins',
+	        {'fid': window.cook.fid, 'ins': json(ins)},
+	        function(){}
+	    );
+	    $('#doing').trigger('tap');
     });
+
     $(document).on('tap', '.byway .item .close', function(){
-	var uid = $(this).parent().data('uid');
-	var ins = ['cancel-byway', uid];
-	$.postJSON(
-	    '/cook-ins',
-	    {'fid': window.cook.fid, 'ins': json(ins)},
-	    function(){}
-	);
+	    var uid = $(this).parent().data('uid');
+	    var ins = ['cancel-byway', uid];
+	    $.postJSON(
+	        '/cook-ins',
+	        {'fid': window.cook.fid, 'ins': json(ins)},
+	        function(){}
+	    );
     });
     $(document).on('tap', '.doing .item .close', function(){
-	var uid = $(this).parent().data('uid');
-	var ins = ['cancel-doing', uid];
-	$.postJSON(
-	    '/cook-ins',
-	    {'fid': window.cook.fid, 'ins': json(ins)},
-	    function(){}
-	);
+	    var uid = $(this).parent().data('uid');
+	    var ins = ['cancel-doing', uid];
+	    $.postJSON(
+	        '/cook-ins',
+	        {'fid': window.cook.fid, 'ins': json(ins)},
+	        function(){}
+	    );
     });
     $(document).on('tap', '.doing .item .finish', function(){
-	var uid = $(this).parent().data('uid');
-	var ins = ['done', uid];
-	$.postJSON(
-	    '/cook-ins',
-	    {'fid': window.cook.fid, 'ins': json(ins)},
-	    function(){}
-	);
+	    var uid = $(this).parent().data('uid');
+	    var ins = ['done', uid];
+	    $.postJSON(
+	        '/cook-ins',
+	        {'fid': window.cook.fid, 'ins': json(ins)},
+	        function(){}
+	    );
     });
     updater.poll();
     left_updater.poll();
@@ -98,74 +100,74 @@ function show_select() {
     var byway = window.cook.byway;
     //show current
     if(current == '') {
-	$('.current').data('uid', '');
-	$('.current .title').text('');
-	$('.current .num').text('');
-	$('.current .desk').text('');
-	$('.current .demand').text('');
+	    $('.current').data('uid', '');
+	    $('.current .title').text('');
+	    $('.current .num').text('');
+	    $('.current .desk').text('');
+	    $('.current .demand').text('');
     } else {
-	$('.current').data('uid', current.uid);
-	$('.current .title').text(current.name);
-	$('.current .num').text(current.num);
-	$('.current .desk').text(current.desk);
-	$('.current .demand').text(current.demand+'|'+current.gdemand);
+	    $('.current').data('uid', current.uid);
+	    $('.current .title').text(current.name);
+	    $('.current .num').text(current.num);
+	    $('.current .desk').text(current.desk);
+	    $('.current .demand').text(current.demand+'|'+current.gdemand);
     }
     //show byway
     var p = $('.byway').empty();
     for(var i in byway) {
-	var one = byway[i];
-	var item = $('<div class="item">'+
-		    '<div class="close">X</div>'+
-		    '<div class="title"></div>'+
-		    '<div class="info"><div class="num"></div>::<div class="desk"></div></div>'+
-		    '<div class="demand"></div>'+
-		'</div>');
-	item.data(one);
-	item.find('.title').text(one.name);
-	item.find('.num').text(one.num);
-	item.find('.desk').text(one.desk);
-	item.find('.demand').text(one.demand+'|'+one.gdemand);
-	p.append(item);
+	    var one = byway[i];
+	    var item = $('<div class="item">'+
+		             '<div class="close">X</div>'+
+		             '<div class="title"></div>'+
+		             '<div class="info"><div class="num"></div>::<div class="desk"></div></div>'+
+		             '<div class="demand"></div>'+
+		             '</div>');
+	    item.data(one);
+	    item.find('.title').text(one.name);
+	    item.find('.num').text(one.num);
+	    item.find('.desk').text(one.desk);
+	    item.find('.demand').text(one.demand+'|'+one.gdemand);
+	    p.append(item);
     }
-    
+
 }
 function show_doing() {
     var doing = window.cook.doing;
     var p = $('.doing').empty();
     for(var i in doing) {
-	var one = doing[i];
-	var item = $('<div class="item">'+
-		'<div class="close">X</div>'+
-		'<div class="title">宫保鸡丁</div>'+
-		'<div class="info"><div class="num">1</div>::<div class="desk">1</div></div>'+
-		'<div class="demand">不要辣</div>'+
-		'<div class="finish">完成</div>'+
-	    '</div>');
-	item.data(one);
-	item.find('.title').text(one.name);
-	item.find('.num').text(one.num);
-	item.find('.desk').text(one.desk);
-	item.find('.demand').text(one.demand+'|'+one.gdemand);
-	p.append(item);
+	    var one = doing[i];
+	    var item = $('<div class="item">'+
+		             '<div class="close">X</div>'+
+		             '<div class="title">宫保鸡丁</div>'+
+		             '<div class="info"><div class="num">1</div>::<div class="desk">1</div></div>'+
+		             '<div class="demand">不要辣</div>'+
+		             '<div class="finish">完成</div>'+
+	                 '</div>');
+	    item.data(one);
+	    item.find('.title').text(one.name);
+	    item.find('.num').text(one.num);
+	    item.find('.desk').text(one.desk);
+	    item.find('.demand').text(one.demand+'|'+one.gdemand);
+	    p.append(item);
     }
 }
 function show_done() {
     var done = window.cook.done;
     var p = $('.done').empty();
     for(var i in done) {
-	var one = done[i];
-	var item = $('<div class="item">'+
-		
-		'<div class="title">宫保鸡丁</div>'+
-		'<div class="info"><div class="num">1</div>::<div class="desk">1</div></div>'+
-		'<div class="demand">不要辣</div>'+
-	    '</div>');
-	item.data(one);
-	item.find('.title').text(one.name);
-	item.find('.num').text(one.num);
-	item.find('.desk').text(one.desk);
-	item.find('.demand').text(one.demand+'|'+one.gdemand);
-	p.append(item);
+	    var one = done[i];
+	    var item = $('<div class="item">'+
+
+		             '<div class="title">宫保鸡丁</div>'+
+		             '<div class="info"><div class="num">1</div>::<div class="desk">1</div></div>'+
+		             '<div class="demand">不要辣</div>'+
+	                 '</div>');
+	    item.data(one);
+	    item.find('.title').text(one.name);
+	    item.find('.num').text(one.num);
+	    item.find('.desk').text(one.desk);
+	    item.find('.demand').text(one.demand+'|'+one.gdemand);
+	    p.append(item);
     }
 }
 function show_content(){
@@ -180,7 +182,7 @@ var updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	var fid = getCookie('fid');
+	    var fid = getCookie('fid');
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({
@@ -221,7 +223,7 @@ var left_updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	
+
         console.log('polling', left_updater.cursor);
         left_updater.cursor += 1;
         left_updater.xhr = $.ajax({

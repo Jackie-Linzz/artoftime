@@ -3,34 +3,34 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     window.desk = $('.heading').data('desk');
     window.message = [];
-    
+
     $(document).on('tap', '.back', function(){
-	window.location.replace('/');
+	    window.location.replace('/');
     });
     $(document).on('tap', '.order', function(){
-	window.location.replace('/customer-category?desk='+desk);
+	    window.location.replace('/customer-category?desk='+desk);
     });
     $(document).on('tap', '.myorder', function(){
-	window.location.replace('/customer-order?desk='+desk);
+	    window.location.replace('/customer-order?desk='+desk);
     });
     $(document).on('tap', '.fb', function(){
-	window.location.replace('/customer-feedback?desk='+desk);
+	    window.location.replace('/customer-feedback?desk='+desk);
     });
     $(document).on('tap', '.call', function(){
-	$.postJSON(
-	    '/customer-call',
-	    {'desk': window.desk},
-	    function(){}
-	);
+	    $.postJSON(
+	        '/customer-call',
+	        {'desk': window.desk},
+	        function(){}
+	    );
     });
     $(document).on('tap', '.qrcode', function(){
-	window.location.replace('/customer-home?desk='+desk);
+	    window.location.replace('/customer-home?desk='+desk);
     });
     updater.poll();
 });
@@ -38,15 +38,15 @@ $(document).ready(function(){
 function show_message() {
     var flag = false;
     for(var i in window.message) {
-	if(window.desk == window.message[i]) {
-	    flag = true;
-	    break;
-	}
+	    if(window.desk == window.message[i]) {
+	        flag = true;
+	        break;
+	    }
     }
     if(flag) {
-	$('.call').text('已呼叫').css('background-color', 'red');
+	    $('.call').text('已呼叫').css('background-color', 'red');
     } else {
-	$('.call').text('呼叫服务员').css('background-color', '#376956');
+	    $('.call').text('呼叫服务员').css('background-color', '#376956');
     }
 }
 
@@ -56,7 +56,7 @@ var updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	
+
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({
@@ -88,4 +88,3 @@ var updater = {
         updater.xhr.abort();
     }
 };
-

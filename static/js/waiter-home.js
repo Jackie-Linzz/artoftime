@@ -3,37 +3,37 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     window.passmsg = [];
     window.feedbackmsg = [];
     window.requestmsg = [];
     window.cleanmsg = [];
     $(document).on('tap', '.back', function(){
-	window.location.replace('/faculty-role');
+	    window.location.replace('/faculty-role');
     });
     $(document).on('tap', '.order', function(){
-	window.location.replace('/waiter-order');
+	    window.location.replace('/waiter-order');
     });
     $(document).on('tap', '.pass', function(){
-	window.location.replace('/waiter-pass');
+	    window.location.replace('/waiter-pass');
     });
     $(document).on('tap', '.feedback', function(){
-	window.location.replace('/waiter-feedback');
+	    window.location.replace('/waiter-feedback');
     });
     $(document).on('tap', '.request', function(){
-	window.location.replace('/waiter-request');
+	    window.location.replace('/waiter-request');
     });
     $(document).on('tap', '.mask', function(){
-	window.location.replace('/waiter-mask');
+	    window.location.replace('/waiter-mask');
     });
     $(document).on('tap', '.clean', function(){
-	window.location.replace('/waiter-clean');
+	    window.location.replace('/waiter-clean');
     });
     $(document).on('tap', '.passwd', function(){
-	window.location.replace('/faculty-secret?back=waiter-home');
+	    window.location.replace('/faculty-secret?back=waiter-home');
     });
     pass.poll();
     feedback.poll();
@@ -49,7 +49,7 @@ var pass = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	var desk = window.desk;
+	    var desk = window.desk;
         console.log('polling', pass.cursor);
         pass.cursor += 1;
         pass.xhr = $.ajax({
@@ -90,7 +90,7 @@ var feedback = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	
+
         console.log('polling', feedback.cursor);
         feedback.cursor += 1;
         feedback.xhr = $.ajax({
@@ -131,7 +131,7 @@ var request = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	
+
         console.log('polling', request.cursor);
         request.cursor += 1;
         request.xhr = $.ajax({
@@ -172,7 +172,7 @@ var clean = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	
+
         console.log('polling', clean.cursor);
         clean.cursor += 1;
         clean.xhr = $.ajax({

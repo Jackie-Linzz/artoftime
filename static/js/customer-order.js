@@ -3,60 +3,60 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     window.myorder = {};
     var desk = $('.heading').attr('data-desk');
     $(document).on('tap', '.left', function(){
-	window.location.replace('/customer-home?desk='+desk);
+	    window.location.replace('/customer-home?desk='+desk);
     });
     $(document).on('tap', '.item .button', function(){
-	var uid = $(this).parents('.item').data('uid');
-	var ins = ['-', uid];
-	$.postJSON(
-	    '/customer-ins',
-	    {'desk': desk, 'ins': json(ins)},
-	    function(){}
-	);
+	    var uid = $(this).parents('.item').data('uid');
+	    var ins = ['-', uid];
+	    $.postJSON(
+	        '/customer-ins',
+	        {'desk': desk, 'ins': json(ins)},
+	        function(){}
+	    );
     });
     $(document).on('change', '.gdemand', function(){
-	//input propertychange
-	var gdemand = $('.gdemand').val();
-	gdemand = trim(gdemand);
-	var ins = ['g', gdemand];
-	$.postJSON(
-	    '/customer-ins',
-	    {'desk': desk, 'ins': json(ins)},
-	    function(){}
-	);
+	    //input propertychange
+	    var gdemand = $('.gdemand').val();
+	    gdemand = trim(gdemand);
+	    var ins = ['g', gdemand];
+	    $.postJSON(
+	        '/customer-ins',
+	        {'desk': desk, 'ins': json(ins)},
+	        function(){}
+	    );
     });
     $(document).on('tap', '.footer', function(){
-	//$(this).addClass('animation');
-	var ins = ['submit'];
-	$.postJSON(
-	    '/customer-ins',
-	    {'desk': desk, 'ins': json(ins)},
-	    function(){}
-	);
+	    //$(this).addClass('animation');
+	    var ins = ['submit'];
+	    $.postJSON(
+	        '/customer-ins',
+	        {'desk': desk, 'ins': json(ins)},
+	        function(){}
+	    );
     });
     updater.poll();
 });
 function Item(data) {
     var item = $('<div class="item one">'+
-		'<div class="row">'+
-                    '<div class="name">名字</div><!--'+
-		 '--><div class="price">18.0</div><!--'+
-		 '--><div class="num">0</div>'+
-		'</div>'+
-		'<div class="row">'+
-                    '<div class="demand">这是特殊要求</div>'+
-		'</div>'+
-		'<div class="row">'+
-                   ' <div class="button">-</div>'+
-		'</div>'+
-		 '</div>');
+		         '<div class="row">'+
+                 '<div class="name">名字</div><!--'+
+		         '--><div class="price">18.0</div><!--'+
+		         '--><div class="num">0</div>'+
+		         '</div>'+
+		         '<div class="row">'+
+                 '<div class="demand">这是特殊要求</div>'+
+		         '</div>'+
+		         '<div class="row">'+
+                 ' <div class="button">-</div>'+
+		         '</div>'+
+		         '</div>');
     item.data(data);
     item.find('.name').text(data.name);
     item.find('.price').text(data.price);
@@ -71,50 +71,50 @@ function show_order(){
     var left = myorder.left;
     var doing = myorder.doing;
     var done = myorder.done;
-    
+
 
     $('.one').remove();
     var num = 0;
     var total = 0;
     for(i in done) {
-	var one = done[i]
-	num += one.num;
-	total += one.price * one.num;
-	var item = Item(one);
-	item.find('.name').text(one.name+'(done)');
-	item.find('.button').remove();
-	$('.total').before(item);
+	    var one = done[i]
+	    num += one.num;
+	    total += one.price * one.num;
+	    var item = Item(one);
+	    item.find('.name').text(one.name+'(已做)');
+	    item.find('.button').remove();
+	    $('.total').before(item);
     }
     for(i in doing) {
-	var one = doing[i]
-	num += one.num;
-	total += one.price * one.num;
-	var item = Item(one);
-	item.find('.name').text(one.name+'(doing)');
-	item.find('.button').remove();
-	$('.total').before(item);
+	    var one = doing[i]
+	    num += one.num;
+	    total += one.price * one.num;
+	    var item = Item(one);
+	    item.find('.name').text(one.name+'(在做)');
+	    item.find('.button').remove();
+	    $('.total').before(item);
     }
     for(i in left) {
-	var one = left[i]
-	num += one.num;
-	total += one.price * one.num;
-	var item = Item(one);
-	item.find('.name').text(one.name+'(left)');
-	item.find('.button').remove();
-	$('.total').before(item);
+	    var one = left[i]
+	    num += one.num;
+	    total += one.price * one.num;
+	    var item = Item(one);
+	    item.find('.name').text(one.name+'(待做)');
+	    item.find('.button').remove();
+	    $('.total').before(item);
     }
     for(i in orders) {
-	var one = orders[i]
-	num += one.num;
-	total += one.price * one.num;
-	var item = Item(one);
-	item.find('.name').text(one.name);
-	$('.total').before(item);
+	    var one = orders[i]
+	    num += one.num;
+	    total += one.price * one.num;
+	    var item = Item(one);
+	    item.find('.name').text(one.name);
+	    $('.total').before(item);
     }
-    $('.total').find('.price').text(total);
+    $('.total').find('.price').text(total.toFixed(2));
     $('.total').find('.num').text(num);
     $('.gdemand').val(myorder.gdemand);
-    
+
 }
 
 
@@ -124,7 +124,7 @@ var updater = {
     cursor: 0,
     xhr: null,
     poll: function(){
-	var desk = $('.heading').attr('data-desk');
+	    var desk = $('.heading').attr('data-desk');
         console.log('polling', updater.cursor);
         updater.cursor += 1;
         updater.xhr = $.ajax({
