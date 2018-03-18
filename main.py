@@ -107,6 +107,11 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/waiter-clean', WaiterCleanHandler),
               (r'/waiter-clean-remove', WaiterCleanRemoveHandler),
               (r'/waiter-clean-update', WaiterCleanUpdateHandler),
+              (r'/waiter-receive', WaiterReceiveHandler),
+              (r'/waiter-query', WaiterQueryHandler),
+              (r'/waiter-done', WaiterDoneHandler),
+              (r'/waiter-left-update', WaiterLeftUpdateHandler),
+              (r'/waiter-done-update', WaiterDoneUpdateHandler),
               (r'/pictures/(.+)', PictureHandler)]
 settings = dict(
                 cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",

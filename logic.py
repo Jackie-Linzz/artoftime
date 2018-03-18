@@ -13,6 +13,7 @@ tables = {}
 waiting = {}
 uids = {}
 cooks = {}
+waiters = {}
 desks = set()
 diet = {}
 category = {}
@@ -113,6 +114,7 @@ class Order(object):
         self.base = t['base']
         self.num = self.base
         self.cid = t['cid']
+        self.who = t['who']
         self.pic = t['pic']
         self.desp = t['desp']
         self.demand = demand
@@ -140,11 +142,13 @@ class Order(object):
             table = tables.get(self.desk)
             table.doing.remove(self)
             table.left.insert(0, self)
+            table.set_future()
         elif self.status == 'done':
             self.status = 'left'
             table = tables.get(self.desk)
             table.done.remove(self)
             table.left.insert(0, self)
+            table.set_future()
             
     def set_doing(self):
         global tables
@@ -154,6 +158,7 @@ class Order(object):
             table = tables.get(self.desk)
             table.left.remove(self)
             table.doing.insert(0, self)
+            table.set_future()
         elif self.status == 'doing':
             pass
         elif self.status == 'done':
@@ -162,6 +167,7 @@ class Order(object):
             table = tables.get(self.desk)
             table.done.remove(self)
             table.doing.insert(0, self)
+            table.set_future()
             
     def set_done(self):
         global tables
@@ -171,11 +177,13 @@ class Order(object):
             table = tables.get(self.desk)
             table.left.remove(self)
             table.done.insert(0, self)
+            table.set_future()
         elif self.status == 'doing':
             self.status = 'done'
             table = tables.get(self.desk)
             table.doing.remove(self)
             table.done.insert(0, self)
+            table.set_future()
 
     def cash_delete(self):
         if self.status == 'left':
@@ -361,9 +369,19 @@ def customer_ins(desk, ins):
     if ins[0] == '+':
         if ins[1] not in diet:
             return
-        one = Order(ins[1], desk, ins[2])
-        table.orders.append(one)
-        uids[one.uid] = one
+        did = ins[1]
+        demand = ins[2]
+        flag = False
+        for one in table.orders:
+            if one.did == did and one.demand == demand and one.inbyway == 0:
+                one.num += one.base
+                flag = True
+                break
+        if flag == False:
+            one = Order(did, desk, demand)
+            table.orders.append(one)
+            uids[one.uid] = one
+                
         
     elif ins[0] == '-':
         uid = ins[1]
@@ -385,6 +403,7 @@ def customer_ins(desk, ins):
         table.orders = []
         table.left = sorted(table.left, key=lambda one: one.ord)
         leftmsg.change()
+        left2msg.change()
     table.set_future()
     return 0
 
@@ -398,9 +417,19 @@ def waiter_ins(desk, ins):
     if ins[0] == '+':
         if ins[1] not in diet:
             return
-        one = Order(ins[1], desk, ins[2])
-        table.orders.append(one)
-        uids[one.uid] = one
+        did = ins[1]
+        demand = ins[2]
+        flag = False
+        for one in table.orders:
+            if one.did == did and one.demand == demand and one.inbyway == 0:
+                one.num += one.base
+                flag = True
+                break
+        if flag == False:
+            one = Order(did, desk, demand)
+            table.orders.append(one)
+            uids[one.uid] = one
+            
     elif ins[0] == '-':
         uid = ins[1]
         one = uids.get(uid)
@@ -432,6 +461,7 @@ def waiter_ins(desk, ins):
         table.orders = []
         table.left = sorted(table.left, key=lambda one: one.ord)
         leftmsg.change()
+        left2msg.change()
     table.set_future()
     return 0
 ##manager mask update
@@ -600,6 +630,43 @@ class LeftMessage(object):
 
 leftmsg = LeftMessage()
 
+class Left2Message(object):
+    def __init__(self):
+        self.content = []
+        self.stamp = time.time()
+        self.waiters = set()
+
+    def change(self):
+        self.stamp = time.time()
+        self.set_future()
+
+    def get_result(self):
+        global tables
+        result = []
+        for v in tables.values():
+            for one in v.left:
+                if one.who == 'waiter':
+                    result.append(one)
+        
+        return [one.to_dict() for one in result]
+    
+    def set_future(self):
+        result = self.get_result()
+        for future in self.waiters:
+            future.set_result(result)
+        self.waiters = set()
+
+    def update(self, stamp):
+        future = Future()
+        if stamp < self.stamp:
+            result = self.get_result()
+            future.set_result(result)
+        else:
+            self.waiters.add(future)
+        return future
+
+left2msg = Left2Message()
+
 class Cook(object):
     def __init__(self, fid):
         self.fid = fid
@@ -745,7 +812,7 @@ class Cook(object):
             # select not in byway
             for table in left:
                 for one in table.left:
-                    if one.inbyway == 0:
+                    if one.who == 'cook' and one.inbyway == 0:
                         if 'all' in self.cookdo or one.did in self.cookdo:
                             one.inbyway = 1
                             one.cook = self.fid
@@ -801,5 +868,43 @@ class Cook(object):
             self.waiters.add(future)
         return future
     
-        
-        
+class Waiter(object):
+    def __init__(self, fid):
+        self.fid = fid
+        self.name = mysql.get('faculty', {'fid': fid})[0]['name']
+        self.done = []
+        self.waiters = set()
+        self.stamp = time.time()
+
+    def to_dict(self):
+        result = {'fid': self.fid, 'name': self.name, 'done': [one.to_dict() for one in self.done]}
+        return result
+
+    def receive(self, uid):
+        global uids
+        one = uids.get(uid)
+        if one is None:
+            return
+        self.stamp = time.time()
+        self.done.insert(0, one)
+        self.done = self.done[0:50]
+        one.set_done()
+        mysql.insert('cook_history', {'fid': self.fid, 'uid': uid, 'stamp': time.time()})
+        left2msg.change()
+        self.set_future()
+
+    def set_future(self):
+        result = self.to_dict()
+        for future in self.waiters:
+            future.set_result(result)
+        self.waiters = set()
+
+    def update(self, stamp):
+        future = Future()
+        if stamp < self.stamp:
+            result = self.to_dict()
+            future.set_result(result)
+        else:
+            self.waiters.add(future)
+        return future
+

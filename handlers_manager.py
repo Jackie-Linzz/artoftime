@@ -111,6 +111,8 @@ class ManagerDietAddHandler(tornado.web.RequestHandler):
         price2 = self.get_argument('price2')
         base = self.get_argument('base')
         cid = self.get_argument('cid')
+        who = self.get_argument('who', 'cook')
+        #print who
         desp = self.get_argument('desp')
         
         order = int(order)
@@ -131,7 +133,7 @@ class ManagerDietAddHandler(tornado.web.RequestHandler):
                 full_path = os.path.join(pic_dir, picture)
                 with open(full_path, 'wb') as f:
                     f.write(content)
-        row = {'did': did, 'name': name, 'ord': order, 'price': price, 'price2': price2, 'base': base, 'cid': cid, 'desp': desp, 'pic': picture}
+        row = {'did': did, 'name': name, 'ord': order, 'price': price, 'price2': price2, 'base': base, 'cid': cid, 'who': who, 'desp': desp, 'pic': picture}
         result = mysql.insert('diet', row)
         if result:
             logic.diet[did] = row

@@ -5,10 +5,6 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-body {
-    background-color: #ffc;
-}
-
 .header {
     position: fixed;
     top: 0;
@@ -37,45 +33,14 @@ body {
 .content {
     padding: 60px 0;
 }
-
-div {
-    padding: 50px 0;
-    font-size: 24px;
-    line-height: 24px;
-    color: white;
+table {
+    margin: 0 auto;
+}
+caption {
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+td {
+    min-width: 100px;
     text-align: center;
-}
-.num {
-    display: inline;
-}
-.order {
-    
-    background-color: #f17c67;
-}
-.receive {
-    background-color: #2e68aa;
-}
-.pass {
-    background-color: #9cf;
-}
-.request {
-    
-    background-color: #495a80;
-}
-.feedback {
-   
-    background-color: #2e68aa;
-}
-.mask {
-    background-color: #1db0b8;
-}
-.clean {
-    background-color: #376956;
-}
-.query {
-    background-color: #1db0b8;
-}
-.passwd {
-    
-    background-color: #9cf;
 }

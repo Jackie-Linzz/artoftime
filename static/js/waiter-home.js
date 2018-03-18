@@ -17,6 +17,9 @@ $(document).ready(function(){
     $(document).on('tap', '.order', function(){
 	    window.location.replace('/waiter-order');
     });
+    $(document).on('tap', '.receive', function(){
+        window.location.replace('/waiter-receive');
+    });
     $(document).on('tap', '.pass', function(){
 	    window.location.replace('/waiter-pass');
     });
@@ -31,6 +34,9 @@ $(document).ready(function(){
     });
     $(document).on('tap', '.clean', function(){
 	    window.location.replace('/waiter-clean');
+    });
+    $(document).on('tap', '.query', function(){
+        window.location.replace('/waiter-query');
     });
     $(document).on('tap', '.passwd', function(){
 	    window.location.replace('/faculty-secret?back=waiter-home');

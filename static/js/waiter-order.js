@@ -55,6 +55,36 @@ $(document).ready(function(){
 	        }
 	    );
     });
+    $('#submit2').on('tap', function(){
+        $('.msg').hide();
+
+	    var did = trim($('#did').val());
+	    var demand = trim($('#demand').val());
+	    if(window.desk == '') return;
+	    if(did == '') return;
+	    //test did in mask
+	    var flag = false;
+	    for(var i in window.mask) {
+	        if(did == window.mask[i].did) {
+		        flag = true;
+		        break;
+	        }
+	    }
+	    if(flag) {
+	        $('.msg').text('缺单');
+	        $('.msg').show();
+	        return;
+	    }
+	    var ins = ['+', did, demand];
+	    $.postJSON(
+	        '/waiter-ins',
+	        {'desk': window.desk, 'ins': json(ins)},
+	        function(response){
+		        if(response.status != 'ok') return;
+		        
+	        }
+	    );
+    });
     $('.bar').on('tap', function(){
 	    if(window.show) {
 	        $('.orders').hide();

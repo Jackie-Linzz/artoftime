@@ -13,7 +13,8 @@ price   float(8,2) not null,
 price2  float(8,2),
 ord     int unsigned not null,
 base    float(8,2) not null,
-cid     char(20) not null ,
+cid     char(20) not null,
+who     char(10) not null,
 pic     char(100),
 desp    varchar(1000)
 );

@@ -128,6 +128,7 @@ $(document).ready(function(){
 	    var price2 = trim($('#d-price2').val());
 	    var base = trim($('#d-base').val());
 	    var cid = trim($('#d-cid').val());
+        var who = trim($('#d-who').val());
 	    var desp = trim($('#d-desp').val());
 	    if(did == '' || name == '' || order == '' || price == '' || price2 == '' || base == '' || cid == '') return;
 	    var formdata = new FormData($('#diet-add-form')[0]);
@@ -148,6 +149,7 @@ $(document).ready(function(){
 		        $('#d-price2').val('');
 		        $('#d-base').val('');
 		        $('#d-cid').val('');
+                $('#d-who').attr('checked', false);
 		        $('#d-pic').val('');
 		        $('#d-desp').val('');
 	        },
@@ -181,6 +183,11 @@ $(document).ready(function(){
 	    $('.diet-detail .base').text(tr.data('base'));
 	    $('.diet-detail .cid').text(tr.data('cid'));
 	    $('.diet-detail .desp').text(tr.data('desp'));
+        if(tr.data('who') == 'cook') {
+            $('.diet-detail .who').text('厨师');
+        } else {
+            $('.diet-detail .who').text('服务员');
+        }
     });
     $(document).on('tap', '.diet-detail .close', function(){
 	    $('.diet-detail').hide();

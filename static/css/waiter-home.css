@@ -52,6 +52,9 @@ div {
     
     background-color: #f17c67;
 }
+.receive {
+    background-color: #2e68aa;
+}
 .pass {
     background-color: #9cf;
 }
@@ -68,6 +71,9 @@ div {
 }
 .clean {
     background-color: #376956;
+}
+.query {
+    background-color: #1db0b8;
 }
 .passwd {
     

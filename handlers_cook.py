@@ -14,7 +14,11 @@ class CookHomeHandler(tornado.web.RequestHandler):
         
 class CookDoHandler(tornado.web.RequestHandler):
     def get(self):
-        diet = mysql.get_all('diet')
+        diet = []
+        for k, v in logic.diet.items():
+            if v['who'] == 'cook':
+                diet.append(v)
+        diet = sorted(diet, key=lambda one: one['did'])
         self.render('cook-do.html',diet=diet)
 
     def post(self):

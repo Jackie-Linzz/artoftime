@@ -6,6 +6,8 @@ from tornado.escape import json_encode, json_decode
 class WaiterHomeHandler(tornado.web.RequestHandler):
     def get(self):
         fid = self.get_cookie('fid')
+        if logic.waiters.get(fid) == None:
+            logic.waiters[fid] = logic.Waiter(fid)
         self.render('waiter-home.html', fid=fid)
 
 
@@ -128,4 +130,47 @@ class WaiterCleanUpdateHandler(tornado.web.RequestHandler):
         self.write(json_encode(response))
         raise tornado.gen.Return()
 
-    
+
+class WaiterReceiveHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('waiter-receive.html')
+
+        
+class WaiterDoneHandler(tornado.web.RequestHandler):
+    def post(self):
+        fid = self.get_cookie('fid')
+        uid = self.get_argument('uid', None)
+        print type(uid)
+        uid = int(uid)
+        if uid is None:
+            return
+        waiter = logic.waiters.get(fid)
+        waiter.receive(uid)
+
+class WaiterLeftUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        stamp = json_decode(self.get_argument('stamp'))
+        left = yield logic.left2msg.update(stamp)
+        response = {'status': 'ok', 'left': left, 'stamp': logic.left2msg.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
+
+class WaiterDoneUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        fid = self.get_cookie('fid')
+        waiter = logic.waiters.get(fid)
+        stamp = json_decode(self.get_argument('stamp'))
+        done = yield waiter.update(stamp)
+        response = {'status': 'ok', 'done': done, 'stamp': waiter.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
+
+
+class WaiterQueryHandler(tornado.web.RequestHandler):
+    def get(self):
+        fid = self.get_cookie('fid')
+        diet = logic.diet.values()
+        diet.sort(key=lambda x: x['did'])
+        self.render('waiter-query.html', fid=fid, diet=diet)
