@@ -8,10 +8,10 @@ $(document).ready(function(){
 	    $('#css').attr('href', css);
     }
     $('.content').hide();
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/manager-home');
     });
-    $(document).on('tap', '.menu .op', function(){
+    $(document).on('click', '.menu .op', function(){
 	    $('.content').show();
 	    $('.comment').remove();
 	    var more = $('.more');
@@ -35,7 +35,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '.more', function(){
+    $(document).on('click', '.more', function(){
 	    var more = $('.more');
 	    $.postJSON(
 	        '/manager-comment-more',

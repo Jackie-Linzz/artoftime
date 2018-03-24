@@ -9,22 +9,25 @@ $(document).ready(function(){
     }
     window.myorder = {};
     window.mask = [];
-    window.desk = '';
+    window.desk = getCookie('desk');
     window.show = 1;
 
+    if(window.desk) {
+        $('#desk').val(window.desk);
+        updater.poll();
+    }
+
     $('.msg').hide();
-    $('.back').on('tap', function(){
+    $('.back').on('click', function(){
 	    window.location.replace('/waiter-home');
     });
     $('#desk').on('focusout', function(){
 	    var desk = $(this).val().toUpperCase();
-
-	    window.desk = trim(desk);
-	    $(this).val(window.desk);
-	    if(updater.xhr) updater.reset();
-	    updater.poll();
+        setCookie('desk', desk, 1);
+        window.location.reload(true);
+	    
     });
-    $('#submit').on('tap', function(){
+    $('#submit').on('click', function(){
 	    $('.msg').hide();
 
 	    var did = trim($('#did').val());
@@ -55,7 +58,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $('#submit2').on('tap', function(){
+    $('#submit2').on('click', function(){
         $('.msg').hide();
 
 	    var did = trim($('#did').val());
@@ -85,7 +88,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $('.bar').on('tap', function(){
+    $('.bar').on('click', function(){
 	    if(window.show) {
 	        $('.orders').hide();
 	        window.show = 0;
@@ -94,7 +97,7 @@ $(document).ready(function(){
 	        window.show = 1;
 	    }
     });
-    $(document).on('tap', '.item .button', function(){
+    $(document).on('click', '.item .button', function(){
 	    var uid = $(this).parents('.item').data('uid');
 	    var ins = ['-', uid];
 	    $.postJSON(
@@ -113,7 +116,7 @@ $(document).ready(function(){
 	        function(){}
 	    );
     });
-    $(document).on('tap', '.submit', function(){
+    $(document).on('click', '.submit', function(){
 	    var ins = ['submit'];
 	    $.postJSON(
 	        '/waiter-ins',
@@ -208,6 +211,7 @@ var updater = {
 
         console.log('polling', updater.cursor);
         updater.cursor += 1;
+        
         updater.xhr = $.ajax({
             url: '/waiter-order-update',
             type: 'POST',

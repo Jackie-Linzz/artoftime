@@ -12,10 +12,10 @@ $(document).ready(function(){
     $('.prompt').hide();
     $('.message').hide();
 
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/cashier-home');
     });
-    $(document).on('tap', '.input-button', function(){
+    $(document).on('click', '.input-button', function(){
 	    var desk = $('#input').val();
 	    desk = trim(desk);
 	    if(desk == '') return;
@@ -29,12 +29,12 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '.item .button', function(){
+    $(document).on('click', '.item .button', function(){
 	    var uid = $(this).parents('.item').data('uid');
 	    window.delete = uid;
 	    $('.prompt').show();
     });
-    $(document).on('tap', '.ok-button', function(){
+    $(document).on('click', '.ok-button', function(){
 	    var uid = window.delete;
 	    $.postJSON(
 	        '/cashier-work-delete',
@@ -47,11 +47,11 @@ $(document).ready(function(){
 	    );
 	    $('.prompt').hide();
     });
-    $(document).on('tap', '.cancel-button', function(){
+    $(document).on('click', '.cancel-button', function(){
 	    window.delete = '';
 	    $('.prompt').hide();
     });
-    $(document).on('tap', '.footer', function(){
+    $(document).on('click', '.footer', function(){
 	    var desk = trim($('#input').val());
 	    $.postJSON(
 	        '/cashier-work-cash',
@@ -72,7 +72,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '.message .button', function(){
+    $(document).on('click', '.message .button', function(){
 	    $('.message').hide();
     });
 });

@@ -7,43 +7,43 @@ $(document).ready(function(){
 	    css = css.replace(/-mobile/g, '');
 	    $('#css').attr('href', css);
     }
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/faculty-role');
     });
-    $(document).on('tap', '.company', function(){
+    $(document).on('click', '.company', function(){
 	    window.location.replace('/manager-company');
     });
-    $(document).on('tap', '.diet', function(){
+    $(document).on('click', '.diet', function(){
 	    window.location.replace('/manager-diet');
     });
-    $(document).on('tap', '.desk', function(){
+    $(document).on('click', '.desk', function(){
 	    window.location.replace('/manager-desk');
     });
-    $(document).on('tap', '.order', function(){
+    $(document).on('click', '.order', function(){
         window.location.replace('/manager-order');
     });
-    $(document).on('tap', '.faculty', function(){
+    $(document).on('click', '.faculty', function(){
 	    window.location.replace('/manager-worker');
     });
-    $(document).on('tap', '.cookdo', function(){
+    $(document).on('click', '.cookdo', function(){
 	    window.location.replace('/manager-cookdo');
     });
-    $(document).on('tap', '.achievement', function(){
+    $(document).on('click', '.achievement', function(){
 	    window.location.replace('/manager-achievement');
     });
-    $(document).on('tap', '.flow', function(){
+    $(document).on('click', '.flow', function(){
 	    window.location.replace('/manager-history');
     });
-    $(document).on('tap', '.comment', function(){
+    $(document).on('click', '.comment', function(){
 	    window.location.replace('/manager-comment');
     });
-    $(document).on('tap', '.mask', function(){
+    $(document).on('click', '.mask', function(){
 	    window.location.replace('/manager-mask');
     });
-    $(document).on('tap', '.passwd', function(){
+    $(document).on('click', '.passwd', function(){
 	    window.location.replace('/faculty-secret?back=manager-home');
     });
-    $(document).on('tap', '.shutdown', function(){
+    $(document).on('click', '.shutdown', function(){
 	    window.location.replace('/manager-shutdown');
     });
 });

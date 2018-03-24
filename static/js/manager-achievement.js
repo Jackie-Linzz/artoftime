@@ -9,10 +9,10 @@ $(document).ready(function(){
     }
     $('.cashier').hide();
     $('.cook').hide();
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/manager-home');
     });
-    $(document).on('tap', '.button', function(){
+    $(document).on('click', '.button', function(){
 	    $('.cashier').hide();
 	    $('.cook').hide();
 

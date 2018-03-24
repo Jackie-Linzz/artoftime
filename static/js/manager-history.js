@@ -8,25 +8,25 @@ $(document).ready(function(){
 	    $('#css').attr('href', css);
     }
     $('.tab').hide();
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/manager-home');
     });
-    $(document).on('tap', '.flow .op', function(){
+    $(document).on('click', '.flow .op', function(){
 	    $('.tab').hide();
 	    $('.flow-content').show();
 	    $('.flow-content table').hide();
     });
-    $(document).on('tap', '.fb .op', function(){
+    $(document).on('click', '.fb .op', function(){
 	    $('.tab').hide();
 	    $('.fb-content').show();
 	    $('.fb-content table').hide();
     });
-    $(document).on('tap', '.trend .op', function(){
+    $(document).on('click', '.trend .op', function(){
 	    $('.tab').hide();
 	    $('.trend-content').show();
 	    $('.trend-content table').hide();
     });
-    $(document).on('tap', '#flow-query', function(){
+    $(document).on('click', '#flow-query', function(){
 	    $('.flow-content table').hide();
 
 	    var from = $('#flow-from').val();
@@ -84,7 +84,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '#fb-query', function(){
+    $(document).on('click', '#fb-query', function(){
 	    $('.fb-content table').hide();
 
 	    var from = $('#fb-from').val();
@@ -177,7 +177,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '#trend-query', function(){
+    $(document).on('click', '#trend-query', function(){
 	    $('.trend-content table').hide();
 
 	    var from = $('#trend-from').val();

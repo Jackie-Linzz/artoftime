@@ -8,18 +8,18 @@ $(document).ready(function(){
 	    $('#css').attr('href', css);
     }
     $('.tab').hide();
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/manager-home');
     });
-    $(document).on('tap', '.group .add', function(){
+    $(document).on('click', '.group .add', function(){
 	    $('.tab').hide();
 	    $('.group-add').show();
     });
-    $(document).on('tap', '.group .delete', function(){
+    $(document).on('click', '.group .delete', function(){
 	    $('.tab').hide();
 	    $('.group-del').show();
     });
-    $(document).on('tap', '.group .show', function(){
+    $(document).on('click', '.group .show', function(){
 	    $('.tab').hide();
 	    $('.group-show').show();
 	    $.postJSON(
@@ -47,15 +47,15 @@ $(document).ready(function(){
 	    );
 
     });
-    $(document).on('tap', '.diet .add', function(){
+    $(document).on('click', '.diet .add', function(){
 	    $('.tab').hide();
 	    $('.diet-add').show();
     });
-    $(document).on('tap', '.diet .delete', function(){
+    $(document).on('click', '.diet .delete', function(){
 	    $('.tab').hide();
 	    $('.diet-del').show();
     });
-    $(document).on('tap', '.diet .show', function(){
+    $(document).on('click', '.diet .show', function(){
 	    $('.tab').hide();
 	    $('.diet-show').show();
 	    $.postJSON(
@@ -85,7 +85,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '#group-add-button', function(){
+    $(document).on('click', '#group-add-button', function(){
 	    var cid = $('#cid').val();
 	    var cname = $('#c-name').val();
 	    var corder = $('#c-order').val();
@@ -107,7 +107,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '#group-del-button', function(){
+    $(document).on('click', '#group-del-button', function(){
 	    var cid = $('#cid2').val();
 	    cid = trim(cid);
 	    $.postJSON(
@@ -120,7 +120,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '#diet-add-button', function(){
+    $(document).on('click', '#diet-add-button', function(){
 	    var did = trim($('#did').val());
 	    var name = trim($('#d-name').val());
 	    var order = trim($('#d-order').val());
@@ -158,7 +158,7 @@ $(document).ready(function(){
 	        }
 	    });
     });
-    $(document).on('tap', '#diet-del-button', function(){
+    $(document).on('click', '#diet-del-button', function(){
 	    var did = $('#did2').val();
 	    did = trim(did);
 	    $.postJSON(
@@ -171,7 +171,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '.detail', function(){
+    $(document).on('click', '.detail', function(){
 	    $('.diet-detail').show();
 	    var tr = $(this).parents('tr');
 	    $('.diet-detail .did').text(tr.data('did'));
@@ -189,7 +189,7 @@ $(document).ready(function(){
             $('.diet-detail .who').text('服务员');
         }
     });
-    $(document).on('tap', '.diet-detail .close', function(){
+    $(document).on('click', '.diet-detail .close', function(){
 	    $('.diet-detail').hide();
     });
 });

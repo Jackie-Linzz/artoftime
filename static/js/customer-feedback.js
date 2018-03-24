@@ -19,15 +19,15 @@ $(document).ready(function(){
 	    }
     );
 
-    $(document).on('tap', '.left', function(){
+    $(document).on('click', '.left', function(){
 	    window.location.replace('/customer-home?desk='+desk);
     });
-    $(document).on('tap', '.item .fb', function(){
+    $(document).on('click', '.item .fb', function(){
 	    var item = $(this).parents('.item');
 	    item.find('.fb').removeClass('selected');
 	    $(this).addClass('selected');
     });
-    $(document).on('tap', '.footer', function(){
+    $(document).on('click', '.footer', function(){
 	    var comment = $('.comment').val();
 	    comment = trim(comment);
 	    fb = [];

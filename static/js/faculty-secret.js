@@ -9,10 +9,10 @@ $(document).ready(function(){
     }
     var back = $('body').data('back');
     $('.msg').hide();
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/'+back);
     });
-    $(document).on('tap', '.button', function(){
+    $(document).on('click', '.button', function(){
 	    var p1 = trim($('#passwd1').val());
 	    var p2 = trim($('#passwd2').val());
 	    var p3 = trim($('#passwd3').val());

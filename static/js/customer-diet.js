@@ -9,14 +9,14 @@ $(document).ready(function(){
     }
     var desk = $('.heading').attr('data-desk');
     var cid = $('.heading').attr('data-cid');
-    $(document).on('tap', '.left', function(){
+    $(document).on('click', '.left', function(){
 	    window.location.replace('/customer-category?desk='+desk);
     });
-    $(document).on('tap', '.detail', function(){
+    $(document).on('click', '.detail', function(){
 	    var did = $(this).parents('.item').attr('data-did');
 	    window.location.replace('/customer-detail?desk='+desk+'&did='+did);
     });
-    $(document).on('tap', '.button', function(){
+    $(document).on('click', '.button', function(){
 	    $(this).removeClass('animation');
 	    $(this).addClass('animation');
 	    //$(this).removeClass('animation');
@@ -29,7 +29,7 @@ $(document).ready(function(){
 	        function(response){}
 	    );
     });
-    $(document).on('tap', '.footer', function(){
+    $(document).on('click', '.footer', function(){
 	    window.location.replace('/customer-order?desk='+desk);
     });
     updater.poll();

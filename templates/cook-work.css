@@ -96,7 +96,7 @@
 .select .byway .item .demand {
     text-align: center;
 }
-.doing .item {
+.doing .item, .do-all {
     position: relative;
     margin: 5px;
     padding-bottom: 20px;

@@ -7,10 +7,10 @@ $(document).ready(function(){
 	    css = css.replace(/-mobile/g, '');
 	    $('#css').attr('href', css);
     }
-    $(document).on('tap', '.logout', function(){
+    $(document).on('click', '.logout', function(){
 	    window.location.replace('/faculty-login');
     });
-    $(document).on('tap', '.manager', function(){
+    $(document).on('click', '.manager', function(){
 	    $.postJSON(
 	        'faculty-role',
 	        {'role': 'manager'},
@@ -19,7 +19,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '.waiter', function(){
+    $(document).on('click', '.waiter', function(){
 	    $.postJSON(
 	        'faculty-role',
 	        {'role': 'waiter'},
@@ -28,7 +28,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '.cashier', function(){
+    $(document).on('click', '.cashier', function(){
 	    $.postJSON(
 	        'faculty-role',
 	        {'role': 'cashier'},
@@ -37,7 +37,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '.cook', function(){
+    $(document).on('click', '.cook', function(){
 	    $.postJSON(
 	        'faculty-role',
 	        {'role': 'cook'},

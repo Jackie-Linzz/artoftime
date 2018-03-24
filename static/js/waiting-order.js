@@ -3,40 +3,40 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     window.myorder = {};
     $(document).on('tap', '.left', function(e){
-	window.location.replace('/waiting-category');
+	    window.location.replace('/waiting-category');
     });
     $(document).on('input propertychange', '.gdemand', function(){
-	var gdemand = $('.gdemand').val();
-	gdemand = trim(gdemand);
-	var ins = ['g', gdemand];
-	$.postJSON(
-	    '/waiting-ins',
-	    {'ins': json(ins)},
-	    function(){}
-	);
+	    var gdemand = $('.gdemand').val();
+	    gdemand = trim(gdemand);
+	    var ins = ['g', gdemand];
+	    $.postJSON(
+	        '/waiting-ins',
+	        {'ins': json(ins)},
+	        function(){}
+	    );
     });
     updater.poll();
 });
 function Item(data) {
     var item$ = $('<div class="item one">'+
-            '<div class="row">'+
-                '<div class="name"></div><!--'+
-                '--><div class="price"></div><!--'+
-                '--><div class="num"></div>'+
-            '</div>'+
-            '<div class="row">'+
-                '<div class="demand"></div>'+
-            '</div>'+
-            '<div class="row">'+
-                '<div class="button">-</div>'+
-            '</div>'+
-		  '</div>');
+                  '<div class="row">'+
+                  '<div class="name"></div><!--'+
+                  '--><div class="price"></div><!--'+
+                  '--><div class="num"></div>'+
+                  '</div>'+
+                  '<div class="row">'+
+                  '<div class="demand"></div>'+
+                  '</div>'+
+                  '<div class="row">'+
+                  '<div class="button">-</div>'+
+                  '</div>'+
+		          '</div>');
     item$.data(data);
     item$.find('.name').text(data.name);
     item$.find('.price').text(data.price);
@@ -46,17 +46,17 @@ function Item(data) {
 }
 
 function show_order() {
-    
+
     $('.one').remove();
     var last = $('.total');
     var num = 0;
     var total = 0;
     for(i in window.myorder.orders) {
-	var one = myorder.orders[i];
-	num += one.num;
-	total += one.price * one.num;
-	var item$ = Item(one);
-	last.before(item$);
+	    var one = myorder.orders[i];
+	    num += one.num;
+	    total += one.price * one.num;
+	    var item$ = Item(one);
+	    last.before(item$);
     }
     last.find('.price').text(total);
     last.find('.num').text(num);

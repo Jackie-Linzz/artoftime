@@ -10,10 +10,10 @@ $(document).ready(function(){
     window.myorder = {};
     var desk = $('.heading').attr('data-desk');
     var cid = $('.heading').attr('data-cid');
-    $(document).on('tap', '.left', function(){
+    $(document).on('click', '.left', function(){
 	    window.location.replace('/customer-diet?desk='+desk+'&cid='+cid);
     });
-    $(document).on('tap', '.footer', function(){
+    $(document).on('click', '.footer', function(){
 	    //$(this).addClass('animation');
 	    var did = $('.heading').attr('data-did');
 	    var demand = $('.demand').val();

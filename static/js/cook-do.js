@@ -17,10 +17,10 @@ $(document).ready(function(){
 	        show();
 	    }
     );
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/cook-home');
     });
-    $(document).on('tap', '#submit1', function(){
+    $(document).on('click', '#submit1', function(){
 	    var flag = $('.all input').prop('checked');
 	    if(flag == true) {
 	        var content = ['all'];
@@ -35,7 +35,7 @@ $(document).ready(function(){
 	        );
 	    }
     });
-    $(document).on('tap', '#submit2', function(){
+    $(document).on('click', '#submit2', function(){
 	    var content = [];
 	    $('.some input:checkbox:checked').each(function(){
 	        var did = $(this).parents('tr').data('did');

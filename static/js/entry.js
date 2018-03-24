@@ -7,7 +7,7 @@ $(document).ready(function(){
 	    css = css.replace(/-mobile/g, '');
 	    $('#css').attr('href', css);
     }
-    $(document).on('tap', '.button', function(e){
+    $(document).on('click', '.button', function(e){
 	    var desk = $('.desk').val();
 	    desk = trim(desk);
 	    $.postJSON(
@@ -20,7 +20,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('taphold', '.header', function(){
+    $(document).on('click', '.header', function(){
 	    window.location.replace('/faculty-login');
     });
 });

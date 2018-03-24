@@ -9,15 +9,15 @@ $(document).ready(function(){
 	    $('#css').attr('href', css);
     }
     $('.order-show').hide();
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/manager-home');
     });
-    $(document).on('tap', '.menu .query', function(){
+    $(document).on('click', '.menu .query', function(){
 	    $('.order-show').hide();
 	    $('.query-order').show();
     });
 
-    $(document).on('tap', '#query-button', function(){
+    $(document).on('click', '#query-button', function(){
 	    var order = $('#input-order').val();
 	    order = trim(order);
 	    if(order == '') return;

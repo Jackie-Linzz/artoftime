@@ -10,26 +10,26 @@ $(document).ready(function(){
     window.desk = $('.heading').data('desk');
     window.message = [];
 
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/');
     });
-    $(document).on('tap', '.order', function(){
+    $(document).on('click', '.order', function(){
 	    window.location.replace('/customer-category?desk='+desk);
     });
-    $(document).on('tap', '.myorder', function(){
+    $(document).on('click', '.myorder', function(){
 	    window.location.replace('/customer-order?desk='+desk);
     });
-    $(document).on('tap', '.fb', function(){
+    $(document).on('click', '.fb', function(){
 	    window.location.replace('/customer-feedback?desk='+desk);
     });
-    $(document).on('tap', '.call', function(){
+    $(document).on('click', '.call', function(){
 	    $.postJSON(
 	        '/customer-call',
 	        {'desk': window.desk},
 	        function(){}
 	    );
     });
-    $(document).on('tap', '.qrcode', function(){
+    $(document).on('click', '.qrcode', function(){
 	    window.location.replace('/customer-home?desk='+desk);
     });
     updater.poll();

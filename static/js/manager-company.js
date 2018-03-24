@@ -22,7 +22,7 @@ $(document).ready(function(){
 	    }
     );
 
-    $(document).on('tap', '.button', function(){
+    $(document).on('click', '.button', function(){
 	    var company = $('#company').val();
 	    var shop = $('#shop').val();
 	    var location = $('#location').val();
@@ -45,7 +45,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/manager-home');
     });
 });

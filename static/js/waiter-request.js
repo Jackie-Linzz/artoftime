@@ -8,10 +8,10 @@ $(document).ready(function(){
 	    $('#css').attr('href', css);
     }
     window.message = [];
-    $('.back').on('tap', function(){
+    $('.back').on('click', function(){
 	    window.location.replace('/waiter-home');
     });
-    $(document).on('tap', '.item .button', function(){
+    $(document).on('click', '.item .button', function(){
 	    var desk = $(this).parents('.item').data('desk');
 	    $.postJSON(
 	        '/waiter-request-remove',

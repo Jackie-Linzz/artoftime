@@ -234,8 +234,9 @@ class ManagerOrderHandler(tornado.web.RequestHandler):
     def post(self):
         pid = self.get_argument('order')
         pid = int(pid)
-        sql = 'select diet.name as name,num,order_history.price as price,cook_history.fid as cook,cash_history.fid as cashier,status from cash_history,order_history,cook_history,diet where cash_history.uid=order_history.uid and order_history.uid=cook_history.uid and order_history.did=diet.did and cash_history.pid=%s' % pid
+        sql = 'select order_history.uid as uid,diet.name as name,num,order_history.price as price,cook_history.fid as cook,cash_history.fid as cashier,status from cash_history,order_history,cook_history,diet where cash_history.uid=order_history.uid and order_history.uid=cook_history.uid and order_history.did=diet.did and order_history.pid=%s' % pid
         result = mysql.query(sql)
+        print result
         result2 = mysql.get_all('faculty')
         faculty = {}
         for one in result2:

@@ -12,18 +12,18 @@ $(document).ready(function(){
     $('.left-content').show();
     $('.done-content').hide();
 
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
         window.location.replace('/waiter-home');
     });
-    $(document).on('tap', '.left', function(){
+    $(document).on('click', '.left', function(){
         $('.left-content').show();
         $('.done-content').hide();
     });
-    $(document).on('tap', '.done', function(){
+    $(document).on('click', '.done', function(){
         $('.left-content').hide();
         $('.done-content').show();
     });
-    $(document).on('tap', '.item .button', function(){
+    $(document).on('click', '.item .button', function(){
         var item = $(this).parents('.item');
         var uid = item.data('uid');
         $.postJSON(
@@ -82,7 +82,7 @@ var left_updater = {
 
     },
     onSuccess: function(response){
-        console.log(response);
+        //console.log(response);
         window.left = response.left;
         left_updater.stamp = response.stamp;
         show_left();
@@ -122,7 +122,7 @@ var done_updater = {
 
     },
     onSuccess: function(response){
-        console.log(response);
+        //console.log(response);
         window.done = response.done.done;
         done_updater.stamp = response.stamp;
         show_done();

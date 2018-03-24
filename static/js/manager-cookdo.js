@@ -9,10 +9,10 @@ $(document).ready(function(){
     }
     $('.result1').hide();
     $('.result2').hide();
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/manager-home');
     });
-    $(document).on('tap', '#cookdo-button', function(){
+    $(document).on('click', '#cookdo-button', function(){
 	    $('.result1').hide();
 	    $('.result2').hide();
 

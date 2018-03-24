@@ -18,18 +18,23 @@
 
     <body>
 	<div class="header">
-	    <h2 class="heading">{{fid}}</h2>
-	    <div class="back">返回</div>
+	    <div class="back">返回</div><div class="pass">未做</div><div class="passed">已做</div>
 	</div>
 	<div class="content">
+        <div class="pass-content">
+            <div class="item"><div class="msg">diet:desk:cook</div><div class="button">确定</div></div>
+        </div>
+        <div class="passed-content">
+            <div class="item"><div class="msg">diet:desk:cook</div></div>
+        </div>
 	    
-	    <div class="item"><div class="msg">diet:desk:cook</div><div class="button">确定</div></div>
+	    
 	    
 	</div>
 	
 	
 	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
-	<script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script>
+	<!-- <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script> -->
 	<script src="{{static_url("js/base.js")}}"></script>
 	<script src="{{static_url("js/waiter-pass.js")}}"></script>
     </body>

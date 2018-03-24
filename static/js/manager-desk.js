@@ -8,18 +8,18 @@ $(document).ready(function(){
 	    $('#css').attr('href', css);
     }
     $('.tab').hide();
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/manager-home');
     });
-    $(document).on('tap', '.menu .add', function(){
+    $(document).on('click', '.menu .add', function(){
 	    $('.tab').hide();
 	    $('.desk-add').show();
     });
-    $(document).on('tap', '.menu .del', function(){
+    $(document).on('click', '.menu .del', function(){
 	    $('.tab').hide();
 	    $('.desk-del').show();
     });
-    $(document).on('tap', '.menu .show', function(){
+    $(document).on('click', '.menu .show', function(){
 	    $('.tab').hide();
 	    $('.desk-show').show();
 	    $.postJSON(
@@ -41,7 +41,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '#desk-add-button', function(){
+    $(document).on('click', '#desk-add-button', function(){
 	    var desk = $('#desk-add').val();
 	    desk = trim(desk);
 	    if(desk == '') return;
@@ -55,7 +55,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '#desk-del-button', function(){
+    $(document).on('click', '#desk-del-button', function(){
 	    var desk = $('#desk-del').val();
 	    desk = trim(desk);
 	    if(desk == '') return;

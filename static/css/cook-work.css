@@ -105,6 +105,16 @@
     background-color: #1db0b8;
     border-radius: 6px;
 }
+.do-all {
+    position: relative;
+    margin: 20px;
+    padding: 20px 0;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    background-color: #1db0b8;
+    border-radius: 6px;
+}
 .doing .item .close {
     position: absolute;
     top: 6px;

@@ -33,18 +33,18 @@ $(document).ready(function(){
 	        }
 	    }
     );
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/manager-home');
     });
-    $(document).on('tap', '.op1', function(){
+    $(document).on('click', '.op1', function(){
 	    $('.tab').hide();
 	    $('.mask').show();
     });
-    $(document).on('tap', '.op2', function(){
+    $(document).on('click', '.op2', function(){
 	    $('.tab').hide();
 	    $('.show').show();
     });
-    $(document).on('tap', '.did-mask', function(){
+    $(document).on('click', '.did-mask', function(){
 	    var flag = $(this).prop('checked');
 	    var did = $(this).parents('tr').data('did');
 	    //console.log('flag:', flag);

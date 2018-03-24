@@ -9,12 +9,12 @@ $(document).ready(function(){
     }
     window.myorder = {};
     var desk = $('.heading').attr('data-desk');
-    $(document).on('tap', '.item', function(e){
+    $(document).on('click', '.item', function(e){
 
 	    var cid = $(this).attr('data-cid');
 	    window.location.replace('/customer-diet?desk='+desk+'&cid='+cid);
     });
-    $(document).on('tap', '.back', function(e){
+    $(document).on('click', '.back', function(e){
 
 	    window.location.replace('/customer-home?desk='+desk);
     });

@@ -44,9 +44,12 @@ class WaiterPassHandler(tornado.web.RequestHandler):
 
 class WaiterPassRemoveHandler(tornado.web.RequestHandler):
     def post(self):
+        fid = self.get_cookie('fid');
+        waiter = logic.waiters.get(fid)
         uid = self.get_argument('uid')
         uid = int(uid)
         logic.passmsg.remove(uid)
+        waiter.passed(uid)
         response = {'status': 'ok'}
         self.write(json_encode(response))
 
@@ -130,6 +133,14 @@ class WaiterCleanUpdateHandler(tornado.web.RequestHandler):
         self.write(json_encode(response))
         raise tornado.gen.Return()
 
+class WaiterStatusUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        stamp = json_decode(self.get_argument('stamp'))
+        message = yield logic.statusmsg.update(stamp)
+        response = {'status': 'ok', 'message': message, 'stamp': logic.statusmsg.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
 
 class WaiterReceiveHandler(tornado.web.RequestHandler):
     def get(self):

@@ -6,7 +6,7 @@ $(document).ready(function(){
 	    css = css.replace(/-mobile/g, '');
 	    $('#css').attr('href', css);
     }
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
         window.location.replace('/waiter-home');
     });
 });

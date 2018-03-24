@@ -9,10 +9,10 @@ $(document).ready(function(){
     }
     window.myorder = {};
     var desk = $('.heading').attr('data-desk');
-    $(document).on('tap', '.left', function(){
+    $(document).on('click', '.left', function(){
 	    window.location.replace('/customer-home?desk='+desk);
     });
-    $(document).on('tap', '.item .button', function(){
+    $(document).on('click', '.item .button', function(){
 	    var uid = $(this).parents('.item').data('uid');
 	    var ins = ['-', uid];
 	    $.postJSON(
@@ -32,7 +32,7 @@ $(document).ready(function(){
 	        function(){}
 	    );
     });
-    $(document).on('tap', '.footer', function(){
+    $(document).on('click', '.footer', function(){
 	    //$(this).addClass('animation');
 	    var ins = ['submit'];
 	    $.postJSON(

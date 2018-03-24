@@ -8,18 +8,18 @@ $(document).ready(function(){
 	    $('#css').attr('href', css);
     }
     $('.tab').hide();
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/manager-home');
     });
-    $(document).on('tap', '.menu .add', function(){
+    $(document).on('click', '.menu .add', function(){
 	    $('.tab').hide();
 	    $('.worker-add').show();
     });
-    $(document).on('tap', '.menu .del', function(){
+    $(document).on('click', '.menu .del', function(){
 	    $('.tab').hide();
 	    $('.worker-del').show();
     });
-    $(document).on('tap', '.menu .show', function(){
+    $(document).on('click', '.menu .show', function(){
 	    $('.tab').hide();
 	    $('.worker-show').show();
 	    $.postJSON(
@@ -52,7 +52,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '#worker-add-button', function(){
+    $(document).on('click', '#worker-add-button', function(){
 	    var fid = $('#fid').val();
 	    var name = $('#name').val();
 	    var passwd = $('#password').val();
@@ -85,7 +85,7 @@ $(document).ready(function(){
 	    );
 
     });
-    $(document).on('tap', '#worker-del-button', function(){
+    $(document).on('click', '#worker-del-button', function(){
 	    var fid = $('#fid2').val();
 	    fid = trim(fid);
 

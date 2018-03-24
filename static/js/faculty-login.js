@@ -7,7 +7,7 @@ $(document).ready(function(){
 	    css = css.replace(/-mobile/g, '');
 	    $('#css').attr('href', css);
     }
-    $(document).on('tap', '.confirm', function(){
+    $(document).on('click', '.confirm', function(){
 	    var fid = $('#fid').val();
 	    var passwd = $('#passwd').val();
 	    fid = trim(fid);
@@ -24,7 +24,7 @@ $(document).ready(function(){
 	        }
 	    );
     });
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/');
     });
 });

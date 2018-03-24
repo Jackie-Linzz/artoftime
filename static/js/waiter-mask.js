@@ -9,7 +9,7 @@ $(document).ready(function(){
     }
     window.mask = [];
 
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/waiter-home');
     });
     updater.poll();

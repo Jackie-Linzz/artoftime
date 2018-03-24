@@ -3,48 +3,48 @@ $(document).ready(function(){
     //for mobile css
     if(/Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)) {
     } else {
-	var css = $('#css').attr('href');
-	css = css.replace(/-mobile/g, '');
-	$('#css').attr('href', css);
+	    var css = $('#css').attr('href');
+	    css = css.replace(/-mobile/g, '');
+	    $('#css').attr('href', css);
     }
     window.myorder = {};
-    $(document).on('tap', '.left', function(e){
-	window.location.replace('/waiting-category');
+    $(document).on('click', '.left', function(e){
+	    window.location.replace('/waiting-category');
     });
-    $('.item').on('tap', '.detail', function(e){
-	var cid = $('.left').attr('data-cid');
-	var did = $(this).parents('.item').attr('data-did');
-	window.location.replace('/waiting-detail?cid='+cid+'&did='+did);
+    $('.item').on('click', '.detail', function(e){
+	    var cid = $('.left').attr('data-cid');
+	    var did = $(this).parents('.item').attr('data-did');
+	    window.location.replace('/waiting-detail?cid='+cid+'&did='+did);
     });
-    $('.item').on('tap', '.button', function(e){
-	var did = $(this).parents('.item').attr('data-did');
-	var ins = ['+', did, ''];
-	$.postJSON(
-	    '/waiting-ins',
-	    {'ins': json(ins)},
-	    function(){}
-	);
+    $('.item').on('click', '.button', function(e){
+	    var did = $(this).parents('.item').attr('data-did');
+	    var ins = ['+', did, ''];
+	    $.postJSON(
+	        '/waiting-ins',
+	        {'ins': json(ins)},
+	        function(){}
+	    );
     });
-    $(document).on('tap', '.footer', function(e){
-	window.location.replace('/waiting-order');
+    $(document).on('click', '.footer', function(e){
+	    window.location.replace('/waiting-order');
     });
     updater.poll();
 });
 function show_num(){
-    
+
     console.log('myorder: ', window.myorder);
     $('.item').each(function(index, element){
-	var num = 0;
-	var did = $(element).attr('data-did');
-	console.log('data-did: ', did, typeof(did));
-	for(i in window.myorder.orders){
-	    var one = myorder.orders[i];
-	    if(one.did == did) {
-		num += one.num;
-		console.log('equal');
+	    var num = 0;
+	    var did = $(element).attr('data-did');
+	    console.log('data-did: ', did, typeof(did));
+	    for(i in window.myorder.orders){
+	        var one = myorder.orders[i];
+	        if(one.did == did) {
+		        num += one.num;
+		        console.log('equal');
+	        }
 	    }
-	}
-	$(element).find('.num').text(num);
+	    $(element).find('.num').text(num);
     });
 }
 var updater = {

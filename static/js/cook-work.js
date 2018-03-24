@@ -8,32 +8,33 @@ $(document).ready(function(){
 	    $('#css').attr('href', css);
     }
     window.cook = {};
+    window.lock = false;
 
 
     $('.tab').hide();
 
-    $(document).on('tap', '#select', function(){
+    $(document).on('click', '#select', function(){
 	    $('.tab').hide();
 	    $('.select').show();
-        $('.prepare-button').trigger('tap');
+        
     });
-    $(document).on('tap', '#doing', function(){
+    $(document).on('click', '#doing', function(){
 	    $('.tab').hide();
 	    $('.doing').show();
     });
-    $(document).on('tap', '#done', function(){
+    $(document).on('click', '#done', function(){
 	    $('.tab').hide();
 	    $('.done').show();
     });
-    $(document).on('tap', '.back', function(){
+    $(document).on('click', '.back', function(){
 	    window.location.replace('/cook-home');
     });
-    $(document).on('tap', '.byway .item', function(){
+    $(document).on('click', '.byway .item', function(){
 	    $(this).toggleClass('selected');
-    });
-    $('#select').trigger('tap');
+    }); 
+    
     //instructions
-    $(document).on('tap', '.refuse-button', function(){
+    $(document).on('click', '.refuse-button', function(){
 	    var ins = ['refuse'];
 	    $.postJSON(
 	        '/cook-ins',
@@ -41,7 +42,7 @@ $(document).ready(function(){
 	        function(){}
 	    );
     });
-    $(document).on('tap', '.prepare-button', function(){
+    $(document).on('click', '.prepare-button', function(){
 	    var ins = ['prepare'];
 	    $.postJSON(
 	        '/cook-ins',
@@ -49,22 +50,22 @@ $(document).ready(function(){
 	        function(){}
 	    );
     });
-    $(document).on('tap', '.accept-button', function(){
+    $(document).on('click', '.accept-button', function(){
 	    var ins = ['accept'];
-	    ins.push($('.current').data('uid'));
-	    $('.byway .selected').each(function(){
-	        var uid = $(this).data('uid');
-	        ins.push(uid);
-	    });
+        //ins.push($('.current').data('uid'));
+	    /* $('.byway .selected').each(function(){
+	       var uid = $(this).data('uid');
+	       ins.push(uid);
+	       });*/
 	    $.postJSON(
 	        '/cook-ins',
 	        {'fid': window.cook.fid, 'ins': json(ins)},
 	        function(){}
 	    );
-	    $('#doing').trigger('tap');
+	    
     });
 
-    $(document).on('tap', '.byway .item .close', function(){
+    $(document).on('click', '.byway .item .close', function(){
 	    var uid = $(this).parent().data('uid');
 	    var ins = ['cancel-byway', uid];
 	    $.postJSON(
@@ -73,7 +74,7 @@ $(document).ready(function(){
 	        function(){}
 	    );
     });
-    $(document).on('tap', '.doing .item .close', function(){
+    $('.doing').on('click', '.close', function(){
 	    var uid = $(this).parent().data('uid');
 	    var ins = ['cancel-doing', uid];
 	    $.postJSON(
@@ -81,20 +82,37 @@ $(document).ready(function(){
 	        {'fid': window.cook.fid, 'ins': json(ins)},
 	        function(){}
 	    );
+        var div = $('<div></div>');
+        div.text('doing,close,'+uid);
+        $('.debug').append(div);
     });
-    $(document).on('tap', '.doing .item .finish', function(){
-	    var uid = $(this).parent().data('uid');
-	    var ins = ['done', uid];
-	    $.postJSON(
+    /* $('.doing').on('click', '.finish', function(){
+	   var uid = $(this).parent().data('uid');
+	   var ins = ['done', uid];
+     *     console.log('.doing .item .finish', ins);
+	   $.postJSON(
+	   '/cook-ins',
+	   {'fid': window.cook.fid, 'ins': json(ins)},
+	   function(){}
+	   );
+     * });*/
+    $(document).on('click', '.do-all', function(){
+        if(window.lock) return;
+        window.lock = true;
+        var ins = ['done-all'];
+        $.postJSON(
 	        '/cook-ins',
 	        {'fid': window.cook.fid, 'ins': json(ins)},
 	        function(){}
 	    );
+        setTimeout(reset_lock, 1000*20);
     });
     updater.poll();
     left_updater.poll();
 });
-
+function reset_lock() {
+    window.lock = false;
+}
 function show_select() {
     var current = window.cook.current;
     var byway = window.cook.byway;
@@ -133,7 +151,8 @@ function show_select() {
 }
 function show_doing() {
     var doing = window.cook.doing;
-    var p = $('.doing').empty();
+    $('.doing .item').remove();
+    var p = $('.doing');
     for(var i in doing) {
 	    var one = doing[i];
 	    var item = $('<div class="item">'+
@@ -141,7 +160,7 @@ function show_doing() {
 		             '<div class="title">宫保鸡丁</div>'+
 		             '<div class="info"><div class="num">1</div>::<div class="desk">1</div></div>'+
 		             '<div class="demand">不要辣</div>'+
-		             '<div class="finish">完成</div>'+
+		             //'<div class="finish">完成</div>'+
 	                 '</div>');
 	    item.data(one);
 	    item.find('.title').text(one.name);
