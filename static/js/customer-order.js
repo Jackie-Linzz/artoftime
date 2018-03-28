@@ -54,7 +54,7 @@ function Item(data) {
                  '<div class="demand">这是特殊要求</div>'+
 		         '</div>'+
 		         '<div class="row">'+
-                 ' <div class="button">-</div>'+
+                 ' <div class="button">x</div>'+
 		         '</div>'+
 		         '</div>');
     item.data(data);

@@ -54,10 +54,24 @@ body {
     margin: 10px 0;
     font-size: 22px;
 }
-.query input {
+#from, #to {
     width: 100%;
     font-size: 22px;
     text-align: center;
+}
+#input-id input {
+    display: inline-block;
+    width: 80%;
+    font-size: 22px;
+    text-align: center;
+}
+#input-id select {
+    display: inline-block;
+    width: 20%;
+    font-size: 22px;
+}
+#trend {
+    font-size: 18px;
 }
 .button {
     margin-top: 30px;

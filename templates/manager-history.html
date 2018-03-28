@@ -2,147 +2,87 @@
 <html>
     <head>
 
-	<meta charset="utf-8" />
+	    <meta charset="utf-8" />
 
-	<meta http-equiv="expires" content="0">
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
+	    <meta http-equiv="expires" content="0">
+	    <meta http-equiv="pragma" content="no-cache">
+	    <meta http-equiv="cache-control" content="no-cache">
 
-	
-	<link rel="stylesheet" type="text/css" href="manager-history.css">
-	
-	<link rel="stylesheet" type="text/css" href="{{static_url("css/manager-history.css")}}" id="css">
-	
+
+	    <link rel="stylesheet" type="text/css" href="manager-history.css">
+
+	    <link rel="stylesheet" type="text/css" href="{{static_url("css/manager-history.css")}}" id="css">
+
 
     </head>
 
     <body>
-	<div class="menu">
-	    <div class="back">返回</div>
-	    <div class="flow">
-		<div class="head">流水</div>
-		<div class="flow-container">
-		    <div class="op">查看</div>
-		</div>
-	    </div>
-	    <div class="fb">
-		<div class="head">反馈信息</div>
-		<div class="fb-container">
-		    <div class="op">查看</div>
-		</div>
-	    </div>
-	    <div class="trend">
-		<div class="head">趋势</div>
-		<div class="trend-container">
-		    <div class="op">查看</div>
-		</div>
-	    </div>
-	    
-	</div>
+	    <div class="menu">
+	        <div class="back">返回</div>
+	        <div class="flow">
+		        <div class="head">流水分析</div>
+		        <div class="flow-container">
+		            <div class="op">查看</div>
+		        </div>
+	        </div>
 
-	<div class="content">
-	    <div class="flow-content tab">
-		<div class="query">
-		    <div class="heading">流水</div>
-		    <div class="label">从：</div>
-		    <input type="date" id="flow-from">
-		    <div class="label">到：</div>
-		    <input type="date" id="flow-to">
-		    <div class="button" id="flow-query">查看</div>
-		</div>
-		<table border="1" cellspacing="0">
-		    <caption>流水</caption>
-		    <thead>
-			<tr>
-			    <th>编号</th>
-			    <th>名字</th>
-			    <th>价格</th>
-			    <th>数量</th>
-			    <th>销售额</th>
-			</tr>
-		    </thead>
-		    <tbody>
-			<tr>
-			    <td>0001</td>
-			    <td>coffee</td>
-			    <td>18.00</td>
-			    <td>100</td>
-			    <td>1800</td>
-			</tr>
-		    </tbody>
-		</table>
+
 	    </div>
-	    <div class="fb-content tab">
-		<div class="query">
-		    <div class="heading">反馈</div>
-		    <div class="label">从：</div>
-		    <input type="date" id="fb-from">
-		    <div class="label">到：</div>
-		    <input type="date" id="fb-to">
-		    <div class="button" id="fb-query">查看</div>
-		</div>
-		<table border="1" cellspacing="0">
-		    <caption>反馈</caption>
-		    <thead>
-			<tr>
-			    <th>编号</th>
-			    <th>名字</th>
-			    <th>总数</th>
-			    <th>好吃</th>
-			    <th>一般</th>
-			    <th>难吃</th>
-			    <th>好评率</th>
-			    <th>差评率</th>
-			</tr>
-		    </thead>
-		    <tbody>
-			<tr>
-			    <td>0001</td>
-			    <td>coffee</td>
-			    <td>100</td>
-			    <td>1</td>
-			    <td>98</td>
-			    <td>1</td>
-			    <td>1%</td>
-			    <td>1%</td>
-			</tr>
-		    </tbody>
-		</table>
+
+	    <div class="content">
+	        <div class="flow-content tab">
+		        <div class="query">
+		            <div class="heading">流水</div>
+		            <div class="label">从：</div>
+		            <input type="date" id="flow-from">
+		            <div class="label">到：</div>
+		            <input type="date" id="flow-to">
+                    <input type="checkbox" id="trend">看趋势
+		            <div class="button" id="flow-query">查看</div>
+		        </div>
+		        <table border="1" cellspacing="0">
+		            <caption>流水</caption>
+		            <thead>
+			            <tr>
+			                <th>编号</th>
+			                <th>名字</th>
+			                <th>价格</th>
+			                <th>数量</th>
+                            <th>数量百分比</th>
+			                <th>销售额</th>
+                            <th>销售额百分比</th>
+                            <th>反馈数量</th>
+                            <th>好评率</th>
+                            <th>中评率</th>
+                            <th>差评率</th>
+			            </tr>
+		            </thead>
+		            <tbody>
+			            <tr>
+			                <td>did</td>
+			                <td>name</td>
+			                <td>price</td>
+			                <td>num</td>
+			                <td>rate</td>
+                            <td>sales</td>
+                            <td>rate</td>
+                            <td>fb-num</td>
+                            <td>rate</td>
+                            <td>rate</td>
+                            <td>rate</td>
+			            </tr>
+		            </tbody>
+		        </table>
+	        </div>
+
+
 	    </div>
-	    <div class="trend-content tab">
-		<div class="query">
-		    <div class="heading">趋势</div>
-		    <div class="label">从：</div>
-		    <input type="date" id="trend-from">
-		    <div class="label">到：</div>
-		    <input type="date" id="trend-to">
-		    <div class="button" id="trend-query">查看</div>
-		</div>
-		<table border="1" cellspacing="0">
-		    <caption>趋势</caption>
-		    <thead>
-			<tr>
-			    <th>从：</th>
-			    <th>到：</th>
-			    <th>流水</th>
-			</tr>
-		    </thead>
-		    <tbody>
-			<tr>
-			    <td>2017.1.1</td>
-			    <td>2017.2.1</td>
-			    <td>10000</td>
-			</tr>
-		    </tbody>
-		</table>
-	    </div>
-	</div>
-	
-	
-	
-	<script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
-	<!-- <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script> -->
-	<script src="{{static_url("js/base.js")}}"></script>
-	<script src="{{static_url("js/manager-history.js")}}"></script>
+
+
+
+	    <script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	    <!-- <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script> -->
+	    <script src="{{static_url("js/base.js")}}"></script>
+	    <script src="{{static_url("js/manager-history.js")}}"></script>
     </body>
 </html>

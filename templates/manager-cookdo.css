@@ -55,9 +55,19 @@ body {
     font-size: 22px;
 }
 .query input {
-    width: 100%;
+    display: inline-block;
+    width: 80%;
     font-size: 22px;
+    text-align: center;
 }
+.query select {
+    display: inline-block;
+    width: 20%;
+    font-size: 22px;
+    text-align: center;
+    border-radius: 0;
+}
+
 #cookdo-button {
     margin-top: 30px;
     padding: 10px 0;

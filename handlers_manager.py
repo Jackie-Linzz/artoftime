@@ -3,6 +3,7 @@ import pickle
 import datetime
 import time
 import logic
+import logic_manager
 import mysql
 import os
 import subprocess
@@ -19,6 +20,17 @@ class ManagerHomeHandler(tornado.web.RequestHandler):
         if role != 'manager':
             return
         self.render('manager-home.html')
+
+class ManagerFacultyListHandler(tornado.web.RequestHandler):
+    def post(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        faculty_list = mysql.get_all('faculty')
+        faculty_list.sort(key=lambda x: x['fid'])
+        #print faculty_list
+        response = {'status': 'ok', 'faculty': faculty_list}
+        self.write(json_encode(response))
 
 class ManagerCompanyHandler(tornado.web.RequestHandler):
     def get(self):
@@ -306,24 +318,19 @@ class ManagerCookdoHandler(tornado.web.RequestHandler):
 
     def post(self):
         fid = self.get_argument('fid')
-        sql = 'select did from cook_do where fid = "%s"' % fid
-        #sql = 'select diet.did, name, cid from cookdo, diet where fid = "%s" and cookdo.did = diet.did' % fid
-        result = mysql.query(sql)
-            
-        all = False
-        for one in result:
-            if one['did'] == 'all':
-                all = True
-                break
+        #print fid
         
-        if all:
-            response = {'status': 'ok', 'result': 'all'}
+        results = []
+        if fid == 'all':
+            faculty = mysql.get_all('faculty')
+            for one in faculty:
+                if one['role'].find('cook') >=0:
+                    results.append({'fid': one['fid'], 'name': one['name'], 'diet': logic_manager.get_cook_range(one['fid'])})
         else:
-            cookdo = []
-            for one in result:
-                item = logic.diet.get(one['did'])
-                cookdo.append({'did': one['did'], 'name': item['name'], 'cid': item['cid']})
-            response = {'status': 'ok', 'result': 'some', 'cookdo': cookdo}
+            name = logic.faculty.get(fid)['name']
+            results.append({'fid': fid, 'name': name, 'diet': logic_manager.get_cook_range(fid)})
+        response = {'status': 'ok', 'result': results}
+        
         self.write(json_encode(response))
         
 class ManagerAchievementHandler(tornado.web.RequestHandler):
@@ -337,6 +344,8 @@ class ManagerAchievementHandler(tornado.web.RequestHandler):
         t1 = self.get_argument('from')
         t2 = self.get_argument('to')
         fid = self.get_argument('fid')
+        trend = self.get_argument('trend')
+        trend = int(trend)
         #print t1, t2
         format = '%Y-%m-%d'
         t1 = datetime.datetime.strptime(t1, format)
@@ -344,81 +353,9 @@ class ManagerAchievementHandler(tornado.web.RequestHandler):
         #print t1, t2
         if t1 >= t2:
             return
-        sql = 'select role from faculty where fid = "%s" ' % fid
-        result = mysql.query(sql)
-        if result is None or len(result) == 0:
-            return
-        roles = result[0]['role']
-        roles = roles.split(',')
-        #print roles
-        response = {'status': 'ok', 'roles': roles}
-
-        t1 = time.mktime(t1.timetuple())
-        t2 = time.mktime(t2.timetuple())
-        if 'cashier' in roles:
-            sql = 'select count(*) as number from cash_history where status = "success" and stamp > %s and stamp < %s ' % (t1, t2)
-            result = mysql.query(sql)
-            success = result[0]['number']
-            sql = 'select count(*) as number from cash_history where status = "failure" and stamp > %s and stamp < %s ' % (t1, t2)
-            result = mysql.query(sql)
-            failure = result[0]['number']
-            response['cashier'] = {'success': success, 'failure': failure}
-        if 'cook' in roles:
-            sql = 'select name, sum(num) as number from diet,order_history,cook_history where diet.did = order_history.did and order_history.uid = cook_history.uid and fid = "%s" and cook_history.stamp > %s and cook_history.stamp < %s group by name' % (fid, t1, t2)
-            result = mysql.query(sql)
-            set1 = set()
-            for one in result:
-                set1.add(one['name'])
-            set2 = set()
-            for one in logic.diet.values():
-                set2.add(one['name'])
-            set3 = set2 - set1
-            for one in set3:
-                result.append({'name': one, 'number': 0})
-            result.sort(key=lambda x: x['name'])
-            response['flow'] = result
-            sql = 'select name, sum(num) as number, fb from diet,order_history,cook_history,feedback where diet.did = order_history.did and order_history.uid = cook_history.uid and cook_history.uid = feedback.uid and fid = "%s" and cook_history.stamp > %s and cook_history.stamp < %s group by name,fb' % (fid, t1, t2)
-            result = mysql.query(sql)
-            fb = []
-            temp = {}
-            for one in result:
-                name = one['name']
-                number = one['number']
-                if name not in temp:
-                    temp[name] = {}
-                if one['fb'] == -1:
-                    temp[name]['bad'] = number
-                elif one['fb'] == 0:
-                    temp[name]['normal'] = number
-                else:
-                    temp[name]['good'] = number
-            for k, v in temp.items():
-                if 'good' not in v:
-                    v['good'] = 0
-                if 'normal' not in v:
-                    v['normal'] = 0
-                if 'bad' not in v:
-                    v['bad'] = 0
-                total = v['good'] + v['normal'] + v['bad']
-                if total == 0:
-                    fb.append({'name': k, 'good': v['good'], 'normal': v['normal'], 'bad': v['bad'], 'goodrate': '0%', 'badrate': '0%'})
-                else:
-                    total = float(total)
-                    rate1 = v['good'] * 100 / total
-                    rate2 = v['bad'] * 100 / total
-                    fb.append({'name': k, 'good': v['good'], 'normal': v['normal'], 'bad': v['bad'], 'goodrate': unicode(rate1)+u'%', 'badrate': unicode(rate2)+u'%'})
-            set1 = set()
-            for one in fb:
-                set1.add(one['name'])
-            set2 = set()
-            for one in logic.diet.values():
-                set2.add(one['name'])
-            set3 = set2 -set1
-            for one in set3:
-                fb.append({'name': one, 'good': 0, 'normal': 0, 'bad': 0, 'goodrate': u'0%', 'badrate': u'0%'})
-
-            fb.sort(key=lambda x: x['name'])
-            response['fb'] = fb
+        result = logic_manager.achieve(fid, t1, t2, trend)
+        #print result
+        response = {'status': 'ok', 'result': result}
         self.write(json_encode(response))
 
 class ManagerHistoryHandler(tornado.web.RequestHandler):

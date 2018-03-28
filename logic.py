@@ -1,6 +1,7 @@
 #coding=utf8
 import time
 import os
+import platform
 import mysql
 import printer
 from tornado.concurrent import Future
@@ -8,10 +9,16 @@ from tornado.concurrent import Future
 data_dir = os.path.expanduser('~/data')
 company_file = os.path.expanduser('~/data/company')
 data_file = os.path.expanduser('~/data/data')
+if platform.system() == 'Linux':
+    data_dir = '/home/jerry/data'
+    company_file = '/home/jerry/data/company'
+    data_file = '/home/jerry/data/data'
+
 info = {}
 tables = {}
 waiting = {}
 uids = {}
+faculty = {}
 cooks = {}
 waiters = {}
 desks = set()

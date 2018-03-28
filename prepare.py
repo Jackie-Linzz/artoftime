@@ -64,46 +64,24 @@ def sync():
     #import pdb
     #pdb.set_trace()
     #print logic.company_file
-    if os.path.isfile(logic.company_file):
-        with open(logic.company_file, 'rb') as f:
-            info = pickle.load(f)
-    else:
-        info =  {'company': '', 'shop': '', 'location': '', 'heading': '', 'welcome': '', 'desp': ''}
-    logic.info = info
+    sync_info()
     sync_pid()
     sync_uid()
     #desks and tables
-    desks = mysql.get_all('desks')
-    logic.desks = set()
-    logic.tables = {}
-    for one in desks:
-        logic.desks.add(one['desk'])
-        logic.tables[one['desk']] = logic.Table(one['desk'])
+    sync_tables()
     #category
-    category = mysql.get_all('category')
-    logic.category = {}
-    for one in category:
-        logic.category[one['cid']] = one
+    sync_category()
     #diet
-    diet = mysql.get_all('diet')
-    logic.diet = {}
-    for one in diet:
-        logic.diet[one['did']] = one
+    sync_diet()
     #mask
     #mask = mysql.get_all('mask')
     #logic.mask.content = set()
     #for one in mask:
     #    logic.mask.add(one['did'])
+    #faculty
+    sync_faculty()
     #cook_do
-    cook_do = mysql.get_all('cook_do')
-    logic.cook_do = {}
-    for one in cook_do:
-        if one['fid'] not in logic.cook_do:
-            logic.cook_do[one['fid']] = set()
-        logic.cook_do.get(one['fid']).add(one['did'])
-    for k, v in logic.cook_do.items():
-        if u'all' in v:
-            v = set([u'all'])
+    sync_cookdo()
 
 def sync_pid():
     result = mysql.get('id', {'name': 'pid'})
@@ -120,3 +98,47 @@ def sync_uid():
         logic.global_uid = 0
     else:
         logic.global_uid = result[0]['num']
+
+def sync_info():
+    if os.path.isfile(logic.company_file):
+        with open(logic.company_file, 'rb') as f:
+            info = pickle.load(f)
+    else:
+        info =  {'company': '', 'shop': '', 'location': '', 'heading': '', 'welcome': '', 'desp': ''}
+    logic.info = info
+
+def sync_tables():
+    desks = mysql.get_all('desks')
+    logic.desks = set()
+    logic.tables = {}
+    for one in desks:
+        logic.desks.add(one['desk'])
+        logic.tables[one['desk']] = logic.Table(one['desk'])
+
+def sync_category():
+    category = mysql.get_all('category')
+    logic.category = {}
+    for one in category:
+        logic.category[one['cid']] = one
+
+def sync_diet():
+    diet = mysql.get_all('diet')
+    logic.diet = {}
+    for one in diet:
+        logic.diet[one['did']] = one
+
+def sync_faculty():
+    faculty = mysql.get_all('faculty')
+    for one in faculty:
+        logic.faculty[one['fid']] = one
+
+def sync_cookdo():
+    cook_do = mysql.get_all('cook_do')
+    logic.cook_do = {}
+    for one in cook_do:
+        if one['fid'] not in logic.cook_do:
+            logic.cook_do[one['fid']] = set()
+        logic.cook_do.get(one['fid']).add(one['did'])
+    for k, v in logic.cook_do.items():
+        if u'all' in v:
+            v = set([u'all'])
