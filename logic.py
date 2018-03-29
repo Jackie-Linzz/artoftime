@@ -811,7 +811,7 @@ statusmsg = Status()
 class Cook(object):
     def __init__(self, fid):
         self.fid = fid
-        self.name = mysql.get('faculty', {'fid': fid})[0]['name']
+        self.name = faculty.get(fid)['name']
         self.current = None
         self.byway = []
         self.doing = []
@@ -1032,7 +1032,7 @@ class Cook(object):
 class Waiter(object):
     def __init__(self, fid):
         self.fid = fid
-        self.name = mysql.get('faculty', {'fid': fid})[0]['name']
+        self.name = faculty.get(fid)['name']
         self.done = []
         self.passed = []
         self.waiters = set()

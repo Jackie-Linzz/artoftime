@@ -182,7 +182,7 @@ class ManagerDietDelHandler(tornado.web.RequestHandler):
 class ManagerDietShowHandler(tornado.web.RequestHandler):
     def post(self):
         result = mysql.get_all('diet');
-        result.sort(key=lambda one: one['cid'])
+        result.sort(key=lambda one: one['did'])
         response = {'status': 'ok', 'diet': result}
         self.write(json_encode(response))
 
@@ -369,122 +369,43 @@ class ManagerHistoryFlowHandler(tornado.web.RequestHandler):
     def post(self):
         start = self.get_argument('from')
         end = self.get_argument('to')
+        trend = self.get_argument('trend')
+        trend = int(trend)
         format = '%Y-%m-%d'
         start = datetime.datetime.strptime(start, format)
         end = datetime.datetime.strptime(end, format)
-        start = time.mktime(start.timetuple())
-        end = time.mktime(end.timetuple())
-        sql = 'select order_history.did,name,diet.price,sum(num) as number, sum(order_history.price*order_history.num) as total from diet,order_history,cash_history where diet.did = order_history.did and order_history.uid = cash_history.uid and status ="success" and order_history.stamp > %s and order_history.stamp < %s group by name' % (start, end)
-        result = mysql.query(sql)
-        set1 = set()
-        for one in result:
-            set1.add(one['name'])
-        set2 = set()
-        for one in logic.diet.values():
-            set2.add(one['name'])
-        set3 = set2-set1
-        for one in set3:
-            for v in logic.diet.values():
-                if v['name'] == one:
-                    result.append({'did': v['did'], 'name': v['name'], 'price': v['price'], 'number': 0, 'total': 0})
-                    break
-        result.sort(key=lambda x: x['did'])
-        response = {'status': 'ok', 'flow': result}
+        result = logic_manager.flow(start, end, trend)
+        #print result
+        response = {'status': 'ok', 'result': result}
         self.write(json_encode(response))
+        
 
 class ManagerHistoryFeedbackHandler(tornado.web.RequestHandler):
     def post(self):
-        start = self.get_argument('from')
-        end = self.get_argument('to')
-        format = '%Y-%m-%d'
-        start = datetime.datetime.strptime(start, format)
-        end = datetime.datetime.strptime(end, format)
-        start = time.mktime(start.timetuple())
-        end = time.mktime(end.timetuple())
-        sql = 'select diet.did,name,fb,sum(num) as number from diet,order_history,feedback where order_history.uid = feedback.uid and order_history.did = diet.did and order_history.stamp > %s and order_history.stamp < %s group by diet.did,fb' % (start, end)
-        result = mysql.query(sql)
-        #print result
-        temp = {}
-        for one in result:
-            did = one['did']
-            fb = one['fb']
-            if did not in temp:
-                temp[did] = {}
-            temp[did]['did'] = did
-            temp[did]['name'] = one['name']
-            if fb == 1:
-                temp[did]['good'] = one['number']
-            elif fb == 0:
-                temp[did]['normal'] = one['number']
-            else:
-                temp[did]['bad'] = one['number']
-        for k, v in temp.items():
-            if 'good' not in v:
-                v['good'] = 0
-            if 'normal' not in v:
-                v['normal'] = 0
-            if 'bad' not in v:
-                v['bad'] = 0
-        set1 = set(temp.keys())
-        set2 = set(logic.diet.keys())
-        set3 = set2 - set1
-        for one in set3:
-            temp[one] = {'did': one, 'name': logic.diet[one]['name'], 'good': 0, 'normal': 0, 'bad': 0}
-        feedback = temp.values()
-        feedback.sort(key=lambda x: x['did'])
-        response = {'status': 'ok', 'fb': feedback}
-        self.write(json_encode(response))
+        pass
 
 class ManagerHistoryTrendHandler(tornado.web.RequestHandler):
     def post(self):
+        pass
+
+class ManagerOnedietHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-onediet.html')
+
+    def post(self):
+        did = self.get_argument('did')
         start = self.get_argument('from')
         end = self.get_argument('to')
+        trend = self.get_argument('trend')
+        trend = int(trend)
         format = '%Y-%m-%d'
         start = datetime.datetime.strptime(start, format)
         end = datetime.datetime.strptime(end, format)
-        if start >= end:
-            return
-        if start.day >28:
-            return
-        m = start
-        t = []
-        while m < end:
-            year = m.year
-            month = m.month
-            day = m.day
-            next_year = year
-            next_month = month + 1
-            if next_month > 12:
-                next_year += 1
-                next_month = 1
-            next_day = day
-            t.append((datetime.datetime(year,month,day), datetime.datetime(next_year,next_month,next_day)))
-            m = datetime.datetime(next_year,next_month,next_day)
-        #print 't:', t
-        s = []
-        for one in t:
-            start = one[0]
-            end = one[1]
-            start = time.mktime(start.timetuple())
-            end = time.mktime(end.timetuple())
-            s.append((start, end))
-        #print 's:', s
-        trend = []
-        for one in s:
-            sql = 'select sum(price*num) as flow from order_history,cash_history where order_history.uid = cash_history.uid and cash_history.status = "success" and order_history.stamp > %s and order_history.stamp < %s'
-            sql = sql % one
-            result = mysql.query(sql)
-            #print 'result:', result
-            flow = result[0]['flow']
-            if flow is None:
-                flow = 0
-            start = datetime.datetime.fromtimestamp(one[0])
-            end = datetime.datetime.fromtimestamp(one[1])
-            start = start.strftime(format)
-            end = end.strftime(format)
-            trend.append({'from': start, 'to': end, 'flow': flow})
-        #print 'trend:', trend
-        response = {'status': 'ok', 'trend': trend}
+        result = logic_manager.one_diet(did, start, end, trend)
+        response = {'status': 'ok', 'result': result}
         self.write(json_encode(response))
 
 class ManagerCommentHandler(tornado.web.RequestHandler):

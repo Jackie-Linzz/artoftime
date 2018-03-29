@@ -34,6 +34,9 @@ $(document).ready(function(){
     $(document).on('click', '.flow', function(){
 	    window.location.replace('/manager-history');
     });
+    $(document).on('click', '.one-diet', function(){
+        window.location.replace('/manager-onediet');
+    });
     $(document).on('click', '.comment', function(){
 	    window.location.replace('/manager-comment');
     });

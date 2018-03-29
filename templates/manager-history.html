@@ -30,16 +30,17 @@
 	    </div>
 
 	    <div class="content">
-	        <div class="flow-content tab">
-		        <div class="query">
-		            <div class="heading">流水</div>
-		            <div class="label">从：</div>
-		            <input type="date" id="flow-from">
-		            <div class="label">到：</div>
-		            <input type="date" id="flow-to">
-                    <input type="checkbox" id="trend">看趋势
-		            <div class="button" id="flow-query">查看</div>
-		        </div>
+            <div class="query">
+		        <div class="heading">流水</div>
+		        <div class="label">从：</div>
+		        <input type="date" id="flow-from">
+		        <div class="label">到：</div>
+		        <input type="date" id="flow-to">
+                <input type="checkbox" id="trend">看趋势
+		        <div class="button" id="flow-query">查看</div>
+		    </div>
+	        <div class="flow-content">
+		        
 		        <table border="1" cellspacing="0">
 		            <caption>流水</caption>
 		            <thead>
@@ -59,17 +60,17 @@
 		            </thead>
 		            <tbody>
 			            <tr>
-			                <td>did</td>
-			                <td>name</td>
-			                <td>price</td>
-			                <td>num</td>
-			                <td>rate</td>
-                            <td>sales</td>
-                            <td>rate</td>
-                            <td>fb-num</td>
-                            <td>rate</td>
-                            <td>rate</td>
-                            <td>rate</td>
+			                <td class="did">did</td>
+			                <td class="name">name</td>
+			                <td class="price">price</td>
+			                <td class="num">num</td>
+			                <td class="num-rate">rate</td>
+                            <td class="sales">sales</td>
+                            <td class="sales-rate">rate</td>
+                            <td class="fb-num">fb-num</td>
+                            <td class="good-rate">rate</td>
+                            <td class="normal-rate">rate</td>
+                            <td class="bad-rate">rate</td>
 			            </tr>
 		            </tbody>
 		        </table>

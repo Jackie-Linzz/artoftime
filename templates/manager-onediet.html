@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	    <meta charset="utf-8" />
+
+	    <meta http-equiv="expires" content="0">
+	    <meta http-equiv="pragma" content="no-cache">
+	    <meta http-equiv="cache-control" content="no-cache">
+
+
+	    <link rel="stylesheet" type="text/css" href="manager-onediet.css">
+
+	    <link rel="stylesheet" type="text/css" href="{{static_url("css/manager-onediet.css")}}" id="css">
+
+
+    </head>
+
+    <body>
+	    <div class="menu">
+	        <div class="back">返回</div>
+	        <div class="head">菜品分析</div>
+
+	    </div>
+
+	    <div class="content">
+	        <div class="query">
+		        <div class="heading">菜品分析</div>
+		        <div class="label">从：</div>
+		        <input type="date" id="from">
+		        <div class="label">到：</div>
+		        <input type="date" id="to">
+		        <div class="label">菜品编号</div>
+                <div id="input-id">
+                    <input type="text" id="did"><select><option value="all">所有</option></select>
+                </div>
+                <input type="checkbox" id="trend" value="trend">看趋势
+		        <div class="button">查看</div>
+	        </div>
+	        
+	        <div class="result">
+		        
+		        <table border="1" cellspacing="0">
+		            <caption>销售</caption>
+		            <thead>
+			            <tr>
+			                <th>名字</th>
+                            <th>数量</th>
+                            <th>总量</th>
+			                <th>数量百分比</th>
+			                <th>销售额</th>
+			                <th>总销售额</th>
+			                <th>销售额百分比</th>
+			            </tr>
+		            </thead>
+		            <tbody>
+			            <tr>
+			                <td class="name"></td>
+                            <td class="num">100</td>
+                            <td class="all-num">100</td>
+			                <td class="num-rate">1</td>
+			                <td class="sales">98</td>
+			                <td class="all-sales">1</td>
+			                <td class="sales-rate">1%</td>
+			            </tr>
+		            </tbody>
+		        </table>
+                <table border="1" cellspacing="0">
+		            <caption>反馈</caption>
+		            <thead>
+			            <tr>
+			                <th>名字</th>
+                            <th>反馈数量</th>
+                            <th>好评</th>
+			                <th>中评</th>
+			                <th>差评</th>
+			                <th>好评率</th>
+                            <th>中评率</th>
+			                <th>差评率</th>
+			            </tr>
+		            </thead>
+		            <tbody>
+			            <tr>
+			                <td class="name"></td>
+                            <td class="fb-num">100</td>
+                            <td class="good-num">100</td>
+			                <td class="normal-rate">1</td>
+			                <td class="bad-num">98</td>
+			                <td class="good-rate">1</td>
+                            <td class="normal-rate"></td>
+			                <td class="bad-rate">1%</td>
+			            </tr>
+		            </tbody>
+		        </table>
+                <table border="1" cellspacing="0">
+		            <caption>厨师关系</caption>
+		            <thead>
+			            <tr>
+			                <th>厨师编号</th>
+                            <th>名字</th>
+                            <th>数量</th>
+			                <th>反馈数量</th>
+			                <th>好评</th>
+			                <th>中评</th>
+			                <th>差评</th>
+                            <th>好评率</th>
+                            <th>中评率</th>
+                            <th>差评率</th>
+			            </tr>
+		            </thead>
+		            <tbody>
+			            <tr>
+			                <td class="fid"></td>
+                            <td class="name">100</td>
+                            <td class="num">100</td>
+			                <td class="fb-num">1</td>
+			                <td class="good-num">98</td>
+			                <td class="normal-num">1</td>
+			                <td class="bad-num">1%</td>
+                            <td class="good-rate"></td>
+                            <td class="normal-rate"></td>
+                            <td class="bad-rate"></td>
+			            </tr>
+		            </tbody>
+		        </table>
+	        </div>
+	    </div>
+
+
+
+	    <script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	    <!-- <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script> -->
+	    <script src="{{static_url("js/base.js")}}"></script>
+	    <script src="{{static_url("js/manager-onediet.js")}}"></script>
+    </body>
+</html>
