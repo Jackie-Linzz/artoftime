@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+	    <meta charset="utf-8" />
+
+	    <meta http-equiv="expires" content="0">
+	    <meta http-equiv="pragma" content="no-cache">
+	    <meta http-equiv="cache-control" content="no-cache">
+
+
+	    <link rel="stylesheet" type="text/css" href="manager-frequency.css">
+
+	    <link rel="stylesheet" type="text/css" href="{{static_url("css/manager-frequency.css")}}" id="css">
+
+
+    </head>
+
+    <body>
+	    <div class="menu">
+	        <div class="back">返回</div>
+	        <div class="frequency">
+		        <div class="head">频率分析</div>
+		        
+	        </div>
+
+
+	    </div>
+
+	    <div class="content">
+            <div class="query">
+		        <div class="heading">频率分析</div>
+		        <div class="label">日期</div>
+		        <input type="date" id="date">		        
+                <input type="checkbox" id="request">顾客请求
+                <input type="checkbox" id="kitchen">厨房
+                <input type="checkbox" id="cash">收银
+		        <div class="button">查看</div>
+		    </div>
+	        <div class="result">
+		        
+		        <table border="1" cellspacing="0">
+		            <caption>顾客请求</caption>
+		            <thead>
+			            <tr>
+			                <th>从</th>
+			                <th>到</th>
+			                <th>数量</th>
+			                
+			            </tr>
+		            </thead>
+		            <tbody>
+			            <tr>
+			                <td class="from">time</td>
+			                <td class="to">time</td>
+			                <td class="num">num</td>			                
+			            </tr>
+		            </tbody>
+		        </table>
+	        </div>
+
+
+	    </div>
+
+
+
+	    <script src="{{static_url("js/jquery-1.11.2.min.js")}}"></script>
+	    <!-- <script src="{{static_url("js/jquery.mobile.custom.min.js")}}"></script> -->
+	    <script src="{{static_url("js/base.js")}}"></script>
+	    <script src="{{static_url("js/manager-frequency.js")}}"></script>
+    </body>
+</html>

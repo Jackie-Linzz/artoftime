@@ -28,6 +28,9 @@ $(document).ready(function(){
     $(document).on('click', '.cookdo', function(){
 	    window.location.replace('/manager-cookdo');
     });
+    $(document).on('click', '.today', function(){
+        window.location.replace('/manager-today');
+    });
     $(document).on('click', '.achievement', function(){
 	    window.location.replace('/manager-achievement');
     });
@@ -36,6 +39,9 @@ $(document).ready(function(){
     });
     $(document).on('click', '.one-diet', function(){
         window.location.replace('/manager-onediet');
+    });
+    $(document).on('click', '.frequency', function(){
+        window.location.replace('/manager-frequency');
     });
     $(document).on('click', '.comment', function(){
 	    window.location.replace('/manager-comment');

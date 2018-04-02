@@ -15,16 +15,16 @@
 }
 .heading {
     color: white;
-    font-size: 40px;
-    line-height: 40px;
+    font-size: 50px;
+    
     text-align: center;
 }
 .back {
     position: absolute;
     left: 15px;
     top: 20px;
-    font-size: 40px;
-    line-height: 40px;
+    font-size: 50px;
+    
     padding: 0 15px;
     border: 1px solid white;
     color: white;
@@ -37,7 +37,7 @@
     position: relative;
     margin: 20px 0;
     padding: 20px 0;
-    font-size: 40px;
+    font-size: 50px;
     text-align: center;
     color: white;
     background-color: #9cf;

@@ -71,6 +71,12 @@ create table if not exists feedback (
   stamp double(20,6) not null
 );
 
+create table if not exists request (
+  th    bigint unsigned not null primary key auto_increment,
+  desk  char(20) not null,
+  stamp double(20,6) not null
+);
+
 create table if not exists comment (
   th    bigint unsigned not null primary key auto_increment,
   desk  char(20) not null,

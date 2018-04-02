@@ -42,7 +42,7 @@ class ManagerCompanyHandler(tornado.web.RequestHandler):
     def post(self):
         file = logic.company_file
         if not os.path.isfile(file):
-            info =  {'company': '', 'shop': '', 'location': '', 'heading': '', 'welcome': '', 'desp': ''}
+            info =  {'company': '', 'shop': '', 'location': '', 'time': '', 'heading': '', 'welcome': '', 'desp': ''}
         else:
             with open(file, 'rb') as f:
                 info = pickle.load(f)
@@ -54,14 +54,16 @@ class ManagerCompanySetHandler(tornado.web.RequestHandler):
         company = self.get_argument('company')
         shop = self.get_argument('shop')
         location = self.get_argument('location')
+        work_time = self.get_argument('time')
         heading = self.get_argument('heading')
         welcome = self.get_argument('welcome')
         desp = self.get_argument('desp')
+        #print work_time
         #content = company +'\n'+shop+'\n'+location+'\n'
         #print content
         #content = content.encode('gb18030')
         #printer.gprint(bytes(content))
-        info = {'company': company, 'shop': shop, 'location': location, 'heading': heading, 'welcome': welcome, 'desp': desp}
+        info = {'company': company, 'shop': shop, 'location': location, 'time': work_time, 'heading': heading, 'welcome': welcome, 'desp': desp}
         logic.info = info
 
         data_dir = logic.data_dir
@@ -332,7 +334,30 @@ class ManagerCookdoHandler(tornado.web.RequestHandler):
         response = {'status': 'ok', 'result': results}
         
         self.write(json_encode(response))
-        
+
+class ManagerTodayHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-today.html')
+    def post(self):
+        now = datetime.datetime.now()
+        start = datetime.datetime(now.year, now.month, now.day)
+        end = start + datetime.timedelta(days=1)
+        t1 = start.strftime('%Y-%m-%d')
+        t2 = end.strftime('%Y-%m-%d')
+        rows = logic_manager.flow_data(start, end)
+        flow = [{'type': '', 'from': t1, 'to': t2, 'rows': rows}]
+        frequency = logic_manager.frequency(now, request=1, kitchen=1, cash=1)
+        cooks = []
+        for fid in logic.working_cooks:
+            rows = logic_manager.one_cook_flow(fid, start, end)
+            name = logic.faculty.get(fid)['name']
+            cooks.append({'fid': fid, 'name': name, 'rows': rows, 'type': 'cook'})
+        response = {'status': 'ok', 'flow': flow, 'frequency': frequency, 'cooks': cooks}
+        self.write(json_encode(response))
+
 class ManagerAchievementHandler(tornado.web.RequestHandler):
     def get(self):
         role = self.get_cookie('role')
@@ -405,6 +430,27 @@ class ManagerOnedietHandler(tornado.web.RequestHandler):
         start = datetime.datetime.strptime(start, format)
         end = datetime.datetime.strptime(end, format)
         result = logic_manager.one_diet(did, start, end, trend)
+        response = {'status': 'ok', 'result': result}
+        self.write(json_encode(response))
+
+class ManagerFrequencyHandler(tornado.web.RequestHandler):
+    def get(self):
+        role = self.get_cookie('role')
+        if role != 'manager':
+            return
+        self.render('manager-frequency.html')
+
+    def post(self):
+        day = self.get_argument('date')
+        request = self.get_argument('request')
+        kitchen = self.get_argument('kitchen')
+        cash = self.get_argument('cash')
+        request = int(request)
+        kitchen = int(kitchen)
+        cash = int(cash)
+        format = '%Y-%m-%d'
+        day = datetime.datetime.strptime(day, format)
+        result = logic_manager.frequency(day,request=request, kitchen=kitchen, cash=cash)
         response = {'status': 'ok', 'result': result}
         self.write(json_encode(response))
 

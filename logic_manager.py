@@ -1,6 +1,6 @@
 import time
 import datetime
-
+import re
 import logic
 import mysql
 
@@ -41,6 +41,15 @@ def time_nodes(start, end, interval='month'):
                 year += 1
                 month = 1
             mid = datetime.datetime(year, month, day)
+        nodes.append(mid)
+        return nodes
+    if interval == '30m':
+        span = datetime.timedelta(seconds=60*30)
+        nodes = []
+        mid = start
+        while mid < end:
+            nodes.append(mid)
+            mid += span
         nodes.append(mid)
         return nodes
 
@@ -406,6 +415,105 @@ def one_diet_fb_cook(did, start, end):
     cook_result.sort(key=lambda x: x['fid'])
     return cook_result
     
-        
-        
-   
+#day is datetime
+def frequency(day, request=0, kitchen=0, cash=0):
+    year = day.year
+    month = day.month
+    day = day.day
+    
+    pattern = '(\d+):(\d+)-(\d+):(\d+)'
+    #print logic.info['time']
+    m = re.match(pattern, logic.info['time'])
+    h1 = int(m.group(1))
+    m1 = int(m.group(2))
+    h2 = int(m.group(3))
+    m2 = int(m.group(4))
+
+    start = datetime.datetime(year, month, day, h1, m1)
+    end = datetime.datetime(year, month, day, h2, m2)
+
+    nodes = time_nodes(start, end, interval='30m')
+
+    t1 = time.mktime(start.timetuple())
+    t2 = time.mktime(end.timetuple())
+
+    intervals = []
+    pos = 0
+    while pos < len(nodes) -1:
+        n1 = nodes[pos]
+        n2 = nodes[pos+1]
+        intervals.append((time.mktime(n1.timetuple()), time.mktime(n2.timetuple())))
+        pos += 1
+
+    result = []
+    #for request
+    if request == 1:
+        sql = 'select * from request where stamp >= %s and stamp < %s' % (t1, t2)
+        rows = mysql.query(sql)
+        nums = []
+        while len(nums) < len(intervals):
+            nums.append(0)
+        for row in rows:
+            for span in intervals:
+                if row['stamp'] >= span[1] and row['stamp'] < span[2]:
+                    index = intervals.index(span)
+                    nums[index] += 1
+                    break
+        t = []
+        for index in range(len(intervals)):
+            n1 = intervals[index][0]
+            n2 = intervals[index][1]
+            n1 = datetime.datetime.fromtimestamp(n1)
+            n2 = datetime.datetime.fromtimestamp(n2)
+            n1_str = n1.strftime('%H:%M')
+            n2_str = n2.strftime('%H:%M')
+            t.append({'from': n1_str, 'to': n2_str, 'num': nums[index]})
+        table = {'type': 'request', 'rows': t}
+        result.append(table)
+    if kitchen == 1:
+        sql == 'select num, stamp from cook_history, order_history where cook_history.uid = order_history.uid and cook_history.stamp > %s and cook_history.stamp < %s' % (t1, t2)
+        rows = mysql.query(sql)
+        nums = []
+        while len(nums) < len(intervals):
+            nums.append(0)
+        for row in rows:
+            for span in intervals:
+                if row['stamp'] >= span[1] and row['stamp'] < span[2]:
+                    index = intervals.index(span)
+                    nums[index] += row['num']
+                    break
+        t = []
+        for index in range(len(intervals)):
+            n1 = intervals[index][0]
+            n2 = intervals[index][1]
+            n1 = datetime.datetime.fromtimestamp(n1)
+            n2 = datetime.datetime.fromtimestamp(n2)
+            n1_str = n1.strftime('%H:%M')
+            n2_str = n2.strftime('%H:%M')
+            t.append({'from': n1_str, 'to': n2_str, 'num': nums[index]})
+        table = {'type': 'kitchen', 'rows': t}
+        result.append(table)
+    if cash == 1:
+        sql = 'select max(stamp) as time from cash_history where stamp > %s and stamp < %s group by pid' % (t1, t2)
+        rows = mysql.query(sql)
+        nums = []
+        while len(nums) < len(intervals):
+            nums.append(0)
+        for row in rows:
+            for span in intervals:
+                if row['time'] >= span[1] and row['time'] < span[2]:
+                    index = intervals.index(span)
+                    nums[index] += 1
+                    break
+        t = []
+        for index in range(len(intervals)):
+            n1 = intervals[index][0]
+            n2 = intervals[index][1]
+            n1 = datetime.datetime.fromtimestamp(n1)
+            n2 = datetime.datetime.fromtimestamp(n2)
+            n1_str = n1.strftime('%H:%M')
+            n2_str = n2.strftime('%H:%M')
+            t.append({'from': n1_str, 'to': n2_str, 'num': nums[index]})
+        table = {'type': 'cash', 'rows': t}
+        result.append(table)
+    return result

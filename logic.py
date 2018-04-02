@@ -19,6 +19,7 @@ tables = {}
 waiting = {}
 uids = {}
 faculty = {}
+working_cooks = set()
 cooks = {}
 waiters = {}
 desks = set()

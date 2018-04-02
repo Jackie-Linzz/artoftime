@@ -8,7 +8,7 @@
     position: absolute;
     left: 15px;
     top: 20px;
-    font-size: 40px;
+    font-size: 46px;
     padding: 4px;
     border: 1px solid white;
     border-radius: 4px;    
@@ -18,7 +18,7 @@
 }
 .footer {
     padding: 20px 0;
-    font-size: 40px;
+    font-size: 48px;
     background-color: #f17c67;
     z-index: 1;
 }
@@ -27,14 +27,14 @@
     margin: 20px 0;
     padding: 1em;
     width: 100%;
-    font-size: 40px;
+    font-size: 46px;
     background-color: #BDB76A;
     border-radius: 6px;
 }
 .img, .line {
     margin: 10px 0;
     width: 100%;
-    font-size: 40px;
+    font-size: 46px;
     background-color: #BDB76A;
 }
 
@@ -51,6 +51,6 @@
 }
 .demand {
     margin: 20px 0;
-    font-size: 40px;
+    font-size: 46px;
     color: white;
 }

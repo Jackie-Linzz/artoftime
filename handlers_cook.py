@@ -8,6 +8,7 @@ class CookHomeHandler(tornado.web.RequestHandler):
     def get(self):
         #install cook in cooks
         fid = self.get_cookie('fid')
+        logic.working_cooks.add(fid)
         if logic.cooks.get(fid) == None:
             logic.cooks[fid] = logic.Cook(fid)
         self.render('cook-home.html')

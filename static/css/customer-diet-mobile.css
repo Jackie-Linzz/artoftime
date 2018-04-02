@@ -8,7 +8,7 @@
     position: absolute;
     left: 15px;
     top: 20px;
-    font-size: 40px;
+    font-size: 46px;
     padding: 4px;
     border: 1px solid white;
     border-radius: 4px;    
@@ -19,7 +19,7 @@
 .item {
     margin: 20px 0;
     padding: 15px 0;
-    font-size: 40px;
+    font-size: 46px;
     text-align: left;
     background-color: #f17c67;
     border-radius: 4px;
@@ -52,7 +52,7 @@
 }
 .footer {
     padding: 20px 0;
-    font-size: 40px;
+    font-size: 48px;
     background-color: #f17c67;
     z-index: 1;
 }

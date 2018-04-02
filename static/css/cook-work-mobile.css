@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 .head {
-    font-size: 34px;
+    font-size: 46px;
     color: white;
 }
 .head div {
@@ -34,7 +34,7 @@
     display: inline-block;
     margin: 20px 0;
     padding: 30px 0;
-    font-size: 34px;
+    font-size: 46px;
     color: white;
     text-align: center;
 }
@@ -52,7 +52,7 @@
 }
 .select .current {
     margin: 20px 0;
-    font-size: 30px;
+    font-size: 46px;
     text-align: center;
     color: white;
     background-color: #9cf;
@@ -70,7 +70,7 @@
     position: relative;
     margin: 20px;
     color: white;
-    font-size: 30px;
+    font-size: 46px;
     background-color: #9c9;
     border-radius: 8px;
 }
@@ -101,7 +101,7 @@
     margin: 20px;
     padding-bottom: 20px;
     color: white;
-    font-size: 30px;
+    font-size: 46px;
     background-color: #1db0b8;
     border-radius: 8px;
 }
@@ -110,7 +110,7 @@
     margin: 40px;
     padding: 20px 0;
     color: white;
-    font-size: 30px;
+    font-size: 46px;
     text-align: center;
     background-color: #1db0b8;
     border-radius: 8px;
@@ -141,7 +141,7 @@
     position: relative;
     margin: 20px;
     color: white;
-    font-size: 30px;
+    font-size: 46px;
     background-color: #37c6c0;
     border-radius: 8px;
 }

@@ -15,16 +15,16 @@
 }
 .heading {
     color: white;
-    font-size: 40px;
-    line-height: 40px;
+    font-size: 50px;
+    
     text-align: center;
 }
 .back {
     position: absolute;
     left: 15px;
     top: 20px;
-    font-size: 40px;
-    line-height: 40px;
+    font-size: 50px;
+    
     padding: 0 15px;
     border: 1px solid white;
     color: white;
@@ -35,11 +35,11 @@
 }
 table {
     margin: 0 auto;
-    font-size: 40px;
+    font-size: 50px;
 }
 caption {
     margin-bottom: 40px;
-    font-size: 40px;
+    font-size: 50px;
 }
 td {
     min-width: 150px;
