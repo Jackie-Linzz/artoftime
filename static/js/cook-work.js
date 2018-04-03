@@ -82,9 +82,9 @@ $(document).ready(function(){
 	        {'fid': window.cook.fid, 'ins': json(ins)},
 	        function(){}
 	    );
-        var div = $('<div></div>');
-        div.text('doing,close,'+uid);
-        $('.debug').append(div);
+        /* var div = $('<div></div>');
+         * div.text('doing,close,'+uid);
+         * $('.debug').append(div);*/
     });
     /* $('.doing').on('click', '.finish', function(){
 	   var uid = $(this).parent().data('uid');
@@ -103,7 +103,21 @@ $(document).ready(function(){
         $.postJSON(
 	        '/cook-ins',
 	        {'fid': window.cook.fid, 'ins': json(ins)},
-	        function(){}
+	        function(){
+                var ins = ['prepare'];
+	            $.postJSON(
+	                '/cook-ins',
+	                {'fid': window.cook.fid, 'ins': json(ins)},
+	                function(){
+                        var ins = ['accept'];
+                        $.postJSON(
+	                        '/cook-ins',
+	                        {'fid': window.cook.fid, 'ins': json(ins)},
+	                        function(){}
+	                    );
+                    }
+	            );
+            }
 	    );
         setTimeout(reset_lock, 1000*20);
     });
