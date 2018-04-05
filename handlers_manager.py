@@ -7,6 +7,7 @@ import logic_manager
 import mysql
 import os
 import subprocess
+import platform
 #import qrcode
 import MySQLdb
 import printer
@@ -543,14 +544,23 @@ class ManagerShutdownHandler(tornado.web.RequestHandler):
 
     def post(self):
         #prepare.save()
-        echo = subprocess.Popen(['echo', 'jerrylan418'], stdout=subprocess.PIPE)
-        shutdown = subprocess.Popen(['sudo', '-S', 'shutdown', '-h', 'now'], stdin=echo.stdout)
+        if platform.system() == 'Darwin':
+            echo = subprocess.Popen(['echo', 'jerrylan418'], stdout=subprocess.PIPE)
+            shutdown = subprocess.Popen(['sudo', '-S', 'shutdown', '-h', 'now'], stdin=echo.stdout)
+        elif platform.system() == 'Linux':
+            echo = subprocess.Popen(['echo', 'lin890418\n'], stdout=subprocess.PIPE)
+            shutdown = subprocess.Popen(['sudo', '-S', 'shutdown', '-P', 'now'], stdin=echo.stdout)
         
 class ManagerRebootHandler(tornado.web.RequestHandler):
     def post(self):
-        prepare.save()
-        echo = subprocess.Popen(['echo', 'jerrylan418'], stdout=subprocess.PIPE)
-        reboot = subprocess.Popen(['sudo', '-S', 'reboot'], stdin=echo.stdout)
+        #prepare.save()
+        if platform.system() == 'Darwin':
+            echo = subprocess.Popen(['echo', 'jerrylan418'], stdout=subprocess.PIPE)
+            reboot = subprocess.Popen(['sudo', '-S', 'reboot'], stdin=echo.stdout)
+        elif platform.system() == 'Linux':
+            echo = subprocess.Popen(['echo', 'lin890418\n'], stdout=subprocess.PIPE)
+            reboot = subprocess.Popen(['sudo', '-S', 'reboot'], stdin=echo.stdout)
+        
         
 
     
