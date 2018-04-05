@@ -635,7 +635,6 @@ class RequestMessage(object):
 
     def add(self, desk):
         self.message.add(desk)
-        print 'inserting'
         mysql.insert('request', {'desk': desk, 'stamp': time.time()})
         self.stamp = time.time()
         self.set_future()
