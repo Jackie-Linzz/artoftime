@@ -9,6 +9,7 @@ $(document).ready(function(){
     }
     window.myorder = {};
     var desk = $('.heading').attr('data-desk');
+    $('.one').remove();
     $(document).on('click', '.left', function(){
 	    window.location.replace('/customer-home?desk='+desk);
     });
