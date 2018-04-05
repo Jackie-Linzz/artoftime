@@ -353,6 +353,7 @@ class ManagerTodayHandler(tornado.web.RequestHandler):
         cooks = []
         for fid in logic.working_cooks:
             rows = logic_manager.one_cook_flow(fid, start, end)
+            #print 'one_cook_flow:', rows
             name = logic.faculty.get(fid)['name']
             cooks.append({'fid': fid, 'name': name, 'rows': rows, 'type': 'cook'})
         response = {'status': 'ok', 'flow': flow, 'frequency': frequency, 'cooks': cooks}

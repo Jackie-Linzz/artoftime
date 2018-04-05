@@ -57,6 +57,11 @@ create table if not exists cook_history (
   fid   char(50) not null, 
   stamp double(20,6) not null
 );
+create table if not exists waiter_receive_history (
+  uid   bigint unsigned not null primary key,
+  fid   char(50) not null, 
+  stamp double(20,6) not null
+);
 create table if not exists cash_history (
   uid   bigint unsigned not null primary key,
   fid   char(100) not null,  

@@ -20,6 +20,7 @@ waiting = {}
 uids = {}
 faculty = {}
 working_cooks = set()
+working_cooks.add(u'0002')
 cooks = {}
 waiters = {}
 desks = set()
@@ -634,6 +635,8 @@ class RequestMessage(object):
 
     def add(self, desk):
         self.message.add(desk)
+        print 'inserting'
+        mysql.insert('request', {'desk': desk, 'stamp': time.time()})
         self.stamp = time.time()
         self.set_future()
 
@@ -660,7 +663,7 @@ class RequestMessage(object):
             self.waiters.add(future)
         return future
     
-requestmsg = FeedbackMessage()
+requestmsg = RequestMessage()
 
 class CleanMessage(object):
     def __init__(self):
@@ -696,7 +699,7 @@ class CleanMessage(object):
             self.waiters.add(future)
         return future
 
-cleanmsg = FeedbackMessage()
+cleanmsg = CleanMessage()
 #for all orders in table.left
 class LeftMessage(object):
     def __init__(self):
@@ -1061,7 +1064,7 @@ class Waiter(object):
             table = tables.get(one.desk)
             if len(table.left) + len(table.doing) == 0:
                 feedbackmsg.add(one.desk)
-            mysql.insert('cook_history', {'fid': self.fid, 'uid': uid, 'stamp': time.time()})
+            mysql.insert('waiter_receive_history', {'fid': self.fid, 'uid': uid, 'stamp': time.time()})
             one.passed = 1
             self.passed.insert(0, one)
             self.passed = self.passed[0:50]

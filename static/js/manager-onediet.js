@@ -67,6 +67,8 @@ $(document).ready(function(){
 
 function show_select() {
     $('option').remove();
+    if(window.diet.length == 0) return;
+    $('#did').val(window.diet[0].did);
     var p = $('select');
     for(var i in window.diet) {
         one = window.diet[i];
@@ -83,6 +85,7 @@ function show_result(){
 		              '<thead>'+
 			          '<tr>'+
 			          '<th>名字</th>'+
+                      '<th>价格</th>'+
                       '<th>数量</th>'+
                       '<th>总量</th>'+
 			          '<th>数量百分比</th>'+
@@ -94,6 +97,7 @@ function show_result(){
 		              '<tbody>'+
 			          '<tr>'+
 			          '<td class="name"></td>'+
+                      '<td class="price"></td>'+
                       '<td class="num">100</td>'+
                       '<td class="all-num">100</td>'+
 			          '<td class="num-rate">1</td>'+
@@ -105,6 +109,7 @@ function show_result(){
 		              '</table>');
         table.find('caption').text(data.from+":"+data.to+':销售');
         table.find('.name').text(data.name);
+        table.find('.price').text(data.price);
         table.find('.num').text(data.num);
         table.find('.all-num').text(data['all-num']);
         table.find('.num-rate').text(data['num-rate'].toFixed(2)+'%');
@@ -145,9 +150,9 @@ function show_result(){
         table.find('.good-num').text(data['good-num']);
         table.find('.normal-num').text(data['normal-num']);
         table.find('.bad-num').text(data['bad-num']);
-        table.find('.good-rate').text(data['good-rate']);
-        table.find('.normal-rate').text(data['normal-rate']);
-        table.find('.bad-rate').text(data['bad-rate']);
+        table.find('.good-rate').text(data['good-rate'].toFixed(2)+'%');
+        table.find('.normal-rate').text(data['normal-rate'].toFixed(2)+'%');
+        table.find('.bad-rate').text(data['bad-rate'].toFixed(2)+'%');
         var tr = $('<tr>'+
 			       '<td class="name"></td>'+
                    '<td class="fb-num">100</td>'+
@@ -163,9 +168,9 @@ function show_result(){
         tr.find('.good-num').text(data['all-good-num']);
         tr.find('.normal-num').text(data['all-normal-num']);
         tr.find('.bad-num').text(data['all-bad-num']);
-        tr.find('.good-rate').text(data['all-good-rate']);
-        tr.find('.normal-rate').text(data['all-normal-rate']);
-        tr.find('.bad-rate').text(data['all-bad-rate']);
+        tr.find('.good-rate').text(data['all-good-rate'].toFixed(2)+'%');
+        tr.find('.normal-rate').text(data['all-normal-rate'].toFixed(2)+'%');
+        tr.find('.bad-rate').text(data['all-bad-rate'].toFixed(2)+'%');
         table.find('tbody').append(tr);
         p.append(table);
         table = $('<table border="1" cellspacing="0">'+
@@ -210,9 +215,9 @@ function show_result(){
             tr.find('.good-num').text(one['good-num']);
             tr.find('.normal-num').text(one['normal-num']);
             tr.find('.bad-num').text(one['bad-num']);
-            tr.find('.good-rate').text(one['good-rate']);
-            tr.find('.normal-rate').text(one['normal-rate']);
-            tr.find('.bad-rate').text(one['bad-rate']);
+            tr.find('.good-rate').text(one['good-rate'].toFixed(2)+'%');
+            tr.find('.normal-rate').text(one['normal-rate'].toFixed(2)+'%');
+            tr.find('.bad-rate').text(one['bad-rate'].toFixed(2)+'%');
             table.find('tbody').append(tr);
             
         }

@@ -65,7 +65,7 @@ function show_flow(){
         for(var j in table.rows) {
             var row = table.rows[j];
             all_num += row.num;
-            all_sales = row.sales;
+            all_sales += row.sales;
             all_fb_num = row['fb-num'];
             all_good = row['good-num'];
             all_bad = row['bad-num'];

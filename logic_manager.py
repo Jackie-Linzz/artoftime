@@ -100,7 +100,7 @@ def achieve(fid, start, end, trend):
 # start and end is datetime
 def all_cook_flow(start, end):
     t1 = time.mktime(start.timetuple())
-    t2 = time.mktime(start.timetuple())
+    t2 = time.mktime(end.timetuple())
     result = {}
     sql = 'select diet.did, sum(num) as number from diet,order_history,cook_history where diet.did = order_history.did and order_history.uid = cook_history.uid and cook_history.stamp > %s and cook_history.stamp < %s group by diet.did' % (t1, t2)
     rows = mysql.query(sql)
@@ -142,10 +142,12 @@ def all_cook_flow(start, end):
     result = result.values()
     result.sort(key=lambda x: x['did'])
     return result
-        
+
+#start end is datetime
 def one_cook_flow(fid, start, end):
     t1 = time.mktime(start.timetuple())
-    t2 = time.mktime(start.timetuple())
+    t2 = time.mktime(end.timetuple())
+    #print 't1, t2:', t1, ',', t2
     result = {}
     sql = 'select diet.did, sum(num) as number from diet,order_history,cook_history where diet.did = order_history.did and order_history.uid = cook_history.uid and fid = "%s" and cook_history.stamp > %s and cook_history.stamp < %s group by diet.did' % (fid, t1, t2)
     rows = mysql.query(sql)
@@ -333,6 +335,7 @@ def one_diet_table(did, start, end):
         if row['did'] == did:
             table['did'] = did
             table['name'] = row['name']
+            table['price'] = row['price']
             table['num'] = row['num']
             table['sales'] = row['sales']
             table['num-rate'] = row['num-rate']
@@ -455,7 +458,7 @@ def frequency(day, request=0, kitchen=0, cash=0):
             nums.append(0)
         for row in rows:
             for span in intervals:
-                if row['stamp'] >= span[1] and row['stamp'] < span[2]:
+                if row['stamp'] >= span[0] and row['stamp'] < span[1]:
                     index = intervals.index(span)
                     nums[index] += 1
                     break
@@ -471,14 +474,15 @@ def frequency(day, request=0, kitchen=0, cash=0):
         table = {'type': 'request', 'rows': t}
         result.append(table)
     if kitchen == 1:
-        sql == 'select num, stamp from cook_history, order_history where cook_history.uid = order_history.uid and cook_history.stamp > %s and cook_history.stamp < %s' % (t1, t2)
+        sql = 'select num, cook_history.stamp from cook_history, order_history where cook_history.uid = order_history.uid and cook_history.stamp >= %s and cook_history.stamp < %s' % (t1, t2)
         rows = mysql.query(sql)
+        
         nums = []
         while len(nums) < len(intervals):
             nums.append(0)
         for row in rows:
             for span in intervals:
-                if row['stamp'] >= span[1] and row['stamp'] < span[2]:
+                if row['stamp'] >= span[0] and row['stamp'] < span[1]:
                     index = intervals.index(span)
                     nums[index] += row['num']
                     break
@@ -501,7 +505,7 @@ def frequency(day, request=0, kitchen=0, cash=0):
             nums.append(0)
         for row in rows:
             for span in intervals:
-                if row['time'] >= span[1] and row['time'] < span[2]:
+                if row['time'] >= span[0] and row['time'] < span[1]:
                     index = intervals.index(span)
                     nums[index] += 1
                     break
