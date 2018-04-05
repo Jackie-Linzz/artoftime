@@ -8,6 +8,8 @@ $(document).ready(function(){
     }
     window.pass = [];
     window.passed = []
+    $('.pass-content').show();
+    $('.passed-content').hide();
     $('.back').on('click', function(){
 	    window.location.replace('/waiter-home');
     });

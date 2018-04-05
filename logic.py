@@ -712,7 +712,9 @@ class LeftMessage(object):
         global tables
         left = 0
         for v in tables.values():
-            left += len(v.left)
+            for one in v.left:
+                if one.who == 'cook':
+                    left += one.num
         self.num = left
         return left
     
@@ -1065,7 +1067,7 @@ class Waiter(object):
             self.passed = self.passed[0:50]
             left2msg.change()
             self.set_future()
-    def passed(self, uid):
+    def passl(self, uid):
         global uids
         uid = int(uid)
         one = uids.get(uid)

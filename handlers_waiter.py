@@ -49,7 +49,7 @@ class WaiterPassRemoveHandler(tornado.web.RequestHandler):
         uid = self.get_argument('uid')
         uid = int(uid)
         logic.passmsg.remove(uid)
-        waiter.passed(uid)
+        waiter.passl(uid)
         response = {'status': 'ok'}
         self.write(json_encode(response))
 
