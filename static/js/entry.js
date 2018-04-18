@@ -10,6 +10,7 @@ $(document).ready(function(){
     $(document).on('click', '.button', function(e){
 	    var desk = $('.desk').val();
 	    desk = trim(desk);
+        //alert(desk);
 	    $.postJSON(
 	        '/',
 	        {'desk': desk},

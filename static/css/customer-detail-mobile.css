@@ -1,3 +1,11 @@
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
 .header {
     padding: 20px 0;
     font-size: 60px;
@@ -33,9 +41,14 @@
 }
 .img, .line {
     margin: 10px 0;
+    padding: 0;
     width: 100%;
     font-size: 46px;
     background-color: #BDB76A;
+}
+img {
+    margin: 0;
+    width: 100%;
 }
 
 .desc {
