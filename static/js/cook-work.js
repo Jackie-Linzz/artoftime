@@ -12,6 +12,7 @@ $(document).ready(function(){
 
 
     $('.tab').hide();
+    $('.doing').show();
 
     $(document).on('click', '#select', function(){
 	    $('.tab').hide();
@@ -119,7 +120,7 @@ $(document).ready(function(){
 	            );
             }
 	    );
-        setTimeout(reset_lock, 1000*20);
+        setTimeout(reset_lock, 1000*5);
     });
     updater.poll();
     left_updater.poll();

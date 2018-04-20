@@ -4,6 +4,7 @@ import os
 import platform
 import mysql
 import printer
+
 from tornado.concurrent import Future
 
 data_dir = os.path.expanduser('~/data')
@@ -16,11 +17,11 @@ if platform.system() == 'Linux':
 
 info = {}
 tables = {}
-waiting = {}
+
 uids = {}
 faculty = {}
 working_cooks = set()
-working_cooks.add(u'0002')
+
 cooks = {}
 waiters = {}
 desks = set()
@@ -29,6 +30,8 @@ category = {}
 cook_do = {} #fid: set()
 global_uid = 0
 global_pid = 0
+
+queue_cursor = 1
 
 
 
@@ -44,66 +47,83 @@ def add_pid():
     sql = 'update id set num = %s where name = "pid"' % global_pid
     mysql.execute(sql)
 
-class waitingStatus(object):
+class Queue(object):
     def __init__(self):
-        self.keep = []
-        self.low = -1
-        self.high = -1
-
-    def add(self):
-        if (self.high + 1) % 100 == self.low:
-            return "sorry"
-        self.high += 1
-        self.keep.append(self.high)
-        if len(self.keep) == 1:
-            self.low = self.high
-        return self.high
-
-    def remove(self, t):
-        if t not in self.keep:
-            return "sorry"
-        self.keep.remove(t)
-        if len(self.keep) == 0:
-            self.low = -1
-            self.high = -1
-            return
-        if t == self.low:
-            while self.low not in self.keep:
-                self.low = (self.low + 1) % 100
-            return
-
-    def length(self):
-        return len(self.keep)
-
-
-ws = waitingStatus()
-
-class WTable(object):
-    def __init__(self, table, number):
-        self.table = table
-        self.number = number
-        self.gdemand = ''
-        self.orders = []
+        self.queue = []
         self.waiters = set()
         self.stamp = time.time()
 
-    def to_dict(self):
-        result = {'table': self.table, 'number': self.number, 'stamp': self.stamp,
-                  'gdemand': self.gdemand,
-                  'orders': [one.to_dict() for one in self.orders]}
+    def add(self, number):
+        global queue_cursor
+        item = {'order': queue_cursor, 'num': number}
+        queue_cursor += 1
+        self.queue.append(item)
+        self.set_future()
 
+    def remove(self, order):
+        self.queue = filter(lambda x: x['order'] != order, self.queue)
+        self.set_future()
+        
     def set_future(self):
+        self.stamp = time.time()
+        result = self.queue
         for future in self.waiters:
-            future.set_result(self.to_dict())
+            future.set_result(result)
         self.waiters = set()
 
     def update(self, stamp):
         future = Future()
         if stamp < self.stamp:
-            future.set_result(self.to_dict())
+            result = self.queue
+            future.set_result(result)
         else:
             self.waiters.add(future)
         return future
+queue = Queue()
+
+class Idle_desks(object):
+    def __init__(self):
+        self.desks = []
+        self.waiters = set()
+        self.stamp = time.time()
+        self.init()
+
+    def init(self):
+        #import pdb
+        #pdb.set_trace()
+        global tables
+        self.desks = []
+        for k, v in tables.items():
+            if len(v.left)+len(v.doing)+len(v.done) == 0:
+                self.desks.append({'desk': k, 'num': v.seats})
+        self.desks.sort(key=lambda x: x['num'])
+
+    def add(self, desk):
+        self.desks.append({'desk': desk, 'num': tables[desk].seats})
+        self.desks.sort(key=lambda x: x['num'])
+        self.set_future()
+
+    def remove(self, desk):
+        self.desks = filter(lambda x: x['desk'] != desk, self.desks)
+        self.set_future()
+
+    def set_future(self):
+        self.stamp = time.time()
+        result = self.desks
+        for future in self.waiters:
+            future.set_result(result)
+        self.waiters = set()
+
+    def update(self, stamp):
+        future = Future()
+        if stamp < self.stamp:
+            result = self.desks
+            future.set_result(result)
+        else:
+            self.waiters.add(future)
+        return future
+
+idle_desks = Idle_desks()
         
 ######################################################
 
@@ -228,27 +248,12 @@ class Order(object):
         return result
         
 
-def waiting_ins(index, ins):
-    global waiting, uids
-    index = int(index)
-    wt = waiting.get(index)
-    if not isinstance(wt, WTable):
-        return None
-    wt.stamp = time.time()
-    if ins[0] == '+':
-        one = Order(ins[1], index, ins[2])
-        wt.orders.append(one)
-        uids[one.uid] = one
-    elif ins[0] == '-':
-        wt.orders = filter(lambda one: one.uid != ins[1], wt.orders)
-    elif ins[0] == 'g':
-        wt.gdemand = ins[1]
-    wt.set_future()
-    return 0
+
 
 class Table(object):
     def __init__(self, table):
         self.table = table.upper()
+        self.seats = mysql.get('desks', {'desk': table})[0]['num']
         self.pid = 0
         self.gdemand = ''
         self.comment = ''
@@ -326,6 +331,7 @@ class Table(object):
         cleanmsg.add(self.table)
         feedbackmsg.remove(self.table)
         #requestmsg.remove(self.table)
+        idle_desks.add(self.table)
         return 'success'
 
     def to_printer(self):
@@ -384,7 +390,7 @@ def get_ordernum_waiter():
     return num
 
 def customer_ins(desk, ins):
-    global tables, global_pid, uids
+    global tables, global_pid, uids, idle_desks
     desk = desk.upper()
     table = tables.get(desk)
     if not isinstance(table, Table):
@@ -430,11 +436,12 @@ def customer_ins(desk, ins):
         table.left = sorted(table.left, key=lambda one: one.ord)
         leftmsg.change()
         left2msg.change()
+        idle_desks.remove(desk)
     table.set_future()
     return 0
 
 def waiter_ins(desk, ins):
-    global tables, global_pid, uids
+    global tables, global_pid, uids, idle_desks
     desk = desk.upper()
     table = tables.get(desk)
     if not isinstance(table, Table):
@@ -491,6 +498,7 @@ def waiter_ins(desk, ins):
         table.left = sorted(table.left, key=lambda one: one.ord)
         leftmsg.change()
         left2msg.change()
+        idle_desks.remove(desk)
     table.set_future()
     return 0
 ##manager mask update

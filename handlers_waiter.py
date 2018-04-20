@@ -185,3 +185,33 @@ class WaiterQueryHandler(tornado.web.RequestHandler):
         diet = logic.diet.values()
         diet.sort(key=lambda x: x['did'])
         self.render('waiter-query.html', fid=fid, diet=diet)
+
+class WaiterQueueHandler(tornado.web.RequestHandler):
+    def get(self):
+        fid = self.get_cookie('fid')
+        self.render('waiter-queue.html', fid=fid)
+
+    def post(self):
+        order = self.get_argument('order')
+        order = int(order)
+        logic.queue.remove(order)
+        self.write('ok')
+
+class WaiterDeskUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        
+        stamp = json_decode(self.get_argument('stamp'))
+        desks = yield logic.idle_desks.update(stamp)
+        response = {'status': 'ok', 'desks': desks, 'stamp': logic.idle_desks.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()
+
+class WaiterQueueUpdateHandler(tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def post(self):
+        stamp = json_decode(self.get_argument('stamp'))
+        queue = yield logic.queue.update(stamp)
+        response = {'status': 'ok', 'queue': queue, 'stamp': logic.queue.stamp}
+        self.write(json_encode(response))
+        raise tornado.gen.Return()

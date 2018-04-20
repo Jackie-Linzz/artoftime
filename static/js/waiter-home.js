@@ -39,6 +39,9 @@ $(document).ready(function(){
     $(document).on('click', '.query', function(){
         window.location.replace('/waiter-query');
     });
+    $(document).on('click', '.queue', function(){
+        window.location.replace('/waiter-queue');
+    });
     $(document).on('click', '.passwd', function(){
 	    window.location.replace('/faculty-secret?back=waiter-home');
     });

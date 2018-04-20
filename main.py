@@ -23,12 +23,7 @@ define("debug", default=False, help="run in debug mode")
 
 
 myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
-              (r'/waiting-category', WaitingCategoryHandler),
-              (r'/waiting-diet', WaitingDietHandler),
-              (r'/waiting-detail', WaitingDetailHandler),
-              (r'/waiting-ins', WaitingInsHandler),
-              (r'/waiting-order', WaitingOrderHandler),
-              (r'/waiting-update', WaitingUpdateHandler),
+              (r'/waiting-queue', WaitingQueueHandler),
               (r'/', EntryHandler),
               (r'/customer-home', CustomerHomeHandler),
               (r'/customer-category', CustomerCategoryHandler),
@@ -117,6 +112,9 @@ myhandlers = [(r'/waiting-entry', WaitingEntryHandler),
               (r'/waiter-done', WaiterDoneHandler),
               (r'/waiter-left-update', WaiterLeftUpdateHandler),
               (r'/waiter-done-update', WaiterDoneUpdateHandler),
+              (r'/waiter-queue', WaiterQueueHandler),
+              (r'/waiter-desk-update', WaiterDeskUpdateHandler),
+              (r'/waiter-queue-update', WaiterQueueUpdateHandler),
               (r'/pictures/(.+)', PictureHandler)]
 settings = dict(
                 cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",

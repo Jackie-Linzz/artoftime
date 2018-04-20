@@ -200,18 +200,22 @@ class ManagerDeskAddHandler(tornado.web.RequestHandler):
     def post(self):
         desk = self.get_argument('desk')
         desk = desk.upper()
-        result = mysql.insert('desks', {'desk': desk})
-        if desk not in logic.desks:
-            logic.desks.add(desk)
-        if desk not in logic.tables:
-            logic.tables[desk] = logic.Table(desk)
+        seats = self.get_argument('seats')
+        seats = int(seats)
+        result = mysql.insert('desks', {'desk': desk, 'num': seats})
+        
         if result:
             #path = os.path.join(logic.data_dir, 'desks/' + desk)
             #data = desk
             #img = qrcode.make(data)
             #img.save(path)
+            if desk not in logic.desks:
+                logic.desks.add(desk)
+            if desk not in logic.tables:
+                logic.tables[desk] = logic.Table(desk)
             response = {'status': 'ok'}
         else:
+            
             response = {'status': 'error'}
         self.write(json_encode(response))
 

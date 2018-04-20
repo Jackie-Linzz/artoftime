@@ -8,6 +8,7 @@ import logic
 def prepare():
     #first time to run
     sync()
+    logic.idle_desks = logic.Idle_desks()
 
 def save():
     #save data for resume

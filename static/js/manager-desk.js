@@ -35,7 +35,7 @@ $(document).ready(function(){
 			            p.append(tr);
 		            }
 		            var td = $('<td></td>');
-		            td.text(desks[i].desk);
+		            td.text(desks[i].desk+'('+desks[i].num+')');
 		            tr.append(td);
 		        }
 	        }
@@ -44,13 +44,17 @@ $(document).ready(function(){
     $(document).on('click', '#desk-add-button', function(){
 	    var desk = $('#desk-add').val();
 	    desk = trim(desk);
+        var seats = $('#desk-seats').val();
+        seats = trim(seats);
 	    if(desk == '') return;
+        if(seats == '') return;
 	    $.postJSON(
 	        '/manager-desk-add',
-	        {'desk': desk},
+	        {'desk': desk, 'seats': seats},
 	        function(response) {
 		        if(response.status == 'ok') {
 		            $('#desk-add').val('');
+                    $('#desk-seats').val('');
 		        }
 	        }
 	    );

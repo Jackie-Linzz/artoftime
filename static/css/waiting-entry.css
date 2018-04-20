@@ -1,9 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0;
+    
+}
+.heading {
+    color: white;
+    font-size: 50px;
+    
+    text-align: center;
+}
+
 body {
     background-color: #BDB76A;
+}
+.content {
+    padding: 160px 0;
+    font-size: 50px;
+    text-align: center;
 }
 input[type=number] {
     display: inline-block;
     width: 50px;
+    font-size: 50px;
+    text-align: center;
     color: black;
     background-color: #BDB76A;
     border: 1px solid white;

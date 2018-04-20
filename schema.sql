@@ -90,7 +90,8 @@ create table if not exists comment (
 );
 
 create table if not exists desks (
- desk char(20) not null primary key
+ desk char(20) not null primary key,
+ num  int unsigned not null
 );
 
 create table if not exists mask (
